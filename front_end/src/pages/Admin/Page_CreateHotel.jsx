@@ -44,7 +44,7 @@ function CreateHotel() {
 			setCreateSuccess(true);
 			setTimeout(() => {
 				setCreateSuccess(false);
-				// navigate("/admin/list-hotel");
+				navigate("/admin/list-hotel");
 			}, 1000);
 		} catch (error) {
 			console.error("Create failed:", error);

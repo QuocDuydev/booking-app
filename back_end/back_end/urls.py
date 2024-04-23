@@ -28,6 +28,7 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'user')
 # router.register(r'rooms', views.RoomView, 'room')
 router.register(r'hotels', views.HotelView, 'hotel')
+router.register(r'images', views.HotelImageView, 'hotel-images')
 # router.register(r'bookings', views.BookingView, 'booking')
 # router.register(r'recomments', views.BookingView, 'reconment')
 
@@ -42,7 +43,7 @@ urlpatterns = [
     # path('api/rooms/<int:room_id>/', views.RoomRetrieveUpdateDestroyView.as_view(), name='room-detail'),
     path('api/hotels/<int:hotel_id>/', views.HotelRetrieveUpdateDestroyView.as_view(), name='hotel-detail'),
     path('api/hotel-images/<int:hotel_id>/', views.HotelImageRetrieveUpdateDestroy.as_view(), name='hotel-image-retrieve-update-destroy'),
-    path('api/hotels/<int:pk>/images/', views.HotelImageView.as_view({'post': 'multiple_upload'}), name='hotel_images')
+    # path('api/hotels/<int:hotel_id>/images/', views.HotelImageView.as_view(), name='hotel-images')
     # path('api/bookings/<int:booking_id>/', views.BookingRetrieveUpdateDestroyView.as_view(), name='booking-detail'),
     # path('api/hotels/<int:hotel_id>/rooms/', views.HotelRoomsListView.as_view(), name='hotel-rooms'),
     # path('api/hotels/<int:hotel_id>/rooms/<int:room_id>', views.RoomstoHotelListView.as_view(), name='rooms-to-hotels'),

@@ -1,17 +1,19 @@
+
 import {
 	Card,
 	Input,
 	Button,
 	Typography,
 	Textarea,
+	
 } from "@material-tailwind/react";
 
 function CreateHotelForm({
 	hotel,
 	handleChange,
 	handleCreate,
-	handleImageChange,
 }) {
+	
 	return (
 		<>
 			<div className=" mx-auto mt-2">
@@ -40,24 +42,6 @@ function CreateHotelForm({
 										onChange={handleChange}
 										placeholder="Enter name hotels..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-									/>
-								</div>
-								<div>
-									<Typography
-										variant="h6"
-										color="blue-gray"
-										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-									>
-										Images Hotel
-									</Typography>
-									<Input
-										type="file"
-										multiple
-										size="lg"
-										name="images"
-										onChange={handleChange}
-										placeholder="Choose file image..."
-										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
 									/>
 								</div>
 								<div>

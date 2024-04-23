@@ -52,7 +52,7 @@ function CardRightBooking({ booking, rooms, handleChange, handleCreate }) {
                 {typeof item.descriptions === 'string' ? item.descriptions.split(' ').slice(0, 25).join(' ') : ''}
               </Typography>
             </div>
-            <div className="border-b mb-2"></div>
+            <div className="border-b mb-2" />
             <div className=" flex">
               <Typography
                 variant="h5"

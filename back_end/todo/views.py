@@ -71,45 +71,11 @@ class UserRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 #    serializer_class = RoomSerializer
 #    permission_classes = [permissions.AllowAny]
 
-@api_view(['GET'])
-def hotel_images(request, pk):
-    hotel = get_object_or_404(Hotels, pk=pk)
-    images = hotel.images.all()
-    serializer = HotelImageSerializer(images, many=True)
-    return Response(serializer.data)
-
 class HotelImageView(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     queryset = HotelImage.objects.all()
     serializer_class = HotelImageSerializer
     
-    def multiple_upload(self, request, *args, **kwargs):
-        serializer = MultipleImageSerializer(data=request.data or None)
-        serializer.is_valid(raise_exception=True)
-        images = serializer.validated_data.get("images")
-        images_list = []
-        for image in images:
-            hotel_image = HotelImage.objects.create(image=image)
-            images_list.append(hotel_image.image.url) # Lưu URL của ảnh
-        return Response(images_list)
-    
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
-
-    def update(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
-
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response("Success")
 
 class HotelImageRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.AllowAny]

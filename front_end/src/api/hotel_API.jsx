@@ -36,6 +36,50 @@ export const postHotel = async (token, formData) => {
 	}
 };
 
+export const getImage = async (token, formData) => {
+	try {
+		const response = await axios.get(`${baseURL}/images/`, formData, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Error posting hotel data:", error);
+		throw error;
+	}
+};
+
+export const postImage = async (token, formData) => {
+	try {
+		const response = await axios.post(`${baseURL}/images/`, formData, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Error posting hotel data:", error);
+		throw error;
+	}
+};
+
+export const deleteImage = async (token, id) => {
+	try {
+		const response = await axios.delete(`${baseURL}/images/${id}`, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Error posting hotel data:", error);
+		throw error;
+	}
+};
 export const putHotel = async (token, hotelData, hotelId) => {
 	try {
 		const formData = new FormData();

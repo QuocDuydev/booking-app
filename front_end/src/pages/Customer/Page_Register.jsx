@@ -10,7 +10,7 @@ function Registers() {
 		password: "",
 		repassword: "",
 	});
-    const token = useAccessToken();
+	const token = useAccessToken();
 	const [passwordsMatch, setPasswordsMatch] = useState(true);
 	const [errorMessages, setErrorMessages] = useState({});
 
@@ -19,54 +19,44 @@ function Registers() {
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setActiveItem({ ...activeItem, [name]: value });
-		setErrorMessages({ ...errorMessages, [name]: "" });
+		setPasswordsMatch({ ...passwordsMatch, [name]: "" });
 	};
 
 	const checkEmailExists = async (email) => {
-		const userDetailsResponse = await fetch(
-            "http://localhost:8000/api/users/",
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${String(token)}`,
-                },
-            },
-        );
-		return false;
+		// const userDetailsResponse = await fetch(
+		//     "http://localhost:8000/api/users/",
+		//     {
+		//         method: "GET",
+		//         headers: {
+		//             "Content-Type": "application/json",
+		//             Authorization: `Bearer ${String(token)}`,
+		//         },
+		//     },
+		// );
+		// return false;
 	};
 
 	const checkUsernameExists = async (username) => {
-        try {
-            const userDetailsResponse = await fetch(
-                `http://localhost:8000/api/users/?username=${username}`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${String(token)}`,
-                    },
-                },
-            );
-            const userDetails = await userDetailsResponse.json();
-            return userDetails.length > 0;
-        } catch (error) {
-            console.error("Error checking username:", error);
-            return false;
-        }
-    };
+		// try {
+		//     const userDetailsResponse = await fetch(
+		//         `http://localhost:8000/api/users/?username=${username}`,
+		//         {
+		//             method: "GET",
+		//             headers: {
+		//                 "Content-Type": "application/json",
+		//                 Authorization: `Bearer ${String(token)}`,
+		//             },
+		//         },
+		//     );
+		//     const userDetails = await userDetailsResponse.json();
+		//     return userDetails.length > 0;
+		// } catch (error) {
+		//     console.error("Error checking username:", error);
+		//     return false;
+		// }
+	};
 
 	const handleCreate = async () => {
-		if (
-			activeItem.password === "" ||
-			activeItem.username === "" ||
-			activeItem.email === ""
-		) {
-			// Hiển thị thông báo lỗi khi tên người dùng, mật khẩu hoặc email để trống
-			setErrorMessages({ common: "Vui lòng điền vào tất cả các trường" });
-			return;
-		}
-
 		if (activeItem.password !== activeItem.repassword) {
 			// Mật khẩu không khớp nhau, hiển thị thông báo lỗi
 			setPasswordsMatch(false);
@@ -74,20 +64,6 @@ function Registers() {
 		}
 
 		try {
-			// Kiểm tra xem email đã tồn tại trong DB chưa
-			const emailExists = await checkEmailExists(activeItem.email);
-			if (emailExists) {
-				setErrorMessages({ email: "Email đã được sử dụng" });
-				return;
-			}
-
-			// Kiểm tra xem tên người dùng đã tồn tại trong DB chưa
-			const usernameExists = await checkUsernameExists(activeItem.username);
-			if (usernameExists) {
-				setErrorMessages({ username: "Tên người dùng đã được sử dụng" });
-				return;
-			}
-
 			// Tạo người dùng mới
 			await postUser(
 				activeItem.username,
@@ -192,7 +168,7 @@ function Registers() {
 								<p className="text-red-500">{errorMessages.repassword}</p>
 							)}
 						</div>
-						
+
 						{!passwordsMatch && (
 							<p className="text-red-500 mb-3">
 								Mật khẩu không trùng khớp. Vui lòng nhập lại!

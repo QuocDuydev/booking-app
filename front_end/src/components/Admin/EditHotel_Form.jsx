@@ -1,199 +1,237 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
-    Card,
-    Input,
-    Button,
-    Typography,
-    Textarea
+	Card,
+	Input,
+	Button,
+	Typography,
+	Textarea,
 } from "@material-tailwind/react";
+import { useParams } from "react-router-dom";
+import useAccessToken from "../ultiti";
+import { getImage, postImage } from "../../api/hotel_API";
+import UploadImageHotel from "../Customer/Upload_Image_Hotel";
 
-function EditHotelForm({ hotel, handleChange, handleUpdate, }) {
-    return (
-        <>
-            <div className="mx-auto mt-4">
-                <Typography variant="h4" color="red">
-                    Edit the Hotels
-                </Typography>
-            </div>
-            <div className=" max-w-full px-3 rounded-lg mt-2 overflow-auto">
+function EditHotelForm({ hotel, handleChange, handleUpdate }) {
+	const token = useAccessToken();
+	const [images, setImages] = useState([]);
+	const id = useParams();
+	const [selectedImage, setSelectedImage] = useState(null);
 
-                <Card color="transparent" shadow={false}>
-                    <form>
-                        <div className="flex mx-auto ">
-                            <div className="mb-1 w-1/2 p-4">
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Name Hotels
-                                    </Typography>
-                                    <Input
-                                        type="text"
-                                        size="lg"
-                                        name="hotelname"
-                                        value={hotel.hotelname}
-                                        onChange={handleChange}
-                                        placeholder="Enter name hotels..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+	const handleUploadImage = async () => {
+		// Call your upload image function here
+		try {
+			const formData = new FormData();
 
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Images Hotel
-                                    </Typography>
-                                    <Input
-                                        type="file"
-                                        multiple
-                                        size="lg"
-                                        name="hotelimage"
-                                        onChange={handleChange}
-                                        placeholder="Choose file image..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
+			formData.append("hotel", hotel.hotel_id);
+			formData.append("image", selectedImage);
 
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Descriptions
-                                    </Typography>
-                                    <Textarea
-                                        type="textarea"
-                                        multiple
-                                        size="lg"
-                                        name="descriptions"
-                                        value={hotel.descriptions}
-                                        onChange={handleChange}
-                                        placeholder="Enter Descriptions about Rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
+			const response = await postImage(token, formData, id);
+			console.log("Create successful:", response.data);
+			setTimeout(() => {
+				alert("Thêm ảnh thành công!");
+				updateImageList();
+				setSelectedImage(null);
+			}, 1000);
+		} catch (error) {
+			console.error("Create failed:", error);
+		}
+	};
 
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Total Rooms
-                                    </Typography>
-                                    <Input
-                                        type="number"
-                                        multiple
-                                        size="lg"
-                                        name="totalroom"
-                                        value={hotel.totalroom}
-                                        onChange={handleChange}
-                                        placeholder="Enter total rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
+	const handleChangeImage = (e) => {
+		const image = e.target.files[0];
+		setSelectedImage(image);
+	};
 
-                                    />
-                                </div>
-                            </div>
-                            <div className="mb-1 w-1/2 p-4">
+	const updateImageList = async () => {
+		try {
+			const userData = await getImage(token);
+			setImages(userData);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	};
 
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Rooms Maps
-                                    </Typography>
-                                    <Input
-                                        type="text"
-                                        multiple
-                                        size="lg"
-                                        name="roommap"
-                                        value={hotel.roommap}
-                                        onChange={handleChange}
-                                        placeholder="Enter Room Map..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const userData = await getImage(token);
 
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Location
-                                    </Typography>
-                                    <Input
-                                        type="text"
-                                        multiple
-                                        size="lg"
-                                        name="location"
-                                        value={hotel.location}
-                                        onChange={handleChange}
-                                        placeholder="Enter Location hotel..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+				setImages(userData);
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+		fetchData();
+	}, [token]);
 
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Ratings
-                                    </Typography>
-                                    <Input
-                                        type="number"
-                                        multiple
-                                        size="lg"
-                                        name="rating"
-                                        value={hotel.rating}
-                                        onChange={handleChange}
-                                        placeholder="Enter rating hotel..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+	return (
+		<>
+			<div className="mx-auto mt-4">
+				<Typography variant="h4" color="red">
+					Edit the Hotels
+				</Typography>
+			</div>
+			<div className=" max-w-full px-3 rounded-lg mt-2 overflow-auto">
+				<Card color="transparent" shadow={false}>
+					<form>
+						<div className="flex mx-auto ">
+							<div className="mb-1 w-1/2 p-4">
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className=" mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Name Hotels
+									</Typography>
+									<Input
+										type="text"
+										size="lg"
+										name="hotelname"
+										value={hotel.hotelname}
+										onChange={handleChange}
+										placeholder="Enter name hotels..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+									/>
+								</div>
 
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        DateAdded Rooms
-                                    </Typography>
-                                    <Input
-                                        type="date"
-                                        multiple
-                                        size="lg"
-                                        name="dateadded"
-                                        value={hotel.dateadded}
-                                        onChange={handleChange}
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-                                        readOnly
-                                    />
-
-                                </div>
-                            </div>
-                        </div>
-                        <Button
-                            onClick={handleUpdate}
-                            className="mx-auto w-2/4 bg-red-600 uppercase text-sm" fullWidth>
-                            Update nows
-                        </Button>
-
-                    </form>
-                </Card>
-            </div>
-        </>
-    );
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Descriptions
+									</Typography>
+									<Textarea
+										type="textarea"
+										multiple
+										size="lg"
+										name="descriptions"
+										value={hotel.descriptions}
+										onChange={handleChange}
+										placeholder="Enter Descriptions about Rooms..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
+									/>
+								</div>
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Total Rooms
+									</Typography>
+									<Input
+										type="number"
+										multiple
+										size="lg"
+										name="totalroom"
+										value={hotel.totalroom}
+										onChange={handleChange}
+										placeholder="Enter total rooms..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
+									/>
+								</div>
+								<UploadImageHotel
+									hotel={hotel}
+									handleChange={handleChange}
+									handleChangeImage={handleChangeImage}
+									handleUploadImage={handleUploadImage}
+									images={images}
+									updateImageList={updateImageList}
+								/>
+							</div>
+							<div className="mb-1 w-1/2 p-4">
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Rooms Maps
+									</Typography>
+									<Input
+										type="text"
+										multiple
+										size="lg"
+										name="roommap"
+										value={hotel.roommap}
+										onChange={handleChange}
+										placeholder="Enter Room Map..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+									/>
+								</div>
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Location
+									</Typography>
+									<Input
+										type="text"
+										multiple
+										size="lg"
+										name="location"
+										value={hotel.location}
+										onChange={handleChange}
+										placeholder="Enter Location hotel..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+									/>
+								</div>
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Ratings
+									</Typography>
+									<Input
+										type="number"
+										multiple
+										size="lg"
+										name="rating"
+										value={hotel.rating}
+										onChange={handleChange}
+										placeholder="Enter rating hotel..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+									/>
+								</div>
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										DateAdded Rooms
+									</Typography>
+									<Input
+										type="date"
+										multiple
+										size="lg"
+										name="dateadded"
+										value={hotel.dateadded}
+										onChange={handleChange}
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+										readOnly
+									/>
+								</div>
+							</div>
+						</div>
+						<Button
+							onClick={handleUpdate}
+							className="mx-auto w-2/4 bg-red-600 uppercase text-sm"
+							fullWidth
+						>
+							Update nows
+						</Button>
+					</form>
+				</Card>
+			</div>
+		</>
+	);
 }
 export default EditHotelForm;

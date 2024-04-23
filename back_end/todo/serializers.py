@@ -36,14 +36,11 @@ class MultipleImageSerializer(serializers.Serializer):
         child=serializers.ImageField()
     )
 class HotelSerializer(serializers.ModelSerializer):
-    # image_info = HotelImageSerializer(many=True)
-    images = serializers.ImageField(
-        
-        source=''
-    )
+    images = HotelImageSerializer(many=True, read_only=True)
+
     class Meta:
         model = Hotels
-        fields = ('hotel_id','hotelname', 'descriptions','totalroom', 'roommap', 'location', 'rating', 'dateadded', 'images' )
+        fields = '__all__'
 
 # class HotelSerializer(serializers.ModelSerializer):
 #     class Meta:
