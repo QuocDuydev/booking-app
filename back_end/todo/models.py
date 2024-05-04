@@ -22,8 +22,8 @@ class AppUserManager(BaseUserManager):
         user.is_superuser = True
         user.is_staff = True
         user.save()
-
         return user
+    
 class Users(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length = 100, unique=True,)
@@ -42,54 +42,81 @@ class Users(AbstractBaseUser, PermissionsMixin):
     account_type = models.CharField(
         max_length=10,
         choices=ACCOUNT_TYPES,
-        default='user',  # Giá trị mặc định có thể là 'user' hoặc 'admin'
+        default='user',  
     )
     objects = AppUserManager()
     def __str__(self):
         return self.username
-
-class Hotels(models.Model):
-    hotel_id = models.AutoField(primary_key=True)
-    hotelname = models.CharField(max_length=100)
+    
+class Accommodation_type(models.Model):
+    acctype_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return  self.name
+    
+class Accommodations(models.Model):
+    acc_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    acctype = models.ForeignKey(Accommodation_type, on_delete=models.CASCADE)
+    accname = models.CharField(max_length=100)
     descriptions = models.TextField()
     totalroom = models.IntegerField()
     roommap = models.CharField(max_length=200)
     location = models.CharField(max_length=300)
     rating = models.IntegerField()
-    dateadded = models.DateField()
+    createdAt = models.DateField()
+    updatedAt = models.DateField()
 
     def __str__(self):
-        return self.hotelname
+        return self.accname
 
-class HotelImage(models.Model):
-    hotel = models.ForeignKey(Hotels, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='hotel-images')
+class AccommodationImage(models.Model):
+    accommodations = models.ForeignKey(Accommodations, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='booking-app-images')
 
     def __str__(self):
-        return f"Image for {self.hotel.hotelname}"
+        return f"Image for {self.accommodations.accname}"
+
+class Room_type(models.Model):
+    roomtype_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return  self.name  
+     
+class Rooms(models.Model):
+    room_id = models.AutoField(primary_key=True)
+    roomname = models.CharField(max_length = 100)
+    accommodations = models.ForeignKey(Accommodations, on_delete=models.CASCADE)
+    roomtype = models.ForeignKey(Room_type, on_delete=models.CASCADE)
+    descriptions = models.TextField()
+    roomprice = models.IntegerField()
+    roomnumber = models.IntegerField()
+    roomoccupancy = models.IntegerField()
+    createdAt = models.DateField()
+    updatedAt = models.DateField()
     
-# class Rooms(models.Model):
-#     room_id = models.AutoField(primary_key=True)
-#     hotel = models.ForeignKey(Hotels, on_delete=models.CASCADE)
-#     roomname = models.CharField(max_length = 100)
-#     roomimage = models.ImageField(upload_to='room_images/')
-#     descriptions = models.TextField()
-#     roomprice = models.IntegerField()
-#     roomnumber = models.IntegerField()
-#     roomoccupancy = models.IntegerField()
-#     dateadded = models.DateField()
-#     ROOM_TYPES = [
-#         ('simple_room', 'Simple Room'),
-#         ('double_room', 'Double Room'), 
-#         ('family_room', 'Family Room'), 
-#     ]
-#     room_type = models.CharField(
-#         max_length=20,
-#         choices=ROOM_TYPES,
-#     )
-#     def __str__(self):
-#         return f"{self.roomname}"
+    def __str__(self):
+        return f"{self.roomname}"
 
+class RoomImage(models.Model):
+    rooms = models.ForeignKey(Rooms, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='booking-app-images')
+    
+    def __str__(self):
+        return f"Image for {self.rooms.roomname}"
+    
+class RoomAmenities(models.Model):
+    rooms = models.ForeignKey(Rooms, related_name='amenities', on_delete=models.CASCADE)
+    name = models.CharField(max_length = 250)
+
+    def __str__(self):
+        return f"Image for {self.rooms.roomname}"
+    
+class Amenities(models.Model):
+    amenities_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return  self.name      
 # class RoomImage(models.Model):
 #     room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
 #     image = models.ImageField(upload_to='room_images/')

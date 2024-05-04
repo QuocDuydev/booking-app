@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getHoteldetail } from "../../api/hotel_API";
+import { getHoteldetail } from "../../api/acc_API";
 import { useParams } from 'react-router-dom';
 import { useAccessToken } from "../ultiti";
 import {

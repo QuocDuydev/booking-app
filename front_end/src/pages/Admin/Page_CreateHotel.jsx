@@ -1,23 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header_Admin from "../../components/Admin/Layout/Header";
 import Sidebar_Admin from "../../components/Admin/Layout/SideBar";
 import { useAccessToken } from "../../components/ultiti";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "@material-tailwind/react";
-import { postHotel } from "../../api/hotel_API";
+import { postHotel } from "../../api/acc_API";
 import CreateHotelForm from "../../components/Admin/CreateHotel_Form";
+import jwt_decode from "jwt-decode";
 
 function CreateHotel() {
 	const token = useAccessToken();
-	const [hotel, setHotels] = useState({
-		hotelname: "",
+	const decodedToken = jwt_decode(token);
+	const userId = decodedToken.user_id;
+	const [accommodation, setAccommodations] = useState({
+		acctype: "",
+		user: userId,
+		accname: "",
 		images: [],
 		descriptions: "",
 		totalroom: "",
 		roommap: "",
 		location: "",
 		rating: "",
-		dateadded: new Date().toISOString().split("T")[0],
+		createdAt: new Date().toISOString().split("T")[0],
+		updatedAt: "",
 	});
 	const [images, setImages] = useState([]);
 	const navigate = useNavigate();
@@ -26,14 +32,16 @@ function CreateHotel() {
 	const handleCreate = async () => {
 		try {
 			const formData = new FormData();
-
-			formData.append("hotelname", hotel.hotelname);
-			formData.append("descriptions", hotel.descriptions);
-			formData.append("totalroom", hotel.totalroom);
-			formData.append("roommap", hotel.roommap);
-			formData.append("location", hotel.location);
-			formData.append("rating", hotel.rating);
-			formData.append("dateadded", hotel.dateadded);
+			formData.append("acctype", accommodation.acctype);
+			formData.append("user", accommodation.user);
+			formData.append("accname", accommodation.accname);
+			formData.append("descriptions", accommodation.descriptions);
+			formData.append("totalroom", accommodation.totalroom);
+			formData.append("roommap", accommodation.roommap);
+			formData.append("location", accommodation.location);
+			formData.append("rating", accommodation.rating);
+			formData.append("createdAt", accommodation.createdAt);
+			formData.append("updatedAt", accommodation.updatedAt);
 
 			for (let i = 0; i < images.length; i++) {
 				formData.append("images", images[i]);
@@ -44,7 +52,15 @@ function CreateHotel() {
 			setCreateSuccess(true);
 			setTimeout(() => {
 				setCreateSuccess(false);
-				navigate("/admin/list-hotel");
+				if (accommodation.acctype === "1") {
+					navigate("/admin/list-hotel");
+				} else if (accommodation.acctype === "2") {
+					navigate("/admin/list-homestay");
+				} else if (accommodation.acctype === "3") {
+					navigate("/admin/list-motel");
+				} else {
+					navigate("/admin");
+				}
 			}, 1000);
 		} catch (error) {
 			console.error("Create failed:", error);
@@ -57,13 +73,13 @@ function CreateHotel() {
 		if (name === "images" && files && files.length > 0) {
 			const file = files[0];
 
-			setHotels((prevHotel) => ({
+			setAccommodations((prevHotel) => ({
 				...prevHotel,
 				[name]: file,
 			}));
 			setImages(files);
 		} else {
-			setHotels((prevHotel) => ({ ...prevHotel, [name]: value }));
+			setAccommodations((prevHotel) => ({ ...prevHotel, [name]: value }));
 		}
 	};
 	return (
@@ -78,9 +94,10 @@ function CreateHotel() {
 						</Alert>
 					)}
 					<CreateHotelForm
-						hotel={hotel}
+						accommodation={accommodation}
 						handleChange={handleChange}
 						handleCreate={handleCreate}
+						setAccommodations={setAccommodations}
 					/>
 				</div>
 			</div>

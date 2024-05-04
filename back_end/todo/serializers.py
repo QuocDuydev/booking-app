@@ -1,8 +1,9 @@
 
 from django.conf import Settings
 from rest_framework import serializers
-from .models import Users, Hotels, HotelImage
+from .models import Users, AccommodationImage, Accommodation_type, Accommodations, Rooms, RoomImage, Room_type, RoomAmenities, Amenities
 from django.contrib.auth import get_user_model
+
 UserModel = get_user_model()
 class UserSignupSerializers(serializers.ModelSerializer):
     class Meta:
@@ -25,34 +26,56 @@ class UserSerializer(serializers.ModelSerializer):
         model = Users
         fields = '__all__'
         
-
-class HotelImageSerializer(serializers.ModelSerializer):
+class AmenitiesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = HotelImage
+        model = Amenities
+        fields = '__all__'     
+          
+# Accommodation
+class AccommodationImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AccommodationImage
         fields = '__all__'
 
-class MultipleImageSerializer(serializers.Serializer):
-    images = serializers.ListField(
-        child=serializers.ImageField()
-    )
-class HotelSerializer(serializers.ModelSerializer):
-    images = HotelImageSerializer(many=True, read_only=True)
-
+class AccommodationTypeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Hotels
+        model = Accommodation_type
         fields = '__all__'
 
-# class HotelSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Hotels
-#         fields = '__all__' 
+class AccommodationSerializer(serializers.ModelSerializer):
+    images = AccommodationImageSerializer(many=True, read_only=True)
 
-# class RoomSerializer(serializers.ModelSerializer):
-   
-#     class Meta:
-#         model = Rooms
-#         fields = '__all__'
+    class Meta:
+        model = Accommodations
+        fields = '__all__'
+        
+# Room
+class RoomImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RoomImage
+        fields = '__all__'
 
+class RoomTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room_type
+        fields = '__all__'
+        
+class RoomAmenitiesSerializer(serializers.ModelSerializer):
+    # amenities_info = serializers.PrimaryKeyRelatedField(
+    #     many=True,
+    #     queryset=Amenities.objects.all(), 
+    # )
+    class Meta:
+        model = RoomAmenities
+        fields = '__all__'
+
+class RoomSerializer(serializers.ModelSerializer):
+    images = RoomImageSerializer(many=True, read_only=True)
+    amenities = RoomAmenitiesSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Rooms
+        fields = '__all__'
     
 # class BookingSerializer(serializers.ModelSerializer):
 #     class Meta:

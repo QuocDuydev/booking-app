@@ -7,13 +7,14 @@ import {
 	DialogHeader,
 	DialogBody,
 	DialogFooter,
+	Select,
 } from "@material-tailwind/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { deleteImage } from "../../api/hotel_API";
 import useAccessToken from "../ultiti";
+import { deleteImage } from "../../api/room_in_acc_API";
 
-export default function UploadImageHotel({
-	hotel,
+export default function UploadImageRooms({
+	room,
 	handleChange,
 	handleChangeImage,
 	handleUploadImage,
@@ -52,17 +53,17 @@ export default function UploadImageHotel({
 
 						<DialogBody>
 							<div className="flex mx-auto ">
-								<div className="mb-1 w-full p-4" key={hotel.hotel_id}>
+								<div className="mb-1 w-full p-4" key={room.room_id}>
 									<div>
 										<Typography variant="h6" color="blue-gray" className="mb-2">
-											Tên khách sạn
+											Tên phòng
 										</Typography>
 										<Input
 											type="text"
 											size="lg"
-											name="hotel"
+											name="accommodations"
+											value={room.roomname}
 											readOnly
-											value={hotel.hotelname}
 											onChange={handleChange}
 											placeholder="Enter name hotels..."
 											className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
@@ -90,9 +91,9 @@ export default function UploadImageHotel({
 
 							<div className="flex m-4">
 								{images
-									.filter((item) => item.hotel === hotel.hotel_id)
+									.filter((item) => item.rooms === room.room_id)
 									.map((item) => (
-										<div key={item.hotel} className="ml-2 p-1 relative">
+										<div key={item.rooms} className="ml-2 p-1 relative">
 											<XMarkIcon
 												onClick={() => handleDeleteImage(item.id)}
 												className="h-3 w-3 text-red-600 font-bold absolute top-1 right-1 cursor-pointer bg-white"

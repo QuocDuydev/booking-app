@@ -1,24 +1,43 @@
-
 import {
 	Card,
 	Input,
 	Button,
 	Typography,
 	Textarea,
-	
+	Select,
+	Option,
 } from "@material-tailwind/react";
 
+import { getAccType } from "../../api/acc-type_API";
+import { useState, useEffect } from "react";
+
 function CreateHotelForm({
-	hotel,
+	accommodation,
 	handleChange,
 	handleCreate,
 }) {
-	
+	const [acctype, setAcctype] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const AccTypeData = await getAccType();
+
+				setAcctype(AccTypeData);
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+		fetchData();
+	}, []);
+	const handleSelectChange = (value) => {
+		handleChange({ target: { name: "acctype", value } });
+	};
 	return (
 		<>
-			<div className=" mx-auto mt-2">
+			<div className=" mx-auto mt-2 uppercase">
 				<Typography variant="h4" color="red">
-					Create the Hotels
+					Thêm chỗ ở
 				</Typography>
 			</div>
 			<div className=" max-w-full px-3 rounded-lg mt-2 overflow-auto">
@@ -32,15 +51,15 @@ function CreateHotelForm({
 										color="blue-gray"
 										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Name Hotels
+										Tên chỗ ở
 									</Typography>
 									<Input
 										type="text"
 										size="lg"
-										name="hotelname"
-										value={hotel.hotelname}
+										name="accname"
+										value={accommodation.accname}
 										onChange={handleChange}
-										placeholder="Enter name hotels..."
+										placeholder="Nhập tên chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
@@ -50,16 +69,16 @@ function CreateHotelForm({
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Descriptions
+										Mô tả
 									</Typography>
 									<Textarea
 										type="textarea"
 										multiple
 										size="lg"
 										name="descriptions"
-										value={hotel.descriptions}
+										value={accommodation.descriptions}
 										onChange={handleChange}
-										placeholder="Enter Descriptions about Rooms..."
+										placeholder="Nhập mô tả chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
 									/>
 								</div>
@@ -69,18 +88,29 @@ function CreateHotelForm({
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										DateAdded Rooms
+										Loại chỗ ở
 									</Typography>
-									<Input
-										type="date"
-										multiple
+
+									{/* <Select
+										options={acctype.map((amenity) => ({
+											value: amenity.acctype_id,
+											label: amenity.name,
+										}))}
+										isMulti
+										name="acctype"
+										onChange={handleAmenitiesChange}
+									/> */}
+									<Select
+										name="acctype"
 										size="lg"
-										name="dateadded"
-										defaultValue={hotel.dateadded}
-										onChange={handleChange}
-										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-										disabled
-									/>
+										value={String(accommodation?.acctype) || ""}
+										onChange={handleSelectChange}
+										className="text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										<Option value="1">Khách sạn</Option>
+										<Option value="2">HomeStay</Option>
+										<Option value="3">Nhà trọ</Option>
+									</Select>
 								</div>
 							</div>
 							<div className="mb-1 w-1/2 p-4">
@@ -90,16 +120,16 @@ function CreateHotelForm({
 										color="blue-gray"
 										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Location
+										Vị trí
 									</Typography>
 									<Input
 										type="text"
 										multiple
 										size="lg"
 										name="location"
-										value={hotel.location}
+										value={accommodation.location}
 										onChange={handleChange}
-										placeholder="Enter Location hotel..."
+										placeholder="Nhập vị trí chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
@@ -109,16 +139,16 @@ function CreateHotelForm({
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Rooms Maps
+										Địa chỉ chỗ ở
 									</Typography>
 									<Input
 										type="text"
 										multiple
 										size="lg"
 										name="roommap"
-										value={hotel.roommap}
+										value={accommodation.roommap}
 										onChange={handleChange}
-										placeholder="Enter Room Map..."
+										placeholder="Nhập địa chỉ chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
@@ -129,16 +159,16 @@ function CreateHotelForm({
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Ratings
+										Xếp hạng
 									</Typography>
 									<Input
 										type="number"
 										multiple
 										size="lg"
 										name="rating"
-										value={hotel.rating}
+										value={accommodation.rating}
 										onChange={handleChange}
-										placeholder="Enter rating hotel..."
+										placeholder="Xếp hạng chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
@@ -148,16 +178,16 @@ function CreateHotelForm({
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Total Rooms
+										Tổng số phòng
 									</Typography>
 									<Input
 										type="number"
 										multiple
 										size="lg"
 										name="totalroom"
-										value={hotel.totalroom}
+										value={accommodation.totalroom}
 										onChange={handleChange}
-										placeholder="Enter total rooms..."
+										placeholder="Nhập tổng số phòng..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
@@ -169,7 +199,7 @@ function CreateHotelForm({
 							className="mx-auto w-2/4 bg-red-600 uppercase mt-2"
 							fullWidth
 						>
-							Add nows
+							Thêm ngay!
 						</Button>
 					</form>
 				</Card>

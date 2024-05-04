@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { getHotel } from "../../api/hotel_API";
+import { getHotel } from "../../api/acc_API";
 import {
   Typography,
 } from "@material-tailwind/react";

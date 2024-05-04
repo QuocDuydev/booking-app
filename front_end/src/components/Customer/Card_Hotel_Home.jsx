@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAccessToken } from "../ultiti";
-import { getHotel } from "../../api/hotel_API";
+import { getHotel } from "../../api/acc_API";
 import {
   Card,
   CardHeader,
