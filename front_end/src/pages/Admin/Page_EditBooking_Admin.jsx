@@ -7,8 +7,8 @@ import Header_Admin from "../../components/Admin/Layout/Header";
 import Sidebar_Admin from "../../components/Admin/Layout/SideBar";
 
 import { useAccessToken } from "../../components/ultiti";
-import { getHotel } from "../../api/hotel_API";
-import { getRoom } from "../../api/room_in_hotel_API";
+import { getHotel } from "../../api/acc_API";
+import { getRoom } from "../../api/room_in_acc_API";
 import { getBookingId } from "../../api/booking_API";
 import EditBookingForm from "../../components/Admin/EditBooking_Form";
 import { putBooking } from "../../api/booking_API";

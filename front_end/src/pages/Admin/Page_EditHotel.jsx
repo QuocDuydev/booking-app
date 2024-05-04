@@ -3,21 +3,27 @@ import { useParams, useNavigate } from "react-router-dom";
 import Header_Admin from "../../components/Admin/Layout/Header";
 import Sidebar_Admin from "../../components/Admin/Layout/SideBar";
 import { useAccessToken } from "../../components/ultiti";
-import { getHoteldetail, putHotel } from "../../api/hotel_API";
+import { getHoteldetail, putHotel } from "../../api/acc_API";
 import { Alert } from "@material-tailwind/react";
 import EditHotelForm from "../../components/Admin/EditHotel_Form";
+import jwt_decode from "jwt-decode";
 
 function EditHotel() {
 	const token = useAccessToken();
-	const { hotel_id } = useParams();
-	const [hotel, setHotels] = useState({
-		hotelname: "",
+	const decodedToken = jwt_decode(token);
+	const userId = decodedToken.user_id;
+	const { acc_id } = useParams();
+	const [accommodation, setAccommodations] = useState({
+		acctype: "",
+		user: userId,
+		accname: "",
 		descriptions: "",
 		totalroom: "",
 		roommap: "",
 		location: "",
 		rating: "",
-		dateadded: "",
+		createdAt: "",
+		updatedAt: "",
 	});
 	const [updateSuccess, setUpdateSuccess] = useState(false);
 	const navigate = useNavigate();
@@ -25,33 +31,46 @@ function EditHotel() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const hotelData = await getHoteldetail(hotel_id, token);
-				setHotels(hotelData);
+				const hotelData = await getHoteldetail(acc_id, token);
+				console.log(hotelData);
+				setAccommodations(hotelData);
 				window.scrollTo(0, 0);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
 		};
 		fetchData();
-	}, [hotel_id, token]);
+	}, [acc_id, token]);
 	const handleUpdate = async () => {
 		try {
-			const hotelData = {
-				hotelname: hotel.hotelname,
-				descriptions: hotel.descriptions,
-				totalroom: hotel.totalroom,
-				roommap: hotel.roommap,
-				location: hotel.location,
-				rating: hotel.rating,
-				dateadded: hotel.dateadded,
-			};
+			const formData = new FormData();
+			formData.append("acctype", accommodation.acctype);
+			formData.append("user", accommodation.user);
+			formData.append("accname", accommodation.accname);
+			formData.append("descriptions", accommodation.descriptions);
+			formData.append("totalroom", accommodation.totalroom);
+			formData.append("roommap", accommodation.roommap);
+			formData.append("location", accommodation.location);
+			formData.append("rating", accommodation.rating);
+			formData.append("createdAt", accommodation.createdAt);
+			formData.append("updatedAt", new Date().toISOString().split("T")[0]);
 
-			const response = await putHotel(token, hotelData, hotel_id);
+			const response = await putHotel(token, formData, acc_id);
 			console.log("Update successful:", response.data);
 			setUpdateSuccess(true);
 			setTimeout(() => {
 				setUpdateSuccess(false);
-				navigate("/admin/list-hotel");
+				let navigateUrl = "/admin";
+
+				if (accommodation.acctype === 1) {
+					navigateUrl = "/admin/list-hotel";
+				} else if (accommodation.acctype === 2) {
+					navigateUrl = "/admin/list-homestay";
+				} else if (accommodation.acctype === 3) {
+					navigateUrl = "/admin/list-motel";
+				}
+
+				navigate(navigateUrl);
 			}, 1000);
 		} catch (error) {
 			console.error("Update failed:", error);
@@ -63,12 +82,12 @@ function EditHotel() {
 		if (name === "images" && files && files.length > 0) {
 			const file = files[0];
 
-			setHotels((prevHotel) => ({
+			setAccommodations((prevHotel) => ({
 				...prevHotel,
 				[name]: file,
 			}));
 		} else {
-			setHotels((prevHotel) => ({ ...prevHotel, [name]: value }));
+			setAccommodations((prevHotel) => ({ ...prevHotel, [name]: value }));
 		}
 	};
 
@@ -84,7 +103,7 @@ function EditHotel() {
 						</Alert>
 					)}
 					<EditHotelForm
-						hotel={hotel}
+						accommodation={accommodation}
 						handleChange={handleChange}
 						handleUpdate={handleUpdate}
 					/>

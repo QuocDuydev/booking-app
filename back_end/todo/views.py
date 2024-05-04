@@ -1,5 +1,3 @@
-from argparse import Action
-from django.shortcuts import get_object_or_404, render
 from .validation import custom_validation
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
@@ -10,16 +8,11 @@ from rest_framework import permissions, status
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.permissions import  IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
-from django.contrib.auth.hashers import check_password
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth import authenticate
 from rest_framework import generics
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
-from .serializers import UserSerializer,  HotelSerializer, UserSignupSerializers, HotelImageSerializer, MultipleImageSerializer
-from .models import Users, Hotels, HotelImage
-from django.http import JsonResponse
+from .serializers import UserSerializer, UserSignupSerializers, AccommodationImageSerializer, AccommodationTypeSerializer, AccommodationSerializer, RoomAmenitiesSerializer, RoomTypeSerializer, RoomSerializer, RoomImageSerializer, AmenitiesSerializer
+from .models import Users, AccommodationImage, Accommodation_type, Accommodations, Rooms, RoomImage, Room_type, RoomAmenities, Amenities
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -60,39 +53,103 @@ class UserView(viewsets.ModelViewSet):
 class UserRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Users.objects.all()
     serializer_class = UserSerializer
-
-# class RoomView(viewsets.ModelViewSet):
-#     permission_classes = [permissions.AllowAny]
-#     serializer_class = RoomSerializer
-#     queryset = Rooms.objects.all()
-
-# class RoomRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):   
-#    queryset = Rooms.objects.all()
-#    serializer_class = RoomSerializer
-#    permission_classes = [permissions.AllowAny]
-
-class HotelImageView(viewsets.ModelViewSet):
-    permission_classes = [permissions.AllowAny]
-    queryset = HotelImage.objects.all()
-    serializer_class = HotelImageSerializer
     
-
-class HotelImageRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+# Accommodation
+class AccommodationView(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
-    queryset = HotelImage.objects.all()
-    serializer_class = HotelImageSerializer
+    queryset = Accommodations.objects.all()
+    serializer_class = AccommodationSerializer
 
-class HotelView(viewsets.ModelViewSet):
+class AccommodationRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.AllowAny]
-    serializer_class = HotelSerializer
-    queryset = Hotels.objects.all()
+    queryset = Accommodations.objects.all()
+    serializer_class = AccommodationSerializer
 
-class HotelRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-   
-    queryset = Hotels.objects.all()
-    serializer_class = HotelSerializer
+class AccommodationTypeView(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
+    queryset = Accommodation_type.objects.all()
+    serializer_class = AccommodationTypeSerializer
+    
+class AccommodationTypeRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = Accommodation_type.objects.all()
+    serializer_class = AccommodationTypeSerializer
+    
+class AccommodationImageView(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = AccommodationImage.objects.all()
+    serializer_class = AccommodationImageSerializer
 
+class AccommodationImageRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = AccommodationImage.objects.all()
+    serializer_class = AccommodationImageSerializer
+
+# Room
+class RoomView(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = Rooms.objects.all()
+    serializer_class = RoomSerializer
+
+class RoomRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = Rooms.objects.all()
+    serializer_class = RoomSerializer
+
+class RoomTypeView(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = Room_type.objects.all()
+    serializer_class = RoomTypeSerializer
+    
+class RoomTypeRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = Room_type.objects.all()
+    serializer_class = RoomTypeSerializer
+    
+class RoomImageView(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = RoomImage.objects.all()
+    serializer_class = RoomImageSerializer
+
+class RoomImageRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = RoomImage.objects.all()
+    serializer_class = RoomImageSerializer
+
+class RoomAmenitiesView(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = RoomAmenities.objects.all()
+    serializer_class = RoomAmenitiesSerializer
+
+class RoomAmenitiesRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = RoomAmenities.objects.all()
+    serializer_class = RoomAmenitiesSerializer
+
+class ListRooms_in_Accommodation_View(APIView):
+    permission_classes = [permissions.AllowAny]
+    def get(self, request, accommodations_id, format=None):
+        rooms = Rooms.objects.filter(accommodations_id=accommodations_id)
+        serializer = RoomSerializer(rooms, many=True, context={'request': request})
+        return Response(serializer.data)
+    
+class RoomDetails_in_Accommodation_View(APIView):
+    permission_classes = [permissions.AllowAny]
+    def get(self, request, accommodations_id, room_id, format=None):
+        rooms = Rooms.objects.filter(accommodations_id=accommodations_id, room_id=room_id)
+        serializer = RoomSerializer(rooms, many=True, context={'request': request})
+        return Response(serializer.data)
+
+class AmenitiesView(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = Amenities.objects.all()
+    serializer_class = AmenitiesSerializer
+
+class AmenitiesRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = Amenities.objects.all()
+    serializer_class = AmenitiesSerializer
+    
 # class BookingView(viewsets.ModelViewSet):
 #     serializer_class = BookingSerializer
 #     queryset = Booking.objects.all()
@@ -118,19 +175,7 @@ class HotelRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 #     permission_classes = [IsAuthenticated]
 
 
-# class HotelRoomsListView(APIView):
-#     permission_classes = [permissions.AllowAny]
-#     def get(self, request, hotel_id, format=None):
-#         rooms = Rooms.objects.filter(hotel_id=hotel_id)
-#         serializer = RoomSerializer(rooms, many=True, context={'request': request})
-#         return Response(serializer.data)
-    
-# class RoomstoHotelListView(APIView):
-#     permission_classes = [permissions.AllowAny]
-#     def get(self, request, hotel_id,room_id, format=None):
-#         rooms = Rooms.objects.filter(hotel_id=hotel_id, room_id=room_id)
-#         serializer = RoomSerializer(rooms, many=True, context={'request': request})
-#         return Response(serializer.data)
+
     
 # class RecommentListView(generics.ListCreateAPIView):
 #     permission_classes = [permissions.AllowAny]

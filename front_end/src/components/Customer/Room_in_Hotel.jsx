@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAccessToken } from "../ultiti";
 import Utilities from "./Layout/Utilities";
-import { getRoominHotel } from "../../api/room_in_hotel_API";
+import { getRoominHotel } from "../../api/room_in_acc_API";
 import { getBooking, getlistBooking } from "../../api/booking_API";
 import {
     Card,

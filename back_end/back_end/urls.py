@@ -26,9 +26,14 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'user')
-# router.register(r'rooms', views.RoomView, 'room')
-router.register(r'hotels', views.HotelView, 'hotel')
-router.register(r'images', views.HotelImageView, 'hotel-images')
+router.register(r'amenities', views.AmenitiesView, 'amenities')
+router.register(r'rooms', views.RoomView, 'room')
+router.register(r'room-images', views.RoomImageView, 'room-images')
+router.register(r'room-types', views.RoomTypeView, 'room-type')
+router.register(r'room-amenities', views.RoomAmenitiesView, 'room-amenities')
+router.register(r'accommodations', views.AccommodationView, 'accommodation')
+router.register(r'accommodation-images', views.AccommodationImageView, 'accommodation-images')
+router.register(r'accommodation-types', views.AccommodationTypeView, 'accommodation-type')
 # router.register(r'bookings', views.BookingView, 'booking')
 # router.register(r'recomments', views.BookingView, 'reconment')
 
@@ -37,12 +42,19 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('apis/', include('todo.urls')),
-    # path('api/list-booking/', views.ListBookingView.as_view(), name='list-booking'),
     path('api/token/', views.MyTokenObtainView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    # path('api/rooms/<int:room_id>/', views.RoomRetrieveUpdateDestroyView.as_view(), name='room-detail'),
-    path('api/hotels/<int:hotel_id>/', views.HotelRetrieveUpdateDestroyView.as_view(), name='hotel-detail'),
-    path('api/hotel-images/<int:hotel_id>/', views.HotelImageRetrieveUpdateDestroy.as_view(), name='hotel-image-retrieve-update-destroy'),
+    path('api/amenities/<int:amenities_id>/', views.AmenitiesRetrieveUpdateDestroy.as_view(), name='amenities-details'),
+    path('api/accommodations/<int:accommodations_id>/rooms/', views.ListRooms_in_Accommodation_View.as_view(), name='list-room'),
+    path('api/accommodations/<int:accommodations_id>/rooms/<int:room_id>', views.RoomDetails_in_Accommodation_View.as_view(), name='room-detail'),
+    path('api/room-images/<int:room_id>/', views.RoomImageRetrieveUpdateDestroy.as_view(), name='room-image-retrieve-update-destroy'),
+    path('api/room-types/<int:room_id>/', views.RoomTypeRetrieveUpdateDestroy.as_view(), name='room-type-retrieve-update-destroy'),
+    path('api/room-amenities/<int:room_id>/', views.RoomAmenitiesRetrieveUpdateDestroy.as_view(), name='room-amenities-retrieve-update-destroy'),
+    path('api/accommodations/<int:accommodations_id>/', views.AccommodationRetrieveUpdateDestroy.as_view(), name='accommodation-detail'),
+    path('api/accommodation-images/<int:accommodations_id>/', views.AccommodationImageRetrieveUpdateDestroy.as_view(), name='accommodation-image-retrieve-update-destroy'),
+    path('api/accommodation-types/<int:accommodations_id>/', views.AccommodationTypeRetrieveUpdateDestroy.as_view(), name='accommodation-type-retrieve-update-destroy'),
+    
+    # path('api/list-booking/', views.ListBookingView.as_view(), name='list-booking'),
     # path('api/hotels/<int:hotel_id>/images/', views.HotelImageView.as_view(), name='hotel-images')
     # path('api/bookings/<int:booking_id>/', views.BookingRetrieveUpdateDestroyView.as_view(), name='booking-detail'),
     # path('api/hotels/<int:hotel_id>/rooms/', views.HotelRoomsListView.as_view(), name='hotel-rooms'),

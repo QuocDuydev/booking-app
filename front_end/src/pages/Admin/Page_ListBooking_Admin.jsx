@@ -9,8 +9,9 @@ import Pagination from "../../components/Customer/Layout/Panination";
 function ListBookings() {
     const [bookings, setBookings] = useState([]);
     const isConfirmed = false;
-    let token = useAccessToken()
+    const token = useAccessToken()
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
         const fetchData = async () => {
             try {

@@ -5,24 +5,26 @@ import {
 	Button,
 	Typography,
 	Textarea,
+	Select,
+	Option,
 } from "@material-tailwind/react";
 import { useParams } from "react-router-dom";
 import useAccessToken from "../ultiti";
-import { getImage, postImage } from "../../api/hotel_API";
-import UploadImageHotel from "../Customer/Upload_Image_Hotel";
+import { getImage, postImage } from "../../api/acc_API";
+import { getAccType } from "../../api/acc-type_API";
+import UploadImageAccommodations from "./Upload_Image_Accommodation";
 
-function EditHotelForm({ hotel, handleChange, handleUpdate }) {
+function EditHotelForm({ accommodation, handleChange, handleUpdate }) {
 	const token = useAccessToken();
 	const [images, setImages] = useState([]);
 	const id = useParams();
 	const [selectedImage, setSelectedImage] = useState(null);
-
 	const handleUploadImage = async () => {
 		// Call your upload image function here
 		try {
 			const formData = new FormData();
 
-			formData.append("hotel", hotel.hotel_id);
+			formData.append("accommodations", accommodation.acc_id);
 			formData.append("image", selectedImage);
 
 			const response = await postImage(token, formData, id);
@@ -35,6 +37,23 @@ function EditHotelForm({ hotel, handleChange, handleUpdate }) {
 		} catch (error) {
 			console.error("Create failed:", error);
 		}
+	};
+	const [acctypes, setAcctype] = useState([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const AccTypeData = await getAccType();
+				console.log(AccTypeData);
+				setAcctype(AccTypeData);
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+		fetchData();
+	}, []);
+	const handleSelectChange = (value) => {
+		handleChange({ target: { name: "acctype", value } });
 	};
 
 	const handleChangeImage = (e) => {
@@ -63,12 +82,11 @@ function EditHotelForm({ hotel, handleChange, handleUpdate }) {
 		};
 		fetchData();
 	}, [token]);
-
 	return (
 		<>
 			<div className="mx-auto mt-4">
 				<Typography variant="h4" color="red">
-					Edit the Hotels
+					Cập nhật thông tin chỗ ở
 				</Typography>
 			</div>
 			<div className=" max-w-full px-3 rounded-lg mt-2 overflow-auto">
@@ -82,15 +100,15 @@ function EditHotelForm({ hotel, handleChange, handleUpdate }) {
 										color="blue-gray"
 										className=" mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Name Hotels
+										Tên chỗ ở
 									</Typography>
 									<Input
 										type="text"
 										size="lg"
-										name="hotelname"
-										value={hotel.hotelname}
+										name="accname"
+										value={accommodation.accname}
 										onChange={handleChange}
-										placeholder="Enter name hotels..."
+										placeholder="Tên chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
@@ -101,16 +119,16 @@ function EditHotelForm({ hotel, handleChange, handleUpdate }) {
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Descriptions
+										Mô tả
 									</Typography>
 									<Textarea
 										type="textarea"
 										multiple
 										size="lg"
 										name="descriptions"
-										value={hotel.descriptions}
+										value={accommodation.descriptions}
 										onChange={handleChange}
-										placeholder="Enter Descriptions about Rooms..."
+										placeholder="Nhập mô tả về chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
 									/>
 								</div>
@@ -120,21 +138,21 @@ function EditHotelForm({ hotel, handleChange, handleUpdate }) {
 										color="blue-gray"
 										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Total Rooms
+										Tổng số phòng
 									</Typography>
 									<Input
 										type="number"
 										multiple
 										size="lg"
 										name="totalroom"
-										value={hotel.totalroom}
+										value={accommodation.totalroom}
 										onChange={handleChange}
 										placeholder="Enter total rooms..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
-								<UploadImageHotel
-									hotel={hotel}
+								<UploadImageAccommodations
+									accommodation={accommodation}
 									handleChange={handleChange}
 									handleChangeImage={handleChangeImage}
 									handleUploadImage={handleUploadImage}
@@ -147,37 +165,18 @@ function EditHotelForm({ hotel, handleChange, handleUpdate }) {
 									<Typography
 										variant="h6"
 										color="blue-gray"
-										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
+										className="mb-2  text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Rooms Maps
-									</Typography>
-									<Input
-										type="text"
-										multiple
-										size="lg"
-										name="roommap"
-										value={hotel.roommap}
-										onChange={handleChange}
-										placeholder="Enter Room Map..."
-										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-									/>
-								</div>
-								<div>
-									<Typography
-										variant="h6"
-										color="blue-gray"
-										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-									>
-										Location
+										Vị trí
 									</Typography>
 									<Input
 										type="text"
 										multiple
 										size="lg"
 										name="location"
-										value={hotel.location}
+										value={accommodation.location}
 										onChange={handleChange}
-										placeholder="Enter Location hotel..."
+										placeholder="Nhập vị trí chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
@@ -187,16 +186,36 @@ function EditHotelForm({ hotel, handleChange, handleUpdate }) {
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Ratings
+										Địa chỉ chỗ ở
+									</Typography>
+									<Input
+										type="text"
+										multiple
+										size="lg"
+										name="roommap"
+										value={accommodation.roommap}
+										onChange={handleChange}
+										placeholder="Nhập địa chỉ chỗ ở..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+									/>
+								</div>
+
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Xếp hạng
 									</Typography>
 									<Input
 										type="number"
 										multiple
 										size="lg"
 										name="rating"
-										value={hotel.rating}
+										value={accommodation.rating}
 										onChange={handleChange}
-										placeholder="Enter rating hotel..."
+										placeholder="Nhập xếp hạng chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
@@ -206,18 +225,20 @@ function EditHotelForm({ hotel, handleChange, handleUpdate }) {
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										DateAdded Rooms
+										Loại chỗ ở
 									</Typography>
-									<Input
-										type="date"
-										multiple
+
+									<Select
+										name="acctype"
 										size="lg"
-										name="dateadded"
-										value={hotel.dateadded}
-										onChange={handleChange}
-										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-										readOnly
-									/>
+										value={String(accommodation?.acctype) || ""}
+										onChange={handleSelectChange}
+										className="text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										<Option value="1">Khách sạn</Option>
+										<Option value="2">HomeStay</Option>
+										<Option value="3">Nhà trọ</Option>
+									</Select>
 								</div>
 							</div>
 						</div>
@@ -226,7 +247,7 @@ function EditHotelForm({ hotel, handleChange, handleUpdate }) {
 							className="mx-auto w-2/4 bg-red-600 uppercase text-sm"
 							fullWidth
 						>
-							Update nows
+							Cập nhật ngay!
 						</Button>
 					</form>
 				</Card>

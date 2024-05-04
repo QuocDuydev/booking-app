@@ -1,237 +1,307 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
-    Card,
-    Input,
-    Button,
-    Typography,
-    Textarea,
-    Select,
-    Option
+	Card,
+	Input,
+	Button,
+	Typography,
+	Textarea,
+	Select,
+	Option,
 } from "@material-tailwind/react";
+import { useParams } from "react-router-dom";
 
-function EditRoomForm({ room, handleChange, handleSelectChange, handleUpdate, selectedHotel }) {
-    return (
-        <>
-            <div className="mx-auto mt-2">
-                <Typography variant="h4" color="red">
-                    Edit the Rooms
-                </Typography>
-            </div>
-            <div className=" max-w-full px-3 rounded-lg mt-2 overflow-auto">
+import UploadImageRooms from "./Upload_Image_Room";
+import {
+	getAmenities,
+	getImage,
+	postAmenities,
+	postImage,
+} from "../../api/room_in_acc_API";
+import useAccessToken from "../ultiti";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+import UploadAmenities from "./Upload_Amenities";
 
-                <Card color="transparent" shadow={false}>
-                    <form>
-                        <div className="flex mx-auto ">
-                            <div className="mb-1 w-1/2 p-4">
-                            <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Hotel Name
-                                    </Typography>
-                                    <Input
-                                        type="text"
-                                        size="lg"
-                                        name="hotel"
-                                        value={selectedHotel ? selectedHotel.hotelname : ''}
-                                        placeholder="Enter name rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-                                        readOnly // Make the input readOnly
-                                    />
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Name Rooms
-                                    </Typography>
+function EditRoomForm({
+	room,
+	handleChange,
+	handleUpdate,
+	selectedAccommodations,
+}) {
+	const [amenity, setAmenity] = useState("");
+	const onChange = ({ target }) => setAmenity(target.value);
+	const token = useAccessToken();
+	const [images, setImages] = useState([]);
+	const [amenities, setAmenities] = useState([]);
+	const id = useParams();
+	const [selectedImage, setSelectedImage] = useState(null);
 
-                                    <Input
-                                        type="text"
-                                        size="lg"
-                                        name="roomname"
-                                        value={room.roomname}
-                                        onChange={handleChange}
-                                        placeholder="Enter name hotels..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+	const handleUploadImage = async () => {
+		try {
+			const formData = new FormData();
 
-                                    />
+			formData.append("rooms", room.room_id);
+			formData.append("image", selectedImage);
 
-                                </div>
-                                
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Images Rooms
-                                    </Typography>
+			const response = await postImage(token, formData, id);
+			console.log("Create successful:", response.data);
+			setTimeout(() => {
+				alert("Thêm ảnh thành công!");
+				updateImageList();
+				setSelectedImage(null);
+			}, 1000);
+		} catch (error) {
+			console.error("Create failed:", error);
+		}
+	};
 
-                                    <Input
-                                        type="file"
-                                        multiple
-                                        size="lg"
+	const handleChangeImage = (e) => {
+		const image = e.target.files[0];
+		setSelectedImage(image);
+	};
+	const updateImageList = async () => {
+		try {
+			const userData = await getImage(token);
+			setImages(userData);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	};
+	const updateAmenityList = async () => {
+		try {
+			const amenitiesData = await getAmenities(token);
+			setAmenities(amenitiesData);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	};
 
-                                        name="roomimage"
-                                        onChange={handleChange}
+	const handleUploadAmenities = async () => {
+		try {
+			const formData = new FormData();
 
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
+			formData.append("rooms", room.room_id);
+			formData.append("name", amenity);
 
-                                    />
+			const response = await postAmenities(token, formData, id);
+			console.log("Create successful:", response.data);
+			setTimeout(() => {
+				alert("Thêm tiện nghi thành công!");
+				updateAmenityList();
+				setSelectedImage(null);
+			}, 1000);
+		} catch (error) {
+			console.error("Create failed:", error);
+		}
+	};
 
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Descriptions
-                                    </Typography>
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const [amenitiesData, userData] = await Promise.all([
+					getAmenities(token),
+					getImage(token),
+				]);
+				setAmenities(amenitiesData);
+				setImages(userData);
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+		fetchData();
+	}, [token]);
+	return (
+		<>
+			<div className="mx-auto mt-2">
+				<Typography variant="h4" color="red">
+					Cập nhật thông tin phòng
+				</Typography>
+			</div>
+			<div className=" max-w-full px-3 rounded-lg mt-2 overflow-auto">
+				<Card color="transparent" shadow={false}>
+					<form>
+						<div className="flex mx-auto ">
+							<div className="mb-1 w-1/2 p-4">
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Tên chỗ ở
+									</Typography>
+									<Input
+										type="text"
+										size="lg"
+										name="hotel"
+										value={
+											selectedAccommodations
+												? selectedAccommodations.accname
+												: ""
+										}
+										placeholder="Nhập tên chỗ ở..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+										readOnly
+									/>
+								</div>
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Tên phòng
+									</Typography>
 
-                                    <Textarea
-                                        type="textarea"
-                                        multiple
-                                        size="lg"
-                                        name="descriptions"
-                                        value={room.descriptions}
-                                        onChange={handleChange}
-                                        placeholder="Enter Descriptions about Rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
+									<Input
+										type="text"
+										size="lg"
+										name="roomname"
+										value={room.roomname}
+										onChange={handleChange}
+										placeholder="Nhập tên phòng..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+									/>
+								</div>
 
-                                    />
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Mô tả
+									</Typography>
 
-                                </div>
-                            </div>
-                            <div className="mb-1 w-1/2 p-4">
-                            <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Room Type
-                                    </Typography>
+									<Textarea
+										type="textarea"
+										multiple
+										size="lg"
+										name="descriptions"
+										value={room.descriptions}
+										onChange={handleChange}
+										placeholder="Nhập mô tả về phòng..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
+									/>
+								</div>
+								<UploadImageRooms
+									room={room}
+									handleChange={handleChange}
+									handleChangeImage={handleChangeImage}
+									handleUploadImage={handleUploadImage}
+									images={images}
+									updateImageList={updateImageList}
+								/>
+							</div>
+							<div className="mb-1 w-1/2 p-4">
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Tiện nghi
+									</Typography>
+									<div className="flex justify-center border-b border-gray-200 text-gray-800 font-medium">
+										<div className="relative flex w-full items-center">
+											<Input
+												type="text"
+												name="name"
+												placeholder="Nhập tiện nghi"
+												className="pr-20"
+												onChange={onChange}
+											/>
+											<Button
+												size="sm"
+												color={amenity ? "gray" : "blue-gray"}
+												disabled={!amenity}
+												className="!absolute right-1 top-1 rounded"
+												onClick={handleUploadAmenities}
+											>
+												Thêm
+											</Button>
+										</div>
+									</div>
+									<UploadAmenities
+										room={room}
+										amenities={amenities}
+										updateAmenityList={updateAmenityList}
+									/>
+								</div>
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Giá phòng
+									</Typography>
 
-                                    <Select
-                                        name="account_type"
-                                        size="lg"
-                                        value={room?.room_type || ""}
-                                        onChange={handleSelectChange}
-                                        className="text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        <Option value="simple_room">simple room</Option>
-                                        <Option value="double_room">double room</Option>
-                                        <Option value="family_room">family room</Option>
+									<Input
+										type="number"
+										multiple
+										size="lg"
+										name="roomprice"
+										value={room.roomprice}
+										onChange={handleChange}
+										placeholder="Nhập giá phòng..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+									/>
+								</div>
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Số phòng
+									</Typography>
 
-                                    </Select>
+									<Input
+										type="number"
+										multiple
+										size="lg"
+										name="roomnumber"
+										value={room.roomnumber}
+										onChange={handleChange}
+										placeholder="Nhập số phòng..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+									/>
+								</div>
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Sức chứa người/phòng
+									</Typography>
 
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Price Rooms
-                                    </Typography>
+									<Input
+										type="number"
+										multiple
+										size="lg"
+										name="roomoccupancy"
+										value={room.roomoccupancy}
+										onChange={handleChange}
+										placeholder="Nhập sức chứa phòng..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+									/>
+								</div>
+							</div>
+						</div>
 
-                                    <Input
-                                        type="number"
-                                        multiple
-                                        size="lg"
-                                        name="roomprice"
-                                        value={room.roomprice}
-                                        onChange={handleChange}
-                                        placeholder="Enter price rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-
-                                    />
-
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Numbers Rooms
-                                    </Typography>
-
-                                    <Input
-                                        type="number"
-                                        multiple
-                                        size="lg"
-                                        name="roomnumber"
-                                        value={room.roomnumber}
-                                        onChange={handleChange}
-                                        placeholder="Enter Numbers rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-
-                                    />
-
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        Occupancy Rooms
-                                    </Typography>
-
-                                    <Input
-                                        type="number"
-                                        multiple
-                                        size="lg"
-                                        name="roomoccupancy"
-                                        value={room.roomoccupancy}
-                                        onChange={handleChange}
-                                        placeholder="Enter Occupancy rooms..."
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-
-                                    />
-
-                                </div>
-                                <div>
-                                    <Typography
-                                        variant="h6"
-                                        color="blue-gray"
-                                        className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-                                    >
-                                        DateAdded Rooms
-                                    </Typography>
-
-                                    <Input
-                                        type="date"
-                                        multiple
-                                        size="lg"
-                                        name="dateadded"
-                                        value={room.dateadded}
-                                        onChange={handleChange}
-                                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-                                        readOnly
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <Button
-                            size="lg"
-                            onClick={handleUpdate}
-                            className="mx-auto w-2/4 bg-red-600 uppercase" fullWidth>
-                            Update nows
-                        </Button>
-
-                    </form>
-                </Card>
-            </div>
-        </>
-    );
+						<Button
+							size="lg"
+							onClick={handleUpdate}
+							className="mx-auto w-2/4 bg-red-600 uppercase"
+							fullWidth
+						>
+							Cập nhật ngay!
+						</Button>
+					</form>
+				</Card>
+			</div>
+		</>
+	);
 }
 export default EditRoomForm;
