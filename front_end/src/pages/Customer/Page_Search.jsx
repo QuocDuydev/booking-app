@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbars from "../../components/Customer/Layout/Navbar";
 import Footer from "../../components/Customer/Layout/Footer";
 import { useAccessToken } from "../../components/ultiti";
-import { getHotel } from "../../api/acc_API";
+import { getAccommodation } from "../../api/acc_API";
 import Filters from "../../components/Customer/Filter_Hotel";
 import ListHotel from "../../components/Customer/List_Hotel";
 import ButtonSearch from "../../components/Customer/Button_Search";
@@ -28,7 +28,7 @@ function ListSearch() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const hotelData = await getHotel(token);
+				const hotelData = await getAccommodation(token);
 				hotelData.sort((a, b) => b.rating - a.rating);
 				setHotels(hotelData);
 				window.scrollTo(0, 0);

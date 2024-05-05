@@ -5,8 +5,8 @@ import Navbars from "../../components/Customer/Layout/Navbar";
 import "react-datepicker/dist/react-datepicker.css";
 import { useAccessToken } from "../../components/ultiti";
 import { postBooking } from "../../api/booking_API";
-import { getHoteldetail } from "../../api/acc_API";
-import { getRoomdetailinHotel } from "../../api/room_in_acc_API";
+import { getAccommodationdetail } from "../../api/acc_API";
+import { getRoomdetail_In_Accommodation} from "../../api/room_in_acc_API";
 import { Alert } from "@material-tailwind/react";
 import CardLeftBooking from "../../components/Customer/Card_Left_Booking";
 import CardRightBooking from "../../components/Customer/Card_Right_Booking";
@@ -111,8 +111,8 @@ function Booking() {
 		const fetchData = async () => {
 			try {
 				const [hotelData, roomData] = await Promise.all([
-					getHoteldetail(hotel_id, token),
-					getRoomdetailinHotel(hotel_id, room_id, token),
+					getAccommodationdetail(hotel_id, token),
+					getRoomdetail_In_Accommodation(hotel_id, room_id, token),
 				]);
 
 				setHotels(hotelData);

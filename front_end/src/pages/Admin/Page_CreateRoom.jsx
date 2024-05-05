@@ -5,8 +5,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAccessToken } from "../../components/ultiti";
 import { Alert } from "@material-tailwind/react";
 import CreateRoomForm from "../../components/Admin/CreateRoom_Form";
-import { getRoominHotel, postRoom } from "../../api/room_in_acc_API";
-import { getHoteldetail } from "../../api/acc_API";
+import { getRoom_In_Accommodation, postRoom } from "../../api/room_in_acc_API";
+import { getAccommodationdetail } from "../../api/acc_API";
 
 function CreateRoom() {
 	// biome-ignore lint/style/useConst: <explanation>
@@ -59,12 +59,11 @@ function CreateRoom() {
 
 	const handleCreate = async () => {
 		try {
-			const hotelDetail = await getHoteldetail(acc_id);
-			const totalRoomsAllowed = hotelDetail.totalroom;
+			const accDetail = await getAccommodationdetail(acc_id);
+			const totalRoomsAllowed = accDetail.totalroom;
 
-			// Fetch current rooms in the hotel
-			const roomsInHotel = await getRoominHotel(acc_id);
-			const currentRoomsCount = roomsInHotel.length;
+			const roomsInAcc = await getRoom_In_Accommodation(acc_id);
+			const currentRoomsCount = roomsInAcc.length;
 			console.log(currentRoomsCount);
 
 			if (totalRoomsAllowed > currentRoomsCount) {
@@ -96,43 +95,13 @@ function CreateRoom() {
 				}, 1000);
 			} else {
 				alert("Cannot add room. Maximum room limit reached!");
-				// Display message indicating maximum rooms reached
+
 				console.log("Cannot add room. Maximum room limit reached.");
 			}
 		} catch (error) {
 			console.error("Create failed:", error);
 		}
 	};
-	// const handleAmenitiesChange = (selectedOptions) => {
-	// 	// Update state with newly selected values
-	// 	setSelectedAmenities(selectedOptions);
-
-	// 	// Call API to save newly selected values
-	// 	saveSelectedValuesToAPI(selectedOptions);
-	//   };
-
-	//   const handleRemoveAmenity = async (removedOption) => {
-	// 	// Remove the option from state
-	// 	const updatedSelectedOptions = selectedAmenities.filter(
-	// 	  (option) => option !== removedOption
-	// 	);
-	// 	setSelectedAmenities(updatedSelectedOptions);
-
-	// 	// Call API to remove the option
-	// 	await deleteValueFromAPI(removedOption.value);
-	//   };
-
-	//   const saveSelectedValuesToAPI = async (selectedOptions) => {
-	// 	try {
-	// 	  // Extract values from selected options
-	// 	  const selectedValues = selectedOptions.map((option) => option.value);
-
-	// 	  // Call API to save selected values
-	// 	  await postValueToAPI(selectedValues);
-	// 	} catch (error) {
-	// 	  console.error("Error saving selected values to API:", error);
-	// 	}
-	//   };
 
 	return (
 		<>
@@ -152,7 +121,6 @@ function CreateRoom() {
 						handleSelectChange={handleSelectChange}
 						handleCreate={handleCreate}
 						handleAmenitiesChange={handleAmenitiesChange}
-						// handleRemoveAmenity={handleRemoveAmenity}
 					/>
 				</div>
 			</div>

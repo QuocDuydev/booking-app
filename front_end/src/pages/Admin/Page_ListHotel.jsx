@@ -3,21 +3,20 @@ import { Typography } from "@material-tailwind/react";
 import Header_Admin from "../../components/Admin/Layout/Header";
 import Sidebar_Admin from "../../components/Admin/Layout/SideBar";
 import { useAccessToken } from "../../components/ultiti";
-import { getHotel } from "../../api/acc_API";
-import { deleteHotel } from "../../api/acc_API";
-import HotelTable from "../../components/Admin/Hotel_Table";
+import { getAccommodation, deleteAccommodation } from "../../api/acc_API";
 import Pagination from "../../components/Customer/Layout/Panination";
 import jwt_decode from "jwt-decode";
 import { getUser } from "../../api/user_API";
+import AccommodationTable from "../../components/Admin/Accommodation_Table";
 
-function ListHotelAdmin() {
+export default function ListHotelAdmin() {
 	const token = useAccessToken();
 	const isConfirmed = false;
 	const [userHotels, setUserHotels] = useState([]);
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const hotelData = await getHotel();
+				const hotelData = await getAccommodation();
 
 				if (token) {
 					const decodedToken = jwt_decode(token);
@@ -50,9 +49,7 @@ function ListHotelAdmin() {
 		const isConfirmed = window.confirm("Are you sure you want to delete?");
 		if (isConfirmed) {
 			try {
-				await deleteHotel(item, token);
-				const updateHotels = await getHotel();
-				setUserHotels(updateHotels);
+				await deleteAccommodation(item, token);
 				window.location.reload();
 			} catch (error) {
 				console.error("Error deleting user:", error);
@@ -60,15 +57,15 @@ function ListHotelAdmin() {
 		}
 	};
 	const [currentPage, setCurrentPage] = useState(1);
-	// Giả sử danh sách khách sạn là một mảng hotels
-	const hotelsPerPage = 5;
-	const totalHotels = userHotels.length;
-	const totalPages = Math.ceil(totalHotels / hotelsPerPage);
+
+	const accsPerPage = 5;
+	const totalAccs = userHotels.length;
+	const totalPages = Math.ceil(totalAccs / accsPerPage);
 
 	// Hàm xử lý để lấy danh sách khách sạn cho trang hiện tại
-	const getHotelsForPage = (pageNumber) => {
-		const startIndex = (pageNumber - 1) * hotelsPerPage;
-		const endIndex = startIndex + hotelsPerPage;
+	const getAccsForPage = (pageNumber) => {
+		const startIndex = (pageNumber - 1) * accsPerPage;
+		const endIndex = startIndex + accsPerPage;
 		return userHotels.slice(startIndex, endIndex);
 	};
 
@@ -88,9 +85,9 @@ function ListHotelAdmin() {
 							Danh sách khách sạn
 						</Typography>
 					</div>
-					<HotelTable
+					<AccommodationTable
 						handleDelete={handleDelete}
-						getHotelsForPage={getHotelsForPage}
+						getAccsForPage={getAccsForPage}
 						currentPage={currentPage}
 					/>
 					<Pagination
@@ -102,4 +99,3 @@ function ListHotelAdmin() {
 		</>
 	);
 }
-export default ListHotelAdmin;

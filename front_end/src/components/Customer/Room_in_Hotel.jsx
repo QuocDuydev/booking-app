@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAccessToken } from "../ultiti";
 import Utilities from "./Layout/Utilities";
-import { getRoominHotel } from "../../api/room_in_acc_API";
+import { getRoom_In_Accommodation } from "../../api/room_in_acc_API";
 import { getBooking, getlistBooking } from "../../api/booking_API";
 import {
     Card,
@@ -49,7 +49,7 @@ function RoominHotel() {
             try {
                 // Fetch hotel and booking data
                 const [roomData, bookingData] = await Promise.all([
-                    getRoominHotel(hotel_id, token),
+                    getRoom_In_Accommodation(hotel_id, token),
                     getlistBooking(token)
                 ]);
 
@@ -81,6 +81,7 @@ function RoominHotel() {
     const [selectedPriceMax, setSelectedPriceMax] = useState('');
 
     function removeAccents(str) {
+        // biome-ignore lint/suspicious/noMisleadingCharacterClass: <explanation>
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
@@ -89,8 +90,8 @@ function RoominHotel() {
             return true;
         }
 
-        const minRange = parseInt(min) || 0;
-        const maxRange = parseInt(max) || Infinity;
+        const minRange = Number.parseInt(min) || 0;
+        const maxRange = Number.parseInt(max) || Number.POSITIVE_INFINITY;
 
         return Prices >= minRange && Prices <= maxRange;
     };
@@ -104,10 +105,9 @@ function RoominHotel() {
                 const updatedRoomtype = [...prevRoomtype];
                 updatedRoomtype.splice(index, 1);
                 return updatedRoomtype;
-            } else {
+            }
                 // Nếu vị trí chưa được chọn, thêm nó vào danh sách
                 return [...prevRoomtype, room_type];
-            }
         });
     };
 
@@ -115,12 +115,12 @@ function RoominHotel() {
         const [min, max] = Prices.split('-');
 
         // Convert min and max to integers
-        const minRange = parseInt(min) || 0;
-        const maxRange = parseInt(max) || Infinity;
+        const minRange = Number.parseInt(min) || 0;
+        const maxRange = Number.parseInt(max) || Number.POSITIVE_INFINITY;
 
         if (
-            minRange === parseInt(selectedPriceMin) &&
-            maxRange === parseInt(selectedPriceMax)
+            minRange === Number.parseInt(selectedPriceMin) &&
+            maxRange === Number.parseInt(selectedPriceMax)
         ) {
             // If the selected range is being toggled, reset to default values
             setSelectedPriceMin('');
@@ -165,7 +165,8 @@ function RoominHotel() {
                                             <Card className="w-full mx-auto mb-2 border-2">
                                                 <CardBody className="flex">
 
-                                                    <img
+                                                    {/* biome-ignore lint/a11y/useAltText: <explanation> */}
+<img
                                                         src={rooms.roomimage}
                                                         className="h-30 w-1/3 rounded-lg object-cover object-center"
                                                     />

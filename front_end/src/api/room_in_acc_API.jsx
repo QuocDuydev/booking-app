@@ -12,19 +12,19 @@ export const getRoom = async () => {
 	}
 };
 
-export const getRoominHotel = async (accId) => {
+export const getRoom_In_Accommodation = async (accId) => {
 	try {
 		const response = await axios.get(
 			`${baseURL}/accommodations/${accId}/rooms/`,
 		);
 		return response.data;
 	} catch (error) {
-		console.error("Error fetching room in hotel data:", error);
+		console.error("Error fetching room in Accommodation data:", error);
 		throw error;
 	}
 };
 
-export const getRoomdetailinHotel = async (accId, roomId) => {
+export const getRoomdetail_In_Accommodation = async (accId, roomId) => {
 	try {
 		const response = await axios.get(
 			`${baseURL}/accommodations/${accId}/rooms/${roomId}`,
@@ -45,7 +45,7 @@ export const postRoom = async (token, formData) => {
 		});
 		return response.data;
 	} catch (error) {
-		console.error("Error posting hotel data:", error);
+		console.error("Error posting Accommodation data:", error);
 		throw error;
 	}
 };
@@ -65,7 +65,7 @@ export const putRoom = async (roomId, token, formData) => {
 	}
 };
 
-export const deleteRoominHotel = async (roomId) => {
+export const deleteRoom_In_Accommodation = async (roomId) => {
 	try {
 		const response = await axios.delete(`${baseURL}/rooms/${roomId}/`);
 		return response.data;
@@ -77,7 +77,7 @@ export const deleteRoominHotel = async (roomId) => {
 
 // Process Image in Rooms
 
-export const getImage = async (token, formData) => {
+export const getImageRoom = async (token, formData) => {
 	try {
 		const response = await axios.get(`${baseURL}/room-images/`, formData, {
 			headers: {
@@ -92,7 +92,7 @@ export const getImage = async (token, formData) => {
 	}
 };
 
-export const postImage = async (token, formData) => {
+export const postImageRoom = async (token, formData) => {
 	try {
 		const response = await axios.post(`${baseURL}/room-images/`, formData, {
 			headers: {
@@ -107,7 +107,7 @@ export const postImage = async (token, formData) => {
 	}
 };
 
-export const deleteImage = async (token, id) => {
+export const deleteImageRoom = async (token, id) => {
 	try {
 		const response = await axios.delete(`${baseURL}/room-images/${id}/`, {
 			headers: {

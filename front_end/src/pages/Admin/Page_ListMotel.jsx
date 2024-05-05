@@ -2,32 +2,32 @@ import { useState, useEffect } from "react";
 import Header_Admin from "../../components/Admin/Layout/Header";
 import Sidebar_Admin from "../../components/Admin/Layout/SideBar";
 import { useAccessToken } from "../../components/ultiti";
-import { getHotel } from "../../api/acc_API";
-import { deleteHotel } from "../../api/acc_API";
-import HotelTable from "../../components/Admin/Hotel_Table";
+import { getAccommodation, deleteAccommodation } from "../../api/acc_API";
 import Pagination from "../../components/Customer/Layout/Panination";
 import jwt_decode from "jwt-decode";
 import { getUser } from "../../api/user_API";
 import { Typography } from "@material-tailwind/react";
+import AccommodationTable from "../../components/Admin/Accommodation_Table";
 
 export default function ListMotelAdmin() {
 	const token = useAccessToken();
 	const isConfirmed = false;
-	const [userHotels, setUserHotels] = useState([]);
+	const [userMotels, setUserMotels] = useState([]);
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const hotelData = await getHotel();
+				const motelData = await getAccommodation();
 
 				if (token) {
 					const decodedToken = jwt_decode(token);
 					const userDetailsResponse = await getUser(token);
-					const fillterHotels = hotelData.filter(
-						(hotel) => hotel.acctype === 3,
+					const fillterMotels = motelData.filter(
+						(motel) => motel.acctype === 3,
 					);
-					const userHotels = hotelData.filter(
-						(hotel) =>
-							hotel.user === decodedToken.user_id && hotel.acctype === 3,
+					const userMotel = motelData.filter(
+						(motel) =>
+							motel.user === decodedToken.user_id && motel.acctype === 3,
 					);
 					const allowedAccess = userDetailsResponse.find(
 						(user) =>
@@ -35,9 +35,9 @@ export default function ListMotelAdmin() {
 							user.account_type === "superadmin",
 					);
 					if (allowedAccess) {
-						setUserHotels(fillterHotels);
+						setUserMotels(fillterMotels);
 					} else {
-						setUserHotels(userHotels);
+						setUserMotels(userMotel);
 					}
 				}
 			} catch (error) {
@@ -50,9 +50,7 @@ export default function ListMotelAdmin() {
 		const isConfirmed = window.confirm("Are you sure you want to delete?");
 		if (isConfirmed) {
 			try {
-				await deleteHotel(item, token);
-				const updateHotels = await getHotel();
-				setUserHotels(updateHotels);
+				await deleteAccommodation(item, token);
 				window.location.reload();
 			} catch (error) {
 				console.error("Error deleting user:", error);
@@ -60,16 +58,16 @@ export default function ListMotelAdmin() {
 		}
 	};
 	const [currentPage, setCurrentPage] = useState(1);
-	// Giả sử danh sách khách sạn là một mảng hotels
-	const hotelsPerPage = 5;
-	const totalHotels = userHotels.length;
-	const totalPages = Math.ceil(totalHotels / hotelsPerPage);
+
+	const accsPerPage = 5;
+	const totalAccs = userMotels.length;
+	const totalPages = Math.ceil(totalAccs / accsPerPage);
 
 	// Hàm xử lý để lấy danh sách khách sạn cho trang hiện tại
-	const getHotelsForPage = (pageNumber) => {
-		const startIndex = (pageNumber - 1) * hotelsPerPage;
-		const endIndex = startIndex + hotelsPerPage;
-		return userHotels.slice(startIndex, endIndex);
+	const getAccsForPage = (pageNumber) => {
+		const startIndex = (pageNumber - 1) * accsPerPage;
+		const endIndex = startIndex + accsPerPage;
+		return userMotels.slice(startIndex, endIndex);
 	};
 
 	// Xử lý khi chuyển tới một số trang mới
@@ -88,9 +86,9 @@ export default function ListMotelAdmin() {
 							Danh sách nhà trọ
 						</Typography>
 					</div>
-					<HotelTable
+					<AccommodationTable
 						handleDelete={handleDelete}
-						getHotelsForPage={getHotelsForPage}
+						getAccsForPage={getAccsForPage}
 						currentPage={currentPage}
 					/>
 					<Pagination

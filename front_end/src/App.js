@@ -27,9 +27,11 @@ import AdminHome from "./pages/Admin/Page_AdminHome.jsx";
 import ListCustomer from "./pages/Admin/Page_ListCustomer.jsx";
 import EditCustomer from "./pages/Admin/Page_EditCustomer.jsx";
 
-import CreateHotel from "./pages/Admin/Page_CreateHotel.jsx";
+import CreateAccommodation from "./pages/Admin/Page_CreateAccommodation.jsx";
 import ListHotelAdmin from "./pages/Admin/Page_ListHotel.jsx";
-import EditHotel from "./pages/Admin/Page_EditHotel.jsx";
+import ListHomeStayAdmin from "./pages/Admin/Page_ListHomeStay.jsx";
+import ListMotelAdmin from "./pages/Admin/Page_ListMotel.jsx";
+import EditAccommodation from "./pages/Admin/Page_EditAccommodation.jsx";
 
 import CreateRoom from "./pages/Admin/Page_CreateRoom.jsx";
 import ListRoom from "./pages/Admin/Page_ListRoom.jsx";
@@ -38,8 +40,7 @@ import EditRoom from "./pages/Admin/Page_EditRoom.jsx";
 import ListBookings from "./pages/Admin/Page_ListBooking_Admin.jsx";
 import EditBookings from "./pages/Admin/Page_EditBooking_Admin.jsx";
 import ProfileAdmin from "./pages/Admin/Page_Profile_Admin.jsx";
-import ListHomeStayAdmin from "./pages/Admin/Page_ListHomeStay.jsx";
-import ListMotelAdmin from "./pages/Admin/Page_ListMotel.jsx";
+
 
 
 function App() {
@@ -67,11 +68,11 @@ function App() {
           <Route path="/admin/:acc_id/create-rooms" element={<AdminRoute element={<CreateRoom />} isAdmin={isAdmin} />} />
           <Route path="/admin/:acc_id/list-rooms" element={<AdminRoute element={<ListRoom />} isAdmin={isAdmin} />} />
           <Route path="/admin/:acc_id/edit-room/:room_id" element={<AdminRoute element={<EditRoom />} isAdmin={isAdmin} />} />
-          <Route path="/admin/create-hotel" element={<AdminRoute element={<CreateHotel />} isAdmin={isAdmin} />} />
+          <Route path="/admin/create-hotel" element={<AdminRoute element={<CreateAccommodation />} isAdmin={isAdmin} />} />
           <Route path="/admin/list-hotel" element={<AdminRoute element={<ListHotelAdmin />} isAdmin={isAdmin} />} />
           <Route path="/admin/list-homestay" element={<AdminRoute element={<ListHomeStayAdmin />} isAdmin={isAdmin} />} />
           <Route path="/admin/list-motel" element={<AdminRoute element={<ListMotelAdmin />} isAdmin={isAdmin} />} />
-          <Route path="/admin/edit-hotel/:acc_id" element={<AdminRoute element={<EditHotel />} isAdmin={isAdmin} />} />
+          <Route path="/admin/edit-hotel/:acc_id" element={<AdminRoute element={<EditAccommodation />} isAdmin={isAdmin} />} />
           <Route path="/admin/list-customer" element={<AdminRoute element={<ListCustomer />} isAdmin={isAdmin} />} />
           <Route path="/admin/edit-customer/:id" element={<AdminRoute element={<EditCustomer />} isAdmin={isAdmin} />} />
           <Route path="/admin/list-booking" element={<AdminRoute element={<ListBookings />} isAdmin={isAdmin} />} />

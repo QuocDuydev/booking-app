@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import useAccessToken from "../ultiti";
-import { deleteImage } from "../../api/room_in_acc_API";
+import { deleteImageRoom } from "../../api/room_in_acc_API";
 
 export default function UploadImageRooms({
 	room,
@@ -29,7 +29,7 @@ export default function UploadImageRooms({
 		const isConfirmed = window.confirm("Bạn có chắc chắn muốn xóa ảnh này?");
 		if (isConfirmed) {
 			try {
-				await deleteImage(token, imageId);
+				await deleteImageRoom(token, imageId);
 				updateImageList();
 			} catch (error) {
 				console.error("Delete image failed:", error);

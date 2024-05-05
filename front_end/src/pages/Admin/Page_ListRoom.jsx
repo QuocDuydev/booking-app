@@ -3,7 +3,10 @@ import { useParams, Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import Header_Admin from "../../components/Admin/Layout/Header";
 import Sidebar_Admin from "../../components/Admin/Layout/SideBar";
-import { deleteRoominHotel, getRoominHotel } from "../../api/room_in_acc_API";
+import {
+	deleteRoom_In_Accommodation,
+	getRoom_In_Accommodation,
+} from "../../api/room_in_acc_API";
 import RoomTable from "../../components/Admin/Room_Table";
 import Pagination from "../../components/Customer/Layout/Panination";
 
@@ -13,7 +16,7 @@ function ListRoom() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const roomData = await getRoominHotel(acc_id);
+				const roomData = await getRoom_In_Accommodation(acc_id);
 
 				setRooms(roomData);
 			} catch (error) {
@@ -29,7 +32,7 @@ function ListRoom() {
 		);
 		if (isConfirmed) {
 			try {
-				await deleteRoominHotel(roomId);
+				await deleteRoom_In_Accommodation(roomId);
 				// Lọc ra danh sách phòng mới sau khi xóa
 				const updatedRooms = rooms.filter((room) => room.room_id !== roomId);
 				setRooms(updatedRooms);
@@ -39,7 +42,7 @@ function ListRoom() {
 		}
 	};
 	const [currentPage, setCurrentPage] = useState(1);
-	// Giả sử danh sách khách sạn là một mảng hotels
+
 	const roomsPerPage = 5;
 	const totalRooms = rooms.length;
 	const totalPages = Math.ceil(totalRooms / roomsPerPage);

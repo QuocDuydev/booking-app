@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { getHotel } from "../../api/acc_API";
+import { getAccommodation } from "../../api/acc_API";
 import {
   Typography,
 } from "@material-tailwind/react";
@@ -11,7 +11,7 @@ export function GridLocation() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const hotelData = await getHotel();
+        const hotelData = await getAccommodation();
         setData(hotelData);
         // Calculate location counts
         const counts = hotelData.reduce((acc, item) => {

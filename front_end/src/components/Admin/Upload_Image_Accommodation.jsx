@@ -10,7 +10,7 @@ import {
 	Select,
 } from "@material-tailwind/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { deleteImage } from "../../api/acc_API";
+import { deleteImageAcc } from "../../api/acc_API";
 import useAccessToken from "../ultiti";
 
 export default function UploadImageAccommodations({
@@ -29,7 +29,7 @@ export default function UploadImageAccommodations({
 		const isConfirmed = window.confirm("Bạn có chắc chắn muốn xóa ảnh này?");
 		if (isConfirmed) {
 			try {
-				await deleteImage(token, imageId);
+				await deleteImageAcc(token, imageId);
 				updateImageList();
 			} catch (error) {
 				console.error("Delete image failed:", error);

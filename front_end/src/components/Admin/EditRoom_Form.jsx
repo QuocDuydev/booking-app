@@ -13,12 +13,11 @@ import { useParams } from "react-router-dom";
 import UploadImageRooms from "./Upload_Image_Room";
 import {
 	getAmenities,
-	getImage,
+	getImageRoom,
 	postAmenities,
-	postImage,
+	postImageRoom,
 } from "../../api/room_in_acc_API";
 import useAccessToken from "../ultiti";
-import { XMarkIcon } from "@heroicons/react/24/solid";
 import UploadAmenities from "./Upload_Amenities";
 
 function EditRoomForm({
@@ -42,7 +41,7 @@ function EditRoomForm({
 			formData.append("rooms", room.room_id);
 			formData.append("image", selectedImage);
 
-			const response = await postImage(token, formData, id);
+			const response = await postImageRoom(token, formData, id);
 			console.log("Create successful:", response.data);
 			setTimeout(() => {
 				alert("Thêm ảnh thành công!");
@@ -60,7 +59,7 @@ function EditRoomForm({
 	};
 	const updateImageList = async () => {
 		try {
-			const userData = await getImage(token);
+			const userData = await getImageRoom(token);
 			setImages(userData);
 		} catch (error) {
 			console.error("Error fetching data:", error);
@@ -99,7 +98,7 @@ function EditRoomForm({
 			try {
 				const [amenitiesData, userData] = await Promise.all([
 					getAmenities(token),
-					getImage(token),
+					getImageRoom(token),
 				]);
 				setAmenities(amenitiesData);
 				setImages(userData);

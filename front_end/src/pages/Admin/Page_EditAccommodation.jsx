@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header_Admin from "../../components/Admin/Layout/Header";
 import Sidebar_Admin from "../../components/Admin/Layout/SideBar";
 import { useAccessToken } from "../../components/ultiti";
-import { getHoteldetail, putHotel } from "../../api/acc_API";
+import { getAccommodationdetail, putAccommodation } from "../../api/acc_API";
 import { Alert } from "@material-tailwind/react";
-import EditHotelForm from "../../components/Admin/EditHotel_Form";
 import jwt_decode from "jwt-decode";
+import EditAccommodationForm from "../../components/Admin/EditAccommodation_Form";
 
-function EditHotel() {
+export default function EditAccommodation() {
 	const token = useAccessToken();
 	const decodedToken = jwt_decode(token);
 	const userId = decodedToken.user_id;
@@ -23,7 +23,7 @@ function EditHotel() {
 		location: "",
 		rating: "",
 		createdAt: "",
-		updatedAt: "",
+		updatedAt: new Date().toISOString().split("T")[0],
 	});
 	const [updateSuccess, setUpdateSuccess] = useState(false);
 	const navigate = useNavigate();
@@ -31,9 +31,9 @@ function EditHotel() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const hotelData = await getHoteldetail(acc_id, token);
-				console.log(hotelData);
-				setAccommodations(hotelData);
+				const accData = await getAccommodationdetail(acc_id, token);
+				console.log(accData);
+				setAccommodations(accData);
 				window.scrollTo(0, 0);
 			} catch (error) {
 				console.error("Error fetching data:", error);
@@ -53,9 +53,9 @@ function EditHotel() {
 			formData.append("location", accommodation.location);
 			formData.append("rating", accommodation.rating);
 			formData.append("createdAt", accommodation.createdAt);
-			formData.append("updatedAt", new Date().toISOString().split("T")[0]);
+			formData.append("updatedAt", accommodation.updatedAt);
 
-			const response = await putHotel(token, formData, acc_id);
+			const response = await putAccommodation(token, formData, acc_id);
 			console.log("Update successful:", response.data);
 			setUpdateSuccess(true);
 			setTimeout(() => {
@@ -82,12 +82,12 @@ function EditHotel() {
 		if (name === "images" && files && files.length > 0) {
 			const file = files[0];
 
-			setAccommodations((prevHotel) => ({
-				...prevHotel,
+			setAccommodations((prevAccommodation) => ({
+				...prevAccommodation,
 				[name]: file,
 			}));
 		} else {
-			setAccommodations((prevHotel) => ({ ...prevHotel, [name]: value }));
+			setAccommodations((prevAccommodation) => ({ ...prevAccommodation, [name]: value }));
 		}
 	};
 
@@ -102,7 +102,7 @@ function EditHotel() {
 							Update successfuly !!
 						</Alert>
 					)}
-					<EditHotelForm
+					<EditAccommodationForm
 						accommodation={accommodation}
 						handleChange={handleChange}
 						handleUpdate={handleUpdate}
@@ -112,4 +112,3 @@ function EditHotel() {
 		</>
 	);
 }
-export default EditHotel;

@@ -6,7 +6,11 @@ import {
 	TrashIcon,
 } from "@heroicons/react/24/solid";
 import { Button } from "@material-tailwind/react";
-function HotelTable({ handleDelete, getHotelsForPage, currentPage }) {
+export default function AccommodationTable({
+	handleDelete,
+	getAccsForPage,
+	currentPage,
+}) {
 	return (
 		<>
 			<div className="max-w-full px-3 rounded-lg mt-2 overflow-hidden">
@@ -24,7 +28,7 @@ function HotelTable({ handleDelete, getHotelsForPage, currentPage }) {
 								</tr>
 							</thead>
 							<tbody className="bg-gray-100 text-center">
-								{getHotelsForPage(currentPage).map((item) => (
+								{getAccsForPage(currentPage).map((item) => (
 									<tr
 										className="text-gray-700 dark:text-gray-400 border-2"
 										key={item.acc_id}
@@ -82,4 +86,3 @@ function HotelTable({ handleDelete, getHotelsForPage, currentPage }) {
 		</>
 	);
 }
-export default HotelTable;

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Header_Admin from "../../components/Admin/Layout/Header";
 import Sidebar_Admin from "../../components/Admin/Layout/SideBar";
 import { useAccessToken } from "../../components/ultiti";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "@material-tailwind/react";
-import { postHotel } from "../../api/acc_API";
-import CreateHotelForm from "../../components/Admin/CreateHotel_Form";
+import { postAccommodation } from "../../api/acc_API";
 import jwt_decode from "jwt-decode";
+import CreateAccommodationForm from "../../components/Admin/CreateAccomodation_Form";
 
-function CreateHotel() {
+export default function CreateAccomodation() {
 	const token = useAccessToken();
 	const decodedToken = jwt_decode(token);
 	const userId = decodedToken.user_id;
@@ -23,7 +23,7 @@ function CreateHotel() {
 		location: "",
 		rating: "",
 		createdAt: new Date().toISOString().split("T")[0],
-		updatedAt: "",
+		updatedAt: new Date().toISOString().split("T")[0],
 	});
 	const [images, setImages] = useState([]);
 	const navigate = useNavigate();
@@ -47,7 +47,7 @@ function CreateHotel() {
 				formData.append("images", images[i]);
 			}
 
-			const response = await postHotel(token, formData);
+			const response = await postAccommodation(token, formData);
 			console.log("Create successful:", response.data);
 			setCreateSuccess(true);
 			setTimeout(() => {
@@ -73,13 +73,13 @@ function CreateHotel() {
 		if (name === "images" && files && files.length > 0) {
 			const file = files[0];
 
-			setAccommodations((prevHotel) => ({
-				...prevHotel,
+			setAccommodations((prevAccommodation) => ({
+				...prevAccommodation,
 				[name]: file,
 			}));
 			setImages(files);
 		} else {
-			setAccommodations((prevHotel) => ({ ...prevHotel, [name]: value }));
+			setAccommodations((prevAccommodation) => ({ ...prevAccommodation, [name]: value }));
 		}
 	};
 	return (
@@ -93,7 +93,7 @@ function CreateHotel() {
 							Create successfuly !!
 						</Alert>
 					)}
-					<CreateHotelForm
+					<CreateAccommodationForm
 						accommodation={accommodation}
 						handleChange={handleChange}
 						handleCreate={handleCreate}
@@ -104,4 +104,3 @@ function CreateHotel() {
 		</>
 	);
 }
-export default CreateHotel;

@@ -41,7 +41,6 @@ function ListCustomer() {
         }
     };
     const [currentPage, setCurrentPage] = useState(1);
-    // Giả sử danh sách khách sạn là một mảng hotels
     const usersPerPage = 5;
     const totalUsers = users.length;
     const totalPages = Math.ceil(totalUsers / usersPerPage);

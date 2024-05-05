@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
 	Card,
 	Input,
@@ -7,49 +8,101 @@ import {
 	Select,
 	Option,
 } from "@material-tailwind/react";
-
+import { useParams } from "react-router-dom";
+import useAccessToken from "../ultiti";
+import { getImageAcc, postImageAcc } from "../../api/acc_API";
 import { getAccType } from "../../api/acc-type_API";
-import { useState, useEffect } from "react";
+import UploadImageAccommodations from "./Upload_Image_Accommodation";
 
-function CreateHotelForm({
+export default function EditAccommodationForm({
 	accommodation,
 	handleChange,
-	handleCreate,
+	handleUpdate,
 }) {
-	const [acctype, setAcctype] = useState([]);
+	const token = useAccessToken();
+	const [images, setImages] = useState([]);
+	const id = useParams();
+	const [selectedImage, setSelectedImage] = useState(null);
+	const handleUploadImage = async () => {
+		// Call your upload image function here
+		try {
+			const formData = new FormData();
+
+			formData.append("accommodations", accommodation.acc_id);
+			formData.append("image", selectedImage);
+
+			const response = await postImageAcc(token, formData, id);
+			console.log("Create successful:", response.data);
+			setTimeout(() => {
+				alert("Thêm ảnh thành công!");
+				updateImageList();
+				setSelectedImage(null);
+			}, 1000);
+		} catch (error) {
+			console.error("Create failed:", error);
+		}
+	};
+	// const [acctypes, setAcctype] = useState([]);
+
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		try {
+	// 			const AccTypeData = await getAccType();
+	// 			console.log(AccTypeData);
+	// 			setAcctype(AccTypeData);
+	// 		} catch (error) {
+	// 			console.error("Error fetching data:", error);
+	// 		}
+	// 	};
+	// 	fetchData();
+	// }, []);
+	const handleSelectChange = (value) => {
+		handleChange({ target: { name: "acctype", value } });
+	};
+
+	const handleChangeImage = (e) => {
+		const image = e.target.files[0];
+		setSelectedImage(image);
+	};
+
+	const updateImageList = async () => {
+		try {
+			const userData = await getImageAcc(token);
+			setImages(userData);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const AccTypeData = await getAccType();
+				const userData = await getImageAcc(token);
 
-				setAcctype(AccTypeData);
+				setImages(userData);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
 		};
 		fetchData();
-	}, []);
-	const handleSelectChange = (value) => {
-		handleChange({ target: { name: "acctype", value } });
-	};
+	}, [token]);
 	return (
 		<>
-			<div className=" mx-auto mt-2 uppercase">
+			<div className="mx-auto mt-4">
 				<Typography variant="h4" color="red">
-					Thêm chỗ ở
+					Cập nhật thông tin chỗ ở
 				</Typography>
 			</div>
 			<div className=" max-w-full px-3 rounded-lg mt-2 overflow-auto">
 				<Card color="transparent" shadow={false}>
-					<form className=" ">
+					<form>
 						<div className="flex mx-auto ">
 							<div className="mb-1 w-1/2 p-4">
 								<div>
 									<Typography
 										variant="h6"
 										color="blue-gray"
-										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
+										className=" mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
 										Tên chỗ ở
 									</Typography>
@@ -59,10 +112,11 @@ function CreateHotelForm({
 										name="accname"
 										value={accommodation.accname}
 										onChange={handleChange}
-										placeholder="Nhập tên chỗ ở..."
+										placeholder="Tên chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
+
 								<div>
 									<Typography
 										variant="h6"
@@ -78,7 +132,7 @@ function CreateHotelForm({
 										name="descriptions"
 										value={accommodation.descriptions}
 										onChange={handleChange}
-										placeholder="Nhập mô tả chỗ ở..."
+										placeholder="Nhập mô tả về chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
 									/>
 								</div>
@@ -86,39 +140,36 @@ function CreateHotelForm({
 									<Typography
 										variant="h6"
 										color="blue-gray"
-										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Loại chỗ ở
+										Tổng số phòng
 									</Typography>
-
-									{/* <Select
-										options={acctype.map((amenity) => ({
-											value: amenity.acctype_id,
-											label: amenity.name,
-										}))}
-										isMulti
-										name="acctype"
-										onChange={handleAmenitiesChange}
-									/> */}
-									<Select
-										name="acctype"
+									<Input
+										type="number"
+										multiple
 										size="lg"
-										value={String(accommodation?.acctype) || ""}
-										onChange={handleSelectChange}
-										className="text-sm md:text-md lg:text-lg xl:text-lg"
-									>
-										<Option value="1">Khách sạn</Option>
-										<Option value="2">HomeStay</Option>
-										<Option value="3">Nhà trọ</Option>
-									</Select>
+										name="totalroom"
+										value={accommodation.totalroom}
+										onChange={handleChange}
+										placeholder="Enter total rooms..."
+										className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
+									/>
 								</div>
+								<UploadImageAccommodations
+									accommodation={accommodation}
+									handleChange={handleChange}
+									handleChangeImage={handleChangeImage}
+									handleUploadImage={handleUploadImage}
+									images={images}
+									updateImageList={updateImageList}
+								/>
 							</div>
 							<div className="mb-1 w-1/2 p-4">
 								<div>
 									<Typography
 										variant="h6"
 										color="blue-gray"
-										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
+										className="mb-2  text-sm md:text-md lg:text-lg xl:text-lg"
 									>
 										Vị trí
 									</Typography>
@@ -168,7 +219,7 @@ function CreateHotelForm({
 										name="rating"
 										value={accommodation.rating}
 										onChange={handleChange}
-										placeholder="Xếp hạng chỗ ở..."
+										placeholder="Nhập xếp hạng chỗ ở..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
@@ -178,28 +229,29 @@ function CreateHotelForm({
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Tổng số phòng
+										Loại chỗ ở
 									</Typography>
-									<Input
-										type="number"
-										multiple
+
+									<Select
+										name="acctype"
 										size="lg"
-										name="totalroom"
-										value={accommodation.totalroom}
-										onChange={handleChange}
-										placeholder="Nhập tổng số phòng..."
-										className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
-									/>
+										value={String(accommodation?.acctype) || ""}
+										onChange={handleSelectChange}
+										className="text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										<Option value="1">Khách sạn</Option>
+										<Option value="2">HomeStay</Option>
+										<Option value="3">Nhà trọ</Option>
+									</Select>
 								</div>
 							</div>
 						</div>
 						<Button
-							size="lg"
-							onClick={handleCreate}
-							className="mx-auto w-2/4 bg-red-600 uppercase mt-2"
+							onClick={handleUpdate}
+							className="mx-auto w-2/4 bg-red-600 uppercase text-sm"
 							fullWidth
 						>
-							Thêm ngay!
+							Cập nhật ngay!
 						</Button>
 					</form>
 				</Card>
@@ -207,4 +259,3 @@ function CreateHotelForm({
 		</>
 	);
 }
-export default CreateHotelForm;

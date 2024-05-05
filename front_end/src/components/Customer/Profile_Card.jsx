@@ -10,235 +10,156 @@ import {
 } from "@material-tailwind/react";
 
 function ProfileCard({ user, handleChange, handleUpdate }) {
-	const [open, setOpen] = useState(false);
+	// const [open, setOpen] = useState(false);
 
-	const handleOpen = () => setOpen(!open);
+	// const handleOpen = () => setOpen(!open);
 
 	return (
-		<div className=" w-full h-full">
-			<div className="container mx-auto py-8 ">
-				<div className="bg-gray-200 shadow rounded-lg p-6">
-					<h2 className="text-xl font-bold mb-2">Personal details </h2>
-					<h3 className="text-gray-700 ml-4  mb-2">
-						{" "}
-						Update your information and find out how it's used.
-					</h3>
-					<div className="flex items-center mb-4">
-						<h3 className="font-semibold ml-4 mr-2">Full name:</h3>
-						<p>{user.name}</p>
-					</div>
-					<div className="flex items-center mb-4">
-						<h3 className="font-semibold ml-4 mr-2">Email address:</h3>
-						<p>{user.email}</p>
-					</div>
-					<div className="flex items-center mb-4">
-						<h3 className="font-semibold ml-4 mr-2">Account Type:</h3>
-						<p className=" text-red-500 font-bold">{user.account_type}</p>
-					</div>
-					<div className="">
-						<Button
-							onClick={handleOpen}
-							variant="gradient"
-							className=" bg-red-600"
-						>
-							Update Profile
-						</Button>
-						<Dialog
-							open={open}
-							handler={handleOpen}
-							className=" w-[50%] h-[50%] my-auto mx-auto"
-						>
+		<div>
+			<section className="py-10 my-auto dark:bg-gray-900">
+				<div className="lg:w-[80%] md:w-[90%] xs:w-[96%] mx-auto flex gap-4">
+					<div className="lg:w-[88%] md:w-[80%] sm:w-[88%] xs:w-full mx-auto shadow-2xl p-4 rounded-xl h-fit self-center dark:bg-gray-800/40">
+						<div className="">
+							<h1 className="lg:text-3xl md:text-2xl sm:text-xl xs:text-xl font-serif font-extrabold mb-2 dark:text-white">
+								Profile
+							</h1>
+							<h2 className="text-grey text-sm mb-4 dark:text-gray-400">
+								Create Profile
+							</h2>
 							<form>
-								<DialogHeader className=" -mb-7">Update Profile</DialogHeader>
-
-								<DialogBody>
-									<div className="flex mx-auto ">
-										<div className="mb-1 w-1/2 p-4">
-											<div>
-												<Typography
-													variant="h6"
-													color="blue-gray"
-													className="mb-2"
+								<div className="w-full rounded-sm bg-[url('https://images.unsplash.com/photo-1449844908441-8829872d2607?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw2fHxob21lfGVufDB8MHx8fDE3MTA0MDE1NDZ8MA&ixlib=rb-4.0.3&q=80&w=1080')] bg-cover bg-center bg-no-repeat items-center">
+									<div className="mx-auto flex justify-center w-[141px] h-[141px] bg-blue-300/20 rounded-full bg-[url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw4fHxwcm9maWxlfGVufDB8MHx8fDE3MTEwMDM0MjN8MA&ixlib=rb-4.0.3&q=80&w=1080')] bg-cover bg-center bg-no-repeat">
+										<div className="bg-white/90 rounded-full w-6 h-6 text-center ml-28 mt-4">
+											<input
+												type="file"
+												name="profile"
+												id="upload_profile"
+												hidden
+												required=""
+											/>
+											<label htmlFor="upload_profile">
+												<svg
+													data-slot="icon"
+													className="w-6 h-5 text-blue-700"
+													fill="none"
+													strokeWidth="1.5"
+													stroke="currentColor"
+													viewBox="0 0 24 24"
+													xmlns="http://www.w3.org/2000/svg"
+													aria-hidden="true"
 												>
-													Username
-												</Typography>
-
-												<Input
-													type="text"
-													size="lg"
-													name="username"
-													value={user.username}
-													onChange={handleChange}
-													placeholder="Enter  username..."
-													className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-													labelProps={{
-														className: "before:content-none after:content-none",
-													}}
-												/>
-											</div>
-											<div>
-												<Typography
-													variant="h6"
-													color="blue-gray"
-													className="mb-2 mt-4"
-												>
-													Full name
-												</Typography>
-
-												<Input
-													type="text"
-													multiple
-													size="lg"
-													name="name"
-													value={user.name}
-													onChange={handleChange}
-													placeholder="Enter Full name..."
-													className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-												/>
-											</div>
+													<path
+														strokeLinecap="round"
+														strokeLinejoin="round"
+														d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"
+													/>
+													<path
+														strokeLinecap="round"
+														strokeLinejoin="round"
+														d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"
+													/>
+												</svg>
+											</label>
 										</div>
-										<div className="mb-1 w-1/2 p-4">
-											<div>
-												<Typography
-													variant="h6"
-													color="blue-gray"
-													className="mb-2"
+									</div>
+									<div className="flex justify-end">
+										{/*  */}
+										<input
+											type="file"
+											name="profile"
+											id="upload_cover"
+											hidden
+											required=""
+										/>
+										<div className="bg-white flex items-center gap-1 rounded-tl-md px-2 text-center font-semibold">
+											<label
+												htmlFor="upload_cover"
+												className="inline-flex items-center gap-1 cursor-pointer"
+											>
+												Cover
+											</label>
+											<label htmlFor="upload_cover">
+												<svg
+													data-slot="icon"
+													className="w-6 h-5 text-blue-700"
+													fill="none"
+													strokeWidth="1.5"
+													stroke="currentColor"
+													viewBox="0 0 24 24"
+													xmlns="http://www.w3.org/2000/svg"
+													aria-hidden="true"
 												>
-													Email
-												</Typography>
-
-												<Input
-													type="email"
-													multiple
-													size="lg"
-													name="email"
-													value={user.email}
-													onChange={handleChange}
-													placeholder="Enter email..."
-													className=" !border-t-blue-gray-200 focus:!border-t-gray-700"
+													<path
+														strokeLinecap="round"
+														strokeLinejoin="round"
+														d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"
+													/>
+													<path
+														strokeLinecap="round"
+														strokeLinejoin="round"
+														d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"
+													/>
+												</svg>
+											</label>
+										</div>
+									</div>
+								</div>
+								<h2 className="text-center mt-1 font-semibold dark:text-gray-300">
+									Upload Profile and Cover Image
+								</h2>
+								<div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+									<div className="w-full  mb-4 mt-6">
+										<label htmlFor="" className="mb-2 dark:text-gray-300">
+											First Name
+										</label>
+										<input
+											type="text"
+											className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+											placeholder="First Name"
+										/>
+										<div className="w-full  mb-4 lg:mt-6">
+											<label htmlFor="" className=" dark:text-gray-300">
+												Last Name
+											</label>
+											<input
+												type="text"
+												className="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
+												placeholder="Last Name"
+											/>
+										</div>
+										<div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+											<div className="w-full">
+												<h3 className="dark:text-gray-300 mb-2">Sex</h3>
+												<select className="w-full text-grey border-2 rounded-lg p-4 pl-2 pr-2 dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800">
+													<option disabled="" value="">
+														Select Sex
+													</option>
+													<option value="Male">Male</option>
+													<option value="Female">Female</option>
+												</select>
+											</div>
+											<div className="w-full">
+												<h3 className="dark:text-gray-300 mb-2">
+													Date Of Birth
+												</h3>
+												<input
+													type="date"
+													className="text-grey p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
 												/>
 											</div>
-
-											<div>
-												<Typography
-													variant="h6"
-													color="blue-gray"
-													className="mb-2 mt-4"
-												>
-													Joined Account
-												</Typography>
-
-												<Input
-													type="date"
-													multiple
-													size="lg"
-													name="joined"
-													readOnly
-													value={user.joined}
-													onChange={handleChange}
-													className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-												/>
+											<div className="w-full rounded-lg bg-blue-500 mt-4 text-white text-lg font-semibold">
+												<button type="submit" className="w-full p-4">
+													Submit
+												</button>
 											</div>
 										</div>
 									</div>
-								</DialogBody>
-								<DialogFooter className="-mt-4">
-									<Button
-										variant="text"
-										color="red"
-										onClick={handleOpen}
-										className="mr-1 bg-slate-300"
-									>
-										<span>Cancel</span>
-									</Button>
-									<Button
-										variant="gradient"
-										color="green"
-										onClick={handleUpdate}
-										className=" bg-red-600"
-									>
-										<span>Confirm</span>
-									</Button>
-								</DialogFooter>
+								</div>
 							</form>
-						</Dialog>
-					</div>
-
-					<h3 className="font-semibold text-center mt-3 -mb-2">Find me on</h3>
-					<div className="flex justify-center items-center gap-6 my-6">
-						{/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
-						<a className="text-gray-700 hover:text-orange-600">
-							{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 448 512"
-								className="h-6 cursor-pointer"
-							>
-								<path
-									fill="currentColor"
-									d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"
-								/>
-							</svg>
-						</a>
-						{/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
-						<a className="text-gray-700 hover:text-orange-600">
-							{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 576 512"
-								className="h-6 cursor-pointer"
-							>
-								<path
-									fill="currentColor"
-									d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"
-								/>
-							</svg>
-						</a>
-						{/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
-						<a className="text-gray-700 hover:text-orange-600">
-							{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 320 512"
-								className="h-6 cursor-pointer"
-							>
-								<path
-									fill="currentColor"
-									d="m279.14 288 14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
-								/>
-							</svg>
-						</a>
-						{/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
-						<a className="text-gray-700 hover:text-orange-600">
-							{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 448 512"
-								className="h-6 cursor-pointer"
-							>
-								<path
-									fill="currentColor"
-									d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"
-								/>
-							</svg>
-						</a>
-						{/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
-						<a className="text-gray-700 hover:text-orange-600">
-							{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 512 512"
-								className="h-6 cursor-pointer"
-							>
-								<path
-									fill="currentColor"
-									d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"
-								/>
-							</svg>
-						</a>
+						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 		</div>
 	);
 }

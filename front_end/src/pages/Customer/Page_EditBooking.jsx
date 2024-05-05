@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useAccessToken } from "../../components/ultiti";
 import { Alert } from "@material-tailwind/react";
 import  Navbars  from "../../components/Customer/Layout/Navbar";
-import { getHotel } from "../../api/acc_API";
+import { getAccommodation } from "../../api/acc_API";
 import { getRoom } from "../../api/room_in_acc_API";
 import { getBookingId } from "../../api/booking_API";
 import { putBooking } from "../../api/booking_API";
@@ -37,7 +37,7 @@ function EditBooking() {
 			const fetchData = async () => {
 				try {
 					const [hotelData, roomData, bookingData] = await Promise.all([
-						getHotel(token),
+						getAccommodation(token),
 						getRoom(token),
 						getBookingId(booking_id, token),
 					]);

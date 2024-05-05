@@ -2,26 +2,26 @@ import axios from "axios";
 
 export const baseURL = "http://localhost:8000/api";
 
-export const getHotel = async () => {
+export const getAccommodation = async () => {
 	try {
 		const response = await axios.get(`${baseURL}/accommodations/`);
 		return response.data;
 	} catch (error) {
-		console.error("Error fetching hotel data:", error);
+		console.error("Error fetching Accommodation data:", error);
 		throw error;
 	}
 };
 
-export const getHoteldetail = async (hotelId) => {
+export const getAccommodationdetail = async (accId) => {
 	try {
-		const response = await axios.get(`${baseURL}/accommodations/${hotelId}/`);
+		const response = await axios.get(`${baseURL}/accommodations/${accId}/`);
 		return response.data;
 	} catch (error) {
-		console.error("Error fetching hotel detail data:", error);
+		console.error("Error fetching Accommodation detail data:", error);
 		throw error;
 	}
 };
-export const postHotel = async (token, formData) => {
+export const postAccommodation = async (token, formData) => {
 	try {
 		const response = await axios.post(`${baseURL}/accommodations/`, formData, {
 			headers: {
@@ -31,11 +31,11 @@ export const postHotel = async (token, formData) => {
 		});
 		return response.data;
 	} catch (error) {
-		console.error("Error posting hotel data:", error);
+		console.error("Error posting Accommodation data:", error);
 		throw error;
 	}
 };
-export const putHotel = async (token, formData, accId) => {
+export const putAccommodation = async (token, formData, accId) => {
 	try {
 		const response = await axios.put(
 			`${baseURL}/accommodations/${accId}/`,
@@ -49,12 +49,12 @@ export const putHotel = async (token, formData, accId) => {
 		);
 		return response.data;
 	} catch (error) {
-		console.error("Error putting hotel data:", error);
+		console.error("Error putting Accommodation data:", error);
 		throw error;
 	}
 };
 
-export const deleteHotel = async (accId, token) => {
+export const deleteAccommodation = async (accId, token) => {
 	try {
 		const response = await axios.delete(`${baseURL}/accommodations/${accId}/`, {
 			headers: {
@@ -63,14 +63,14 @@ export const deleteHotel = async (accId, token) => {
 		});
 		return response.data;
 	} catch (error) {
-		console.error("Error deleting hotel:", error);
+		console.error("Error deleting Accommodation:", error);
 		throw error;
 	}
 };
 
 // Process Image in Accommodations
 
-export const getImage = async (token, formData) => {
+export const getImageAcc = async (token, formData) => {
 	try {
 		const response = await axios.get(
 			`${baseURL}/accommodation-images/`,
@@ -84,12 +84,12 @@ export const getImage = async (token, formData) => {
 		);
 		return response.data;
 	} catch (error) {
-		console.error("Error posting hotel data:", error);
+		console.error("Error posting Accommodation data:", error);
 		throw error;
 	}
 };
 
-export const postImage = async (token, formData) => {
+export const postImageAcc = async (token, formData) => {
 	try {
 		const response = await axios.post(
 			`${baseURL}/accommodation-images/`,
@@ -103,12 +103,12 @@ export const postImage = async (token, formData) => {
 		);
 		return response.data;
 	} catch (error) {
-		console.error("Error posting hotel data:", error);
+		console.error("Error posting Accommodation data:", error);
 		throw error;
 	}
 };
 
-export const deleteImage = async (token, id) => {
+export const deleteImageAcc = async (token, id) => {
 	try {
 		const response = await axios.delete(
 			`${baseURL}/accommodation-images/${id}`,
@@ -121,7 +121,7 @@ export const deleteImage = async (token, id) => {
 		);
 		return response.data;
 	} catch (error) {
-		console.error("Error posting hotel data:", error);
+		console.error("Error posting Accommodation data:", error);
 		throw error;
 	}
 };

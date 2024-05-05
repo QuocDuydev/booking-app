@@ -5,13 +5,16 @@ import Sidebar_Admin from "../../components/Admin/Layout/SideBar";
 import { useAccessToken } from "../../components/ultiti";
 import { Alert } from "@material-tailwind/react";
 import EditRoomForm from "../../components/Admin/EditRoom_Form";
-import { getHotel } from "../../api/acc_API";
-import { getRoomdetailinHotel, putRoom } from "../../api/room_in_acc_API";
+import { getAccommodation } from "../../api/acc_API";
+import {
+	getRoomdetail_In_Accommodation,
+	putRoom,
+} from "../../api/room_in_acc_API";
 
 function EditRoom() {
 	const token = useAccessToken();
 	const { acc_id, room_id } = useParams();
-	const [hotel, setHotel] = useState([]);
+	const [acc, setAccommodations] = useState([]);
 	const [room, setRooms] = useState({
 		accommodations: "",
 		roomname: "",
@@ -21,23 +24,22 @@ function EditRoom() {
 		roomoccupancy: "",
 		roomtype: "",
 		createdAt: "",
-		updatedAt: "",
+		updatedAt: new Date().toISOString().split("T")[0],
 	});
 	const [updateSuccess, setUpdateSuccess] = useState(false);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		// Fetch hotel details
 		const fetchData = async () => {
 			try {
-				const [hotelData, roomData] = await Promise.all([
-					getHotel(),
-					getRoomdetailinHotel(acc_id, room_id),
+				const [accData, roomData] = await Promise.all([
+					getAccommodation(),
+					getRoomdetail_In_Accommodation(acc_id, room_id),
 				]);
 
 				// Lấy ra đối tượng phòng từ mảng roomData
 				const roomObject = roomData[0];
-				setHotel(hotelData);
+				setAccommodations(accData);
 				setRooms(roomObject);
 			} catch (error) {
 				console.error("Error fetching data:", error);
@@ -49,15 +51,16 @@ function EditRoom() {
 	const handleUpdate = async () => {
 		try {
 			const roomData = {
-				hotel: room.hotel,
+				accommodations: room.accommodations,
 				roomname: room.roomname,
 				roomimage: room.roomimage,
 				descriptions: room.descriptions,
 				roomprice: room.roomprice,
 				roomnumber: room.roomnumber,
 				roomoccupancy: room.roomoccupancy,
-				room_type: room.room_type,
-				dateadded: room.dateadded,
+				roomtype: room.roomtype,
+				createdAt: room.createdAt,
+				updatedAt: room.updatedAt,
 			};
 
 			const response = await putRoom(room_id, token, roomData);
@@ -88,7 +91,7 @@ function EditRoom() {
 	// const handleSelectChange = (value) => {
 	// 	handleChange({ target: { name: "room_type", value } });
 	// };
-	const selectedAccommodations = hotel.find(
+	const selectedAccommodations = acc.find(
 		(item) => item.acc_id === room.accommodations,
 	);
 	return (
