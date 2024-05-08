@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Users, AccommodationImage, Accommodations, RoomAmenities, Rooms, RoomImage
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ("id", "username", "name", "email", "password", "account_type", "joined")
+    list_display = ("id", "username" ,"images","name", "email", "password", "phone","address", "account_type", "sex_type", "createdAt", "updatedAt")
     
 class AccommodationImageInline(admin.TabularInline):
     model = AccommodationImage

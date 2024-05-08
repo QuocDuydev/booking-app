@@ -60,7 +60,8 @@ function ListBookings({ booking, handleDelete }) {
                                                 <td className="px-4 py-3 ">
                                                     <div className=" flex space-x-4 mx-auto justify-center">
                                                         <Link to={`/edit-booking/${item.booking_id}`}>
-                                                            <button
+                                                            {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+<button
 
                                                                 className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-green-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                                 aria-label="Edit"
@@ -69,7 +70,8 @@ function ListBookings({ booking, handleDelete }) {
                                                             </button>
                                                         </Link>
 
-                                                        <button
+                                                        {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+<button
                                                             onClick={() => handleDelete(item)}
                                                             className="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-red-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                             aria-label="Delete"

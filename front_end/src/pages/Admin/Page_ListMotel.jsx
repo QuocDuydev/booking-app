@@ -78,7 +78,9 @@ export default function ListMotelAdmin() {
 	return (
 		<>
 			<div className=" flex h-screen overflow-hidden">
-				<Sidebar_Admin />
+				<div className="hidden lg:block">
+					<Sidebar_Admin />
+				</div>
 				<div className="flex flex-col flex-1 w-full">
 					<Header_Admin />
 					<div className=" mx-auto mb-4 mt-4">

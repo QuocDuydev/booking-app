@@ -22,8 +22,8 @@ export default function CreateAccomodation() {
 		roommap: "",
 		location: "",
 		rating: "",
-		createdAt: new Date().toISOString().split("T")[0],
-		updatedAt: new Date().toISOString().split("T")[0],
+		createdAt: new Date(),
+		updatedAt: new Date(),
 	});
 	const [images, setImages] = useState([]);
 	const navigate = useNavigate();
@@ -79,13 +79,18 @@ export default function CreateAccomodation() {
 			}));
 			setImages(files);
 		} else {
-			setAccommodations((prevAccommodation) => ({ ...prevAccommodation, [name]: value }));
+			setAccommodations((prevAccommodation) => ({
+				...prevAccommodation,
+				[name]: value,
+			}));
 		}
 	};
 	return (
 		<>
 			<div className=" flex h-screen overflow-hidden">
-				<Sidebar_Admin />
+				<div className="hidden lg:block">
+					<Sidebar_Admin />
+				</div>
 				<div className="flex flex-col flex-1 w-full">
 					<Header_Admin />
 					{CreateSuccess && (

@@ -20,7 +20,7 @@ function TotalPrice({ checkin, checkout, rooms }) {
     setTotalPrice(totalPrice);
   }, [checkin, checkout, rooms]);
 
-  return <div className="text-center">{totalPrice + " $"}</div>;
+  return <div className="text-center">{`${totalPrice} $`}</div>;
 }
 
 export default TotalPrice;

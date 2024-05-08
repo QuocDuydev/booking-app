@@ -19,7 +19,7 @@ import jwt_decode from "jwt-decode";
 import { useAccessToken } from "../../ultiti";
 import { getUser } from "../../../api/user_API";
 
-function Sidebar_Admin() {
+function Sidebar_Admin(isDrawerOpen, closeDrawer) {
 	const [open, setOpen] = useState(0);
 
 	const handleOpen = (value) => {
@@ -50,7 +50,7 @@ function Sidebar_Admin() {
 
 	return (
 		<div className="sticky top-0 z-10 h-max max-w-full rounded">
-			<Card className=" hidden lg:block max-w-[15rem] p-4 h-full bg-white rounded shadow-none sm:hidden">
+			<Card className=" max-w-[15rem] p-4 h-full bg-white rounded shadow-none">
 				<List>
 					<Link to="/admin">
 						<ListItem>

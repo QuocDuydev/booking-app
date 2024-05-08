@@ -60,12 +60,13 @@ function ShowRecomment() {
 
     const [users, setUsers] = useState([]);
     const [recommentsData, setRecommentsData] = useState([]);
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
         const fetchRecomments = async () => {
             try {
                 const recommentData = await getRecomment(hotel_id);
                 setRecommentsData(recommentData);
-                let latestTimestamp = Date.now();
+                const latestTimestamp = Date.now();
 
                 // Sắp xếp theo ngày thêm mới nhất và thời gian thêm mới nhất
                 const sortedRecomment = recommentData.sort((a, b) => {
@@ -96,7 +97,7 @@ function ShowRecomment() {
                             const userData = await axios.get(`http://localhost:8000/api/users/${item.user}`, {
                                 headers: {
                                     'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${token}`,
+                                    Authorization: `Bearer ${token}`,
                                 }
                             });
                             return userData;

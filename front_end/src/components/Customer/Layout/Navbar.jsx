@@ -6,7 +6,7 @@ import {
 	IconButton,
 	MenuItem,
 } from "@material-tailwind/react";
-import { Bars2Icon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import ProfileMenu from "./ProfileMenu";
 
 const navListItems = [
@@ -38,9 +38,9 @@ function NavList() {
 					</MenuItem>
 				</Typography>
 			))}
-			<form class="w-auto mx-auto lg:w-[450px] md:w-[500px]">
-				<div class="relative">
-					<div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+			<form className="w-auto mx-auto lg:w-[450px] md:w-[500px]">
+				<div className="relative">
+					<div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
 						<MagnifyingGlassIcon className="w-5 h-5 text-black" />
 					</div>
 					<input
@@ -95,7 +95,7 @@ export default function Navbars() {
 						onClick={toggleIsNavOpen}
 						className="ml-auto mr-2 lg:hidden"
 					>
-						<Bars2Icon className="h-6 w-6" />
+						<Bars3Icon className="h-6 w-6" />
 					</IconButton>
 
 					<ProfileMenu />

@@ -17,6 +17,8 @@ import Home from "./pages/Customer/Page_Home.jsx";
 import ListSearch from "./pages/Customer/Page_Search.jsx";
 import ShowHotelDetails from "./pages/Customer/Page_HotelDetails.jsx";
 
+import Show_ListImg_Acc from "./pages/Customer/Page_ListImg_Acc.jsx";
+
 import Booking from "./pages/Customer/Page_Booking.jsx";
 import ShowListBooking from "./pages/Customer/Page_ListBooking.jsx";
 import EditBooking from "./pages/Customer/Page_EditBooking.jsx";
@@ -43,6 +45,7 @@ import ProfileAdmin from "./pages/Admin/Page_Profile_Admin.jsx";
 
 
 
+
 function App() {
   const [isAdmin] = useState(true);
 
@@ -59,6 +62,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search-results" element={<ListSearch />} />
           <Route path="/hotel/:acc_id" element={<ShowHotelDetails />} />
+          <Route path="/hotel/:acc_id/list-images" element={<Show_ListImg_Acc />} />
           <Route path="/booking/:hotel_id/:room_id" element={<Booking />} />
           <Route path="/list-booking" element={<ShowListBooking />} />
           <Route path="/edit-booking/:booking_id" element={<EditBooking />} />

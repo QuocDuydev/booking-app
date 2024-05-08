@@ -40,7 +40,9 @@ function RoomTable({ acc_id, handleDelete, getRoomsForPage, currentPage }) {
 												</div>
 											</div>
 										</td>
-										<td className="px-4 py-3 text-sm">{item.roomprice} $</td>
+										<td className="px-4 py-3 text-sm">
+											{item.roomprice.toLocaleString()}đ
+										</td>
 										<td className="px-4 py-3 text-sm">{item.room_type}</td>
 										<td className="px-4 py-3 text-xs">
 											<span className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full">

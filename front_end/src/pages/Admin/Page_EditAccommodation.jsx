@@ -23,7 +23,7 @@ export default function EditAccommodation() {
 		location: "",
 		rating: "",
 		createdAt: "",
-		updatedAt: new Date().toISOString().split("T")[0],
+		updatedAt: new Date(),
 	});
 	const [updateSuccess, setUpdateSuccess] = useState(false);
 	const navigate = useNavigate();
@@ -87,14 +87,19 @@ export default function EditAccommodation() {
 				[name]: file,
 			}));
 		} else {
-			setAccommodations((prevAccommodation) => ({ ...prevAccommodation, [name]: value }));
+			setAccommodations((prevAccommodation) => ({
+				...prevAccommodation,
+				[name]: value,
+			}));
 		}
 	};
 
 	return (
 		<>
 			<div className=" flex h-screen overflow-hidden">
-				<Sidebar_Admin />
+				<div className="hidden lg:block">
+					<Sidebar_Admin />
+				</div>
 				<div className="flex flex-col flex-1 w-full">
 					<Header_Admin />
 					{updateSuccess && (

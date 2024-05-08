@@ -8,7 +8,19 @@ import Header_Admin from "../../components/Admin/Layout/Header";
 function ProfileAdmin() {
 	const token = useAccessToken();
 	const { id } = useParams();
-	const [user, setUsers] = useState([]);
+	const [user, setUsers] = useState({
+		username: "",
+		images: "",
+		name: "",
+		email: "",
+		phone: "",
+		address: "",
+		password: "",
+		account_type: "",
+		sex_type: "",
+		createdAt: "",
+		updatedAt: new Date(),
+	});
 
 	useEffect(
 		(token) => {
@@ -28,10 +40,13 @@ function ProfileAdmin() {
 		[id],
 	);
 	const handleUpdate = () => {
+		const userData = { ...user };
+		// biome-ignore lint/performance/noDelete: <explanation>
+		delete userData.images;
 		axios({
 			method: "put",
 			url: `http://localhost:8000/api/users/${id}/`,
-			data: user,
+			data: userData,
 			headers: {
 				"Content-Type": "multipart/form-data",
 				Authorization: `Bearer ${token}`,

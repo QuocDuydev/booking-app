@@ -24,8 +24,9 @@ function CreateRoom() {
 		roomnumber: "",
 		roomoccupancy: "",
 		roomtype: "",
-		createdAt: new Date().toISOString().split("T")[0],
-		updatedAt: new Date().toISOString().split("T")[0],
+		createdAt: new Date(),
+		// createdAt: new Date().toISOString().split("T")[0],
+		updatedAt: new Date(),
 	});
 	const navigate = useNavigate();
 	const [CreateSuccess, setCreateSuccess] = useState(false);
@@ -106,7 +107,9 @@ function CreateRoom() {
 	return (
 		<>
 			<div className=" flex h-screen overflow-hidden">
-				<Sidebar_Admin />
+				<div className="hidden lg:block">
+					<Sidebar_Admin />
+				</div>
 				<div className="flex flex-col flex-1 w-full">
 					<Header_Admin />
 					{CreateSuccess && (

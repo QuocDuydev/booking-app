@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import useAccessToken from "../../ultiti";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 import {
 	Button,
 	Menu,
@@ -30,7 +31,27 @@ export default function ProfileMenu() {
 	}
 	const { user, logoutUser } = useContext(AuthContext);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [users, setUsers] = useState([]);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		axios
+			.get(`http://localhost:8000/api/users/${id}/`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((response) => {
+				console.log(response);
+				setUsers(response.data);
+			})
+			.catch((error) => {
+				console.error("Error fetching user data:", error);
+			});
+	}, [id]);
+	const imageUrl = users.images
+		? users.images
+		: "https://res.cloudinary.com/dzi8e6scb/image/upload/v1713672680/avatar_spd3di.jpg";
 	return (
 		<Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
 			<MenuHandler>
@@ -44,7 +65,7 @@ export default function ProfileMenu() {
 						size="sm"
 						alt="tania andrew"
 						className="border border-gray-900 p-0.5"
-						src="https://res.cloudinary.com/dzi8e6scb/image/upload/v1713672680/avatar_spd3di.jpg"
+						src={imageUrl}
 					/>
 					<ChevronDownIcon
 						strokeWidth={2.5}

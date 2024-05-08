@@ -41,7 +41,8 @@ export function ListAllRecomment({ users, recommentsData }) {
               color="blue-gray"
               onClick={closeDrawerRight}
             >
-              <svg
+              {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
+<svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"

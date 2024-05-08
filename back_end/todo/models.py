@@ -27,10 +27,14 @@ class AppUserManager(BaseUserManager):
 class Users(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length = 100, unique=True,)
+    images = models.ImageField(upload_to='booking-app-images', default="https://res.cloudinary.com/dzi8e6scb/image/upload/v1713672680/avatar_spd3di.jpg")
     name = models.CharField(max_length = 100, default = "")
     email = models.CharField(max_length = 200)
+    phone = models.IntegerField(default=0)
+    address = models.CharField(max_length=250, default = "")
     password = models.CharField(max_length = 100)
-    joined = models.DateField(default=timezone.now)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     USERNAME_FIELD = 'username'
@@ -44,6 +48,16 @@ class Users(AbstractBaseUser, PermissionsMixin):
         choices=ACCOUNT_TYPES,
         default='user',  
     )
+    SEX_TYPES = [
+        ('male', 'Nam'),
+        ('female', 'Nữ'),
+    ]
+    sex_type = models.CharField(
+        max_length=10,
+        choices=SEX_TYPES,
+        default='',  
+    )
+    
     objects = AppUserManager()
     def __str__(self):
         return self.username
@@ -64,8 +78,8 @@ class Accommodations(models.Model):
     roommap = models.CharField(max_length=200)
     location = models.CharField(max_length=300)
     rating = models.IntegerField()
-    createdAt = models.DateField()
-    updatedAt = models.DateField()
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.accname
@@ -92,8 +106,8 @@ class Rooms(models.Model):
     roomprice = models.IntegerField()
     roomnumber = models.IntegerField()
     roomoccupancy = models.IntegerField()
-    createdAt = models.DateField()
-    updatedAt = models.DateField()
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return f"{self.roomname}"

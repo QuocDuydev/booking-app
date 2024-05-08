@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAccessToken } from "../../components/ultiti";
 import { useParams, useNavigate } from "react-router-dom";
 import Header_Admin from "../../components/Admin/Layout/Header";
@@ -15,61 +15,53 @@ import {
 	Option,
 } from "@material-tailwind/react";
 import EditCustomerForm from "../../components/Admin/EditCustomer_Form";
-import { getUserId } from "../../api/user_API";
 
-function EditCustomer() {
+export default function EditCustomer() {
 	const { id } = useParams();
 	const [user, setUser] = useState({
 		username: "",
+		images: "",
 		name: "",
 		email: "",
+		phone: "",
+		address: "",
 		password: "",
 		account_type: "",
-		joined: "",
+		sex_type: "",
+		createdAt: "",
+		updatedAt: new Date(),
 	});
-	const [defaultAccountType, setDefaultAccountType] = useState("");
 	const [updateSuccess, setUpdateSuccess] = useState(false);
 	const navigate = useNavigate();
 	const token = useAccessToken();
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		axios
+			.get(`http://localhost:8000/api/users/${id}/`, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			})
+			.then((response) => {
+				console.log(response);
+				setUser(response.data);
 
-	//   useEffect(() => {
-	//     const fetchData = async () => {
-	//         try {
-
-	//             const userData = await getUserId(id);
-	//             setDefaultAccountType(user.account_type);
-	//             setUser(userData);
-	//         } catch (error) {
-	//             console.error("Error fetching data:", error);
-	//         }
-	//     };
-	//     fetchData();
-	// }, [id]);
-	useEffect(
-		(token) => {
-			axios
-				.get(`http://localhost:8000/api/users/${id}/`, {
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				})
-				.then((response) => {
-					setUser(response.data);
-					setDefaultAccountType(response.data.account_type);
-					// console.log(room.roomimage)
-				})
-				.catch((error) => {
-					console.error("Error fetching room data:", error);
-				});
-		},
-		[id],
-	);
+				// console.log(room.roomimage)
+			})
+			.catch((error) => {
+				console.error("Error fetching room data:", error);
+			});
+	}, [id]);
 
 	const handleUpdate = () => {
+		const userData = { ...user };
+		// biome-ignore lint/performance/noDelete: <explanation>
+		delete userData.images;
+
 		axios({
 			method: "put",
 			url: `http://localhost:8000/api/users/${id}/`,
-			data: user,
+			data: userData,
 			headers: {
 				"Content-Type": "multipart/form-data",
 				Authorization: `Bearer ${token}`,
@@ -82,7 +74,6 @@ function EditCustomer() {
 					setUpdateSuccess(false);
 				}, 1000);
 
-				// Redirect to home page after 1 seconds
 				setTimeout(() => {
 					navigate("/admin/list-customer");
 				}, 1000);
@@ -95,13 +86,18 @@ function EditCustomer() {
 		const { name, value } = e.target;
 		setUser((prevUser) => ({ ...prevUser, [name]: value }));
 	};
-	const handleSelectChange = (value) => {
+	const handleSelectAccChange = (value) => {
 		handleChange({ target: { name: "account_type", value } });
+	};
+	const handleSelectSexChange = (value) => {
+		handleChange({ target: { name: "sex_type", value } });
 	};
 	return (
 		<>
 			<div className=" flex h-screen overflow-hidden">
-				<Sidebar_Admin />
+				<div className="hidden lg:block">
+					<Sidebar_Admin />
+				</div>
 				<div className="flex flex-col flex-1 w-full">
 					<Header_Admin />
 					{updateSuccess && (
@@ -112,7 +108,8 @@ function EditCustomer() {
 					<EditCustomerForm
 						user={user}
 						handleChange={handleChange}
-						handleSelectChange={handleSelectChange}
+						handleSelectSexChange={handleSelectSexChange}
+						handleSelectAccChange={handleSelectAccChange}
 						handleUpdate={handleUpdate}
 					/>
 				</div>
@@ -120,4 +117,3 @@ function EditCustomer() {
 		</>
 	);
 }
-export default EditCustomer;
