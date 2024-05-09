@@ -18,7 +18,7 @@ import {
 	postImageRoom,
 } from "../../api/room_in_acc_API";
 import useAccessToken from "../ultiti";
-import UploadAmenities from "./Upload_Amenities";
+import UploadAmenities from "./List_Amenities";
 
 function EditRoomForm({
 	room,
@@ -56,6 +56,9 @@ function EditRoomForm({
 	const handleChangeImage = (e) => {
 		const image = e.target.files[0];
 		setSelectedImage(image);
+	};
+	const handleSelectChange = (value) => {
+		handleChange({ target: { name: "roomtype", value } });
 	};
 	const updateImageList = async () => {
 		try {
@@ -246,25 +249,47 @@ function EditRoomForm({
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
-								<div>
-									<Typography
-										variant="h6"
-										color="blue-gray"
-										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-									>
-										Số phòng
-									</Typography>
+								<div className="flex">
+									<div className="w-1/2 mr-2">
+										<Typography
+											variant="h6"
+											color="blue-gray"
+											className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+										>
+											Số phòng
+										</Typography>
 
-									<Input
-										type="number"
-										multiple
-										size="lg"
-										name="roomnumber"
-										value={room.roomnumber}
-										onChange={handleChange}
-										placeholder="Nhập số phòng..."
-										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-									/>
+										<Input
+											type="number"
+											multiple
+											size="lg"
+											name="roomnumber"
+											value={room.roomnumber}
+											onChange={handleChange}
+											placeholder="Nhập số phòng..."
+											className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+										/>
+									</div>
+									<div className="w-1/2">
+										<Typography
+											variant="h6"
+											color="blue-gray"
+											className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+										>
+											Sức chứa người/phòng
+										</Typography>
+
+										<Input
+											type="number"
+											multiple
+											size="lg"
+											name="roomoccupancy"
+											value={room.roomoccupancy}
+											onChange={handleChange}
+											placeholder="Nhập sức chứa phòng..."
+											className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+										/>
+									</div>
 								</div>
 								<div>
 									<Typography
@@ -272,19 +297,21 @@ function EditRoomForm({
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Sức chứa người/phòng
+										Loại phòng
 									</Typography>
 
-									<Input
-										type="number"
-										multiple
+									<Select
+										name="roomtype"
 										size="lg"
-										name="roomoccupancy"
-										value={room.roomoccupancy}
-										onChange={handleChange}
-										placeholder="Nhập sức chứa phòng..."
-										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-									/>
+										value={String(room?.roomtype) || ""}
+										onChange={handleSelectChange}
+										className="text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										<Option value="1">Phòng đơn</Option>
+										<Option value="2">Phòng đôi</Option>
+										<Option value="3">Phòng gia đình</Option>
+										<Option value="4">Phòng ghép</Option>
+									</Select>
 								</div>
 							</div>
 						</div>

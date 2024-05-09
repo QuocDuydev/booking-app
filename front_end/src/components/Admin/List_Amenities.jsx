@@ -12,7 +12,7 @@ import useAccessToken from "../ultiti";
 import { deleteAmenities } from "../../api/room_in_acc_API";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
-export default function UploadAmenities({
+export default function ListAmenities({
 	amenities,
 	room,
 	updateAmenityList,
@@ -37,13 +37,8 @@ export default function UploadAmenities({
 
 	return (
 		<div>
-			<div className="mt-4 mx-auto flex justify-center">
-				<Button
-					onClick={handleOpen}
-					variant="gradient"
-					color="blue"
-					className="sm"
-				>
+			<div className="mt-2 mx-auto flex justify-center">
+				<Button onClick={handleOpen} variant="gradient" color="blue" size="sm">
 					Danh sách tiện nghi
 				</Button>
 				<Dialog

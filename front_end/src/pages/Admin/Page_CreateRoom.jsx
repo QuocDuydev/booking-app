@@ -13,7 +13,6 @@ function CreateRoom() {
 	let token = useAccessToken();
 	const { acc_id } = useParams();
 	const [images, setImages] = useState([]);
-	const [amenities, setAmenities] = useState([]);
 	const [room, setRoom] = useState({
 		accommodations: acc_id,
 		roomname: "",
@@ -30,8 +29,6 @@ function CreateRoom() {
 	});
 	const navigate = useNavigate();
 	const [CreateSuccess, setCreateSuccess] = useState(false);
-	const [selectedAmenities, setSelectedAmenities] = useState([]);
-
 	const handleChange = (e) => {
 		const { name, value, files } = e.target;
 
@@ -42,17 +39,9 @@ function CreateRoom() {
 				...prevRoom,
 				[name]: file,
 			}));
-			setImages(files);
-			setAmenities(name);
 		} else {
 			setRoom((prevRoom) => ({ ...prevRoom, [name]: value }));
 		}
-	};
-	const handleAmenitiesChange = (selectedOptions) => {
-		const selectedAmenities = selectedOptions.map((option) => ({
-			id: option.value,
-		}));
-		setSelectedAmenities(selectedAmenities);
 	};
 	const handleSelectChange = (value) => {
 		handleChange({ target: { name: "roomtype", value } });
@@ -78,14 +67,6 @@ function CreateRoom() {
 				formData.append("roomtype", room.roomtype);
 				formData.append("createdAt", room.createdAt);
 				formData.append("updatedAt", room.updatedAt);
-
-				for (let i = 0; i < images.length; i++) {
-					formData.append("images", images[i]);
-				}
-
-				for (let i = 0; i < selectedAmenities.length; i++) {
-					formData.append("amenities", selectedAmenities[i].id);
-				}
 
 				const response = await postRoom(token, formData);
 				console.log("Create successful:", response.data);
@@ -123,7 +104,6 @@ function CreateRoom() {
 						handleChange={handleChange}
 						handleSelectChange={handleSelectChange}
 						handleCreate={handleCreate}
-						handleAmenitiesChange={handleAmenitiesChange}
 					/>
 				</div>
 			</div>

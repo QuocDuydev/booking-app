@@ -46,7 +46,7 @@ export default function UploadImageRooms({
 				<Dialog
 					open={open}
 					handler={handleOpen}
-					className=" w-[60%] h-[60%] my-auto mx-auto"
+					className=" w-[60%] h-auto my-auto mx-auto"
 				>
 					<form>
 						<DialogHeader className=" -mb-7" />

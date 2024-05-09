@@ -11,8 +11,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.hashers import make_password
 from rest_framework import generics
-from .serializers import UserSerializer, UserSignupSerializers, AccommodationImageSerializer, AccommodationTypeSerializer, AccommodationSerializer, RoomAmenitiesSerializer, RoomTypeSerializer, RoomSerializer, RoomImageSerializer, AmenitiesSerializer
-from .models import Users, AccommodationImage, Accommodation_type, Accommodations, Rooms, RoomImage, Room_type, RoomAmenities, Amenities
+from .serializers import UserSerializer, UserSignupSerializers, AccommodationImageSerializer, AccommodationTypeSerializer, AccommodationSerializer, RoomAmenitiesSerializer, RoomTypeSerializer, RoomSerializer, RoomImageSerializer, AmenitiesSerializer, BookingSerializer, RecommentSerializer, UtilitiesSerializer
+from .models import Users, AccommodationImage, Accommodation_type, Accommodations, Rooms, RoomImage, Room_type, RoomAmenities, Amenities, Booking, Recomments, Utilities
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -150,53 +150,53 @@ class AmenitiesRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Amenities.objects.all()
     serializer_class = AmenitiesSerializer
     
-# class BookingView(viewsets.ModelViewSet):
-#     serializer_class = BookingSerializer
-#     queryset = Booking.objects.all()
+class UtilitiesView(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny]
+    queryset = Utilities.objects.all()
+    serializer_class = UtilitiesSerializer
 
-# class ListBookingView(generics.ListCreateAPIView):
-#     serializer_class = BookingSerializer
-#     permission_classes = [IsAuthenticated]
-
-#     def get_queryset(self):
-#         user_id = self.request.user.id
-#         return Booking.objects.filter(user_id=user_id)
-
-# class BookingRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Booking.objects.all()
-#     serializer_class = BookingSerializer
-#     def create(self, request):
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         # Lấy user_id từ tài khoản đang đăng nhập
-#         user = request.user
-#         serializer.save(user_id=user)  
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#     permission_classes = [IsAuthenticated]
-
-
-
+class UtilitiesRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = Utilities.objects.all()
+    serializer_class = UtilitiesSerializer
     
-# class RecommentListView(generics.ListCreateAPIView):
-#     permission_classes = [permissions.AllowAny]
-#     serializer_class = RecommentSerializer
+class BookingView(viewsets.ModelViewSet):
+    serializer_class = BookingSerializer
+    queryset = Booking.objects.all()
 
-#     def get_queryset(self):
-#         hotel_id = self.kwargs.get('hotel_id')
-#         queryset = Recomments.objects.filter(hotel_id=hotel_id)
-#         return queryset
+class ListBookingView(generics.ListCreateAPIView):
+    serializer_class = BookingSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user_id = self.request.user.id
+        return Booking.objects.filter(user_id=user_id)
+
+class BookingRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        # Lấy user_id từ tài khoản đang đăng nhập
+        user = request.user
+        serializer.save(user_id=user)  
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    permission_classes = [IsAuthenticated]
+
+ 
+class RecommentListView(generics.ListCreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = RecommentSerializer
+
+    def get_queryset(self):
+        acc_id = self.kwargs.get('acc_id')
+        queryset = Recomments.objects.filter(acc_id=acc_id)
+        return queryset
     
-# class RecommentRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+class RecommentRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
    
-#     queryset = Recomments.objects.all()
-#     serializer_class = RecommentSerializer
-#     permission_classes = [permissions.AllowAny]
+    queryset = Recomments.objects.all()
+    serializer_class = RecommentSerializer
+    permission_classes = [permissions.AllowAny]
     
-# def upload_image(request):
-#     if request.method == 'POST' and request.FILES.getlist('roomimage'):
-#         images = request.FILES.getlist('roomimage')
-#         # Xử lý và lưu trữ hình ảnh ở đây
-#         # Trả về URL của các hình ảnh đã tải lên
-#         image_urls = [handle_uploaded_image(image) for image in images]
-#         return JsonResponse({'image_urls': image_urls})
-#     return JsonResponse({'error': 'No image uploaded'})

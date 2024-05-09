@@ -126,51 +126,60 @@ class RoomAmenities(models.Model):
     def __str__(self):
         return f"Image for {self.rooms.roomname}"
     
+class RoomUtilities(models.Model):
+    rooms = models.ForeignKey(Rooms, related_name='utilities', on_delete=models.CASCADE)
+    name = models.CharField(max_length = 250)
+
+    def __str__(self):
+        return f"Image for {self.rooms.roomname}"
+    
 class Amenities(models.Model):
     amenities_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     def __str__(self):
-        return  self.name      
-# class RoomImage(models.Model):
-#     room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
-#     image = models.ImageField(upload_to='room_images/')
+        return  self.name  
+        
+class Utilities(models.Model):
+    utilities_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return  self.name  
 
-#     def __str__(self):
-#         return f"Image for {self.room.roomname}"
-    
-# class Booking(models.Model):
-#     booking_id = models.AutoField(primary_key=True)
-#     user = models.ForeignKey(Users, on_delete=models.CASCADE)
-#     hotel = models.ForeignKey(Hotels, on_delete=models.CASCADE)
-#     room = models.ForeignKey(Rooms, on_delete=models.CASCADE)
-#     name = models.CharField(max_length = 100)
-#     email = models.CharField(max_length = 200)
-#     phonenumber = models.IntegerField()
-#     address = models.CharField()
-#     checkin = models.DateField()
-#     checkout = models.DateField()
-#     total = models.IntegerField()
-#     datebooking = models.DateField()
-#     STATUS_TYPES = [
-#         ('active', 'Active'),
-#         ('processing', 'Processing'), 
-#         ('hide', 'Hide'), 
-#     ]
-#     status = models.CharField(
-#         max_length=10,
-#         choices=STATUS_TYPES,
-#         default='processing',  # Giá trị mặc định có thể là 'active' hoặc 'processing'
-#     )
-#     def __str__(self):
-#         return f"{self.booking_id},{self.user}, {self.hotel}, {self.room}, {self.name}, {self.email},{self.phonenumber}, {self.address}, {self.checkin}, {self.checkout},  {self.total}, {self.datebooking}, {self.status}"   
+class Booking(models.Model):
+    booking_id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    accommodations = models.ForeignKey(Accommodations, on_delete=models.CASCADE)
+    rooms = models.ForeignKey(Rooms, on_delete=models.CASCADE)
+    name = models.CharField(max_length = 100)
+    email = models.CharField(max_length = 200)
+    phonenumber = models.IntegerField()
+    address = models.CharField()
+    checkin = models.DateField()
+    checkout = models.DateField()
+    total = models.IntegerField()
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+    STATUS_TYPES = [
+        ('active', 'Active'),
+        ('processing', 'Processing'), 
+        ('hide', 'Hide'), 
+    ]
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_TYPES,
+        default='processing',  # Giá trị mặc định có thể là 'active' hoặc 'processing'
+    )
+    def __str__(self):
+        return f"{self.booking_id},{self.user}, {self.accommodations}, {self.rooms}, {self.name}, {self.email},{self.phonenumber}, {self.address}, {self.checkin}, {self.checkout},  {self.total}, {self.createdAt}, {self.updatedAt}, {self.status}"   
 
-# class Recomments(models.Model):
-#     comment_id = models.AutoField(primary_key=True)
-#     hotel = models.ForeignKey(Hotels, on_delete=models.CASCADE)
-#     user = models.ForeignKey(Users, on_delete=models.CASCADE)
-#     descriptions = models.TextField()
-#     rating = models.IntegerField()
-#     datecommented = models.DateField()
+class Recomments(models.Model):
+    comment_id = models.AutoField(primary_key=True)
+    accommodations = models.ForeignKey(Accommodations, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    descriptions = models.TextField()
+    rating = models.IntegerField()
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
     
-#     def __str__(self):
-#         return f"{self.user}"
+    def __str__(self):
+        return f"{self.user}"

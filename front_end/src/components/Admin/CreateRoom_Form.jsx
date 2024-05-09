@@ -8,7 +8,6 @@ import {
 	Option,
 } from "@material-tailwind/react";
 
-import Select from "react-select";
 import { useState, useEffect } from "react";
 import { getAmenities } from "../../api/acc-type_API";
 
@@ -17,7 +16,6 @@ function CreateRoomForm({
 	handleChange,
 	handleSelectChange,
 	handleCreate,
-	handleAmenitiesChange,
 }) {
 	const [amenity, setAmenities] = useState([]);
 
@@ -83,7 +81,7 @@ function CreateRoomForm({
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-md xl:text-md"
 									/>
 								</div>
-								
+
 								<div>
 									<Typography
 										variant="h6"
@@ -107,24 +105,6 @@ function CreateRoomForm({
 								</div>
 							</div>
 							<div className="mb-1 w-1/2 p-4">
-								<div>
-									<Typography
-										variant="h6"
-										color="blue-gray"
-										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
-									>
-										Tiện nghi
-									</Typography>
-									<Select
-										options={amenity.map((amenity) => ({
-											value: amenity.amenities_id,
-											label: amenity.name,
-										}))}
-										isMulti
-										name="amenities"
-										onChange={handleAmenitiesChange}
-									/>
-								</div>
 								<div>
 									<Typography
 										variant="h6"

@@ -21,3 +21,13 @@ export const getAmenities = async () => {
 		throw error;
 	}
 };
+
+export const getRoomType = async () => {
+	try {
+		const response = await axios.get(`${baseURL}/room-types/`);
+		return response.data;
+	} catch (error) {
+		console.error("Error fetching accommodation type data:", error);
+		throw error;
+	}
+};

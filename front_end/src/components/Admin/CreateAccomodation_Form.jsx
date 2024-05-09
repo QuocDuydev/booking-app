@@ -90,16 +90,6 @@ export default function CreateAccommodationForm({
 									>
 										Loại chỗ ở
 									</Typography>
-
-									{/* <Select
-										options={acctype.map((amenity) => ({
-											value: amenity.acctype_id,
-											label: amenity.name,
-										}))}
-										isMulti
-										name="acctype"
-										onChange={handleAmenitiesChange}
-									/> */}
 									<Select
 										name="acctype"
 										size="lg"

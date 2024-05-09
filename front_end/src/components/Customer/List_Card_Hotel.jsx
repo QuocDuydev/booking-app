@@ -129,102 +129,108 @@ export default function ListCardHotel() {
 
 	return (
 		<>
-			<div className=" container mt-6 flex">
-				<BuildingOffice2Icon className="h-7 w-7 text-red-600 mr-3" />
-				<Typography variant="h4">Danh sách Khách Sạn</Typography>
-			</div>
-			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
-				{limitedHotel.map((item, index) => {
-					const hotelRooms = rooms[index] || [];
-					const firstRoomPrice =
-						hotelRooms.length > 0 ? hotelRooms[0].roomprice : "0";
-					return (
-						<Card
-							className="text-center shadow-lg border-spacing-0  rounded-xl flex flex-col"
-							key={item.acc_id}
-						>
-							<CardHeader className="mt-6 h-56 overflow-hidden">
-								<Carousel className="rounded-xl">
-									{item.images.slice(0, 5).map((image, index) => (
-										<Link
-											to={`/hotel/${item.acc_id}`}
-											// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-											key={index}
-										>
-											<img
-												src={image.image}
-												alt={`image-${index}`}
-												className="h-full w-full object-cover"
-											/>
-										</Link>
-									))}
-								</Carousel>
-							</CardHeader>
-							<CardBody className=" flex flex-col justify-between  h-1/2">
-								<div className="mx-auto justify-center  overflow-hidden b ">
-									<Typography
-										variant="h5"
-										color="blue-gray"
-										className="mb-2 line-clamp-3 w-[250px]"
-										style={{
-											display: "-webkit-box",
-											WebkitBoxOrient: "vertical",
-											WebkitLineClamp: 3,
-											overflow: "hidden",
-											textOverflow: "ellipsis",
-										}}
-									>
-										{item.accname}
-									</Typography>
-								</div>
-								<div className=" ">
-									<div className="mx-auto flex justify-center mb-2">
-										{item.acc_id && (
-											<>
-												<Rating
-													value={item.rating}
-													unratedColor="red"
-													ratedColor="red"
-													readonly
-													className="flex justify-end"
+			<div className="container mx-auto relative max-w-screen-2xl px-3 py-3">
+				<div className="mt-6 flex ">
+					<BuildingOffice2Icon className="h-7 w-7 text-red-600 mr-3" />
+					<Typography variant="h4">Danh sách Khách Sạn</Typography>
+				</div>
+				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+					{limitedHotel.map((item, index) => {
+						const hotelRooms = rooms[index] || [];
+						const firstRoomPrice =
+							hotelRooms.length > 0 ? hotelRooms[0].roomprice : "0";
+						return (
+							<Card
+								className="text-center shadow-lg border-spacing-0  rounded-xl flex flex-col"
+								key={item.acc_id}
+							>
+								<CardHeader className="mt-6 h-56 overflow-hidden">
+									<Carousel className="rounded-xl">
+										{item.images.slice(0, 5).map((image, index) => (
+											<Link
+												to={`/hotel/${item.acc_id}`}
+												// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+												key={index}
+											>
+												<img
+													src={image.image}
+													alt={`image-${index}`}
+													className="h-full w-full object-cover"
 												/>
-											</>
-										)}
-									</div>
-									<div className="text-left">
-										<Typography variant="h6" color="blue-gray" className="flex">
-											Chủ nhà:
-											<span className="line-clamp-1 w-[190px] ml-1 overflow-ellipsis block text-blue-600">
-												{user[item.user]?.name}
-											</span>
+											</Link>
+										))}
+									</Carousel>
+								</CardHeader>
+								<CardBody className=" flex flex-col justify-between  h-1/2">
+									<div className="mx-auto justify-center  overflow-hidden b ">
+										<Typography
+											variant="h5"
+											color="blue-gray"
+											className="mb-2 line-clamp-3 w-[250px]"
+											style={{
+												display: "-webkit-box",
+												WebkitBoxOrient: "vertical",
+												WebkitLineClamp: 3,
+												overflow: "hidden",
+												textOverflow: "ellipsis",
+											}}
+										>
+											{item.accname}
 										</Typography>
-										<Typography color="blue-gray">
-											<div className="flex">
-												<MapPinIcon className="h-5 w-5" />
-												<span className="line-clamp-1 w-[250px] ml-1 overflow-ellipsis block ">
-													{item.location} - {item.roommap}
+									</div>
+									<div className=" ">
+										<div className="mx-auto flex justify-center mb-2">
+											{item.acc_id && (
+												<>
+													<Rating
+														value={item.rating}
+														unratedColor="red"
+														ratedColor="red"
+														readonly
+														className="flex justify-end"
+													/>
+												</>
+											)}
+										</div>
+										<div className="text-left">
+											<Typography
+												variant="h6"
+												color="blue-gray"
+												className="flex"
+											>
+												Chủ nhà:
+												<span className="line-clamp-1 w-[190px] ml-1 overflow-ellipsis block text-blue-600">
+													{user[item.user]?.name}
 												</span>
-											</div>
-										</Typography>
+											</Typography>
+											<Typography color="blue-gray">
+												<div className="flex">
+													<MapPinIcon className="h-5 w-5" />
+													<span className="line-clamp-1 w-[250px] ml-1 overflow-ellipsis block ">
+														{item.location} - {item.roommap}
+													</span>
+												</div>
+											</Typography>
+										</div>
+										<div className="mt-3 flex mx-auto text-right">
+											<Typography variant="h4" color="red" className="flex">
+												<span className="line-clamp-1 w-[250px] ml-1 mt-[1px] flex justify-center ">
+													{firstRoomPrice.toLocaleString()}đ
+												</span>
+											</Typography>
+										</div>
 									</div>
-									<div className="mt-3 flex mx-auto text-right">
-										<Typography variant="h4" color="red" className="flex">
-											<span className="line-clamp-1 w-[250px] ml-1 mt-[1px] flex justify-center ">
-												{firstRoomPrice.toLocaleString()}đ
-											</span>
-										</Typography>
-									</div>
-								</div>
-							</CardBody>
-						</Card>
-					);
-				})}
-			</div>
-			<div className="flex mx-auto justify-end mt-3 ">
-				<Link to={"/list-hotel"}>
-					{" "}
-					<Button size="md">Xem thêm {">>"}</Button>
-				</Link>
+								</CardBody>
+							</Card>
+						);
+					})}
+				</div>
+				<div className="flex mx-auto justify-end mt-3 ">
+					<Link to={"/list-hotel"}>
+						{" "}
+						<Button size="md">Xem thêm {">>"}</Button>
+					</Link>
+				</div>
 			</div>
 		</>
 	);
