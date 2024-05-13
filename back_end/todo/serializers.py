@@ -1,11 +1,7 @@
 
 from django.conf import Settings
 from rest_framework import serializers
-<<<<<<< HEAD
 from .models import Users, AccommodationImage, Accommodation_type, Accommodations, Rooms, RoomImage, Room_type, RoomAmenities, Amenities, Booking, Recomments, Utilities, AccommodationUtilities
-=======
-from .models import Users, AccommodationImage, Accommodation_type, Accommodations, Rooms, RoomImage, Room_type, RoomAmenities, Amenities
->>>>>>> parent of e715492 (Update page home add acc detail)
 from django.contrib.auth import get_user_model
 
 UserModel = get_user_model()
@@ -33,6 +29,11 @@ class UserSerializer(serializers.ModelSerializer):
 class AmenitiesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Amenities
+        fields = '__all__'     
+
+class UtilitiesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Utilities
         fields = '__all__'     
           
 # Accommodation
@@ -70,10 +71,6 @@ class RoomTypeSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class RoomAmenitiesSerializer(serializers.ModelSerializer):
-    # amenities_info = serializers.PrimaryKeyRelatedField(
-    #     many=True,
-    #     queryset=Amenities.objects.all(), 
-    # )
     class Meta:
         model = RoomAmenities
         fields = '__all__'
@@ -81,22 +78,21 @@ class RoomAmenitiesSerializer(serializers.ModelSerializer):
 class RoomSerializer(serializers.ModelSerializer):
     images = RoomImageSerializer(many=True, read_only=True)
     amenities = RoomAmenitiesSerializer(many=True, read_only=True)
-    roomtype = serializers.ReadOnlyField(source='roomtype.name')
     class Meta:
         model = Rooms
         fields = '__all__'
     
-# class BookingSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Booking
-#         fields = '__all__'
-#         user_id = serializers.PrimaryKeyRelatedField(read_only=True)
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = '__all__'
+        user_id = serializers.PrimaryKeyRelatedField(read_only=True)
 
-# class RecommentSerializer(serializers.ModelSerializer):
+class RecommentSerializer(serializers.ModelSerializer):
    
-#     class Meta:
-#         model = Recomments
-#         fields = '__all__'
-#         user_id = serializers.PrimaryKeyRelatedField(read_only=True)
+    class Meta:
+        model = Recomments
+        fields = '__all__'
+        user_id = serializers.PrimaryKeyRelatedField(read_only=True)
         
 

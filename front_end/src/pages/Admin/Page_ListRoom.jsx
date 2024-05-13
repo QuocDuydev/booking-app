@@ -9,16 +9,21 @@ import {
 } from "../../api/room_in_acc_API";
 import RoomTable from "../../components/Admin/Room_Table";
 import Pagination from "../../components/Customer/Layout/Panination";
+import { getRoomType } from "../../api/acc-type_API";
 
-function ListRoom() {
+export default function ListRoom() {
 	const { acc_id } = useParams();
 	const [rooms, setRooms] = useState([]);
+	const [roomtypes, setRoomtypes] = useState([]);
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const roomData = await getRoom_In_Accommodation(acc_id);
-
+				const [roomData, roomtypeData] = await Promise.all([
+					getRoom_In_Accommodation(acc_id),
+					getRoomType(),
+				]);
 				setRooms(roomData);
+				setRoomtypes(roomtypeData);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
@@ -70,6 +75,7 @@ function ListRoom() {
 						handleDelete={handleDelete}
 						getRoomsForPage={getRoomsForPage}
 						currentPage={currentPage}
+						roomtypes={roomtypes}
 					/>
 					<Pagination
 						handlePageChange={handlePageChange}
@@ -80,4 +86,3 @@ function ListRoom() {
 		</>
 	);
 }
-export default ListRoom;

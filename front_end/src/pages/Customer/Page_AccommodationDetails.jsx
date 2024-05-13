@@ -4,7 +4,6 @@ import { DefaultTimeline } from "../../components/Customer/Layout/Timeline";
 import ShowRecomment from "../../components/Customer/Recomment";
 import AccommodationDetails from "../../components/Customer/Accommodation_Details";
 import RoominAccommodation from "../../components/Customer/Room_in_Accommodation";
-import MapAcc from "../../components/Customer/Map";
 export default function ShowAccomodationDetails() {
 	return (
 		<>
@@ -12,7 +11,6 @@ export default function ShowAccomodationDetails() {
 			<main className="content ">
 				<div className="container mx-auto">
 					<AccommodationDetails />
-					<MapAcc />
 					<RoominAccommodation />
 					<DefaultTimeline />
 					<ShowRecomment />

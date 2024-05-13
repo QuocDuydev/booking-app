@@ -13,6 +13,7 @@ import {
 	Button,
 } from "@material-tailwind/react";
 import { CheckBadgeIcon, MapPinIcon } from "@heroicons/react/24/solid";
+import MapAcc from "./Map";
 export default function AccommodationDetails() {
 	const token = useAccessToken();
 	const { acc_id } = useParams();
@@ -211,6 +212,10 @@ export default function AccommodationDetails() {
 					</div>
 				</CardBody>
 			</Card>
+			<div className="p-5">
+				<Typography variant="h4"> Vị trí chỗ ở</Typography>
+			</div>
+			<MapAcc roommap={accommodations.roommap} />
 		</div>
 	);
 }

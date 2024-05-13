@@ -20,7 +20,7 @@ function EditBookings() {
 	const [booking, setBooking] = useState({
 		user: "",
 		accommodations: "",
-		room: "",
+		rooms: "",
 		name: "",
 		email: "",
 		phonenumber: "",
@@ -38,7 +38,7 @@ function EditBookings() {
 			try {
 				const [accData, roomData, bookingData] = await Promise.all([
 					getAccommodation(),
-					getRoom(),
+					getRoom(token),
 					getBookingId(booking_id, token),
 				]);
 
@@ -70,7 +70,7 @@ function EditBookings() {
 			const bookingData = {
 				user: booking.user,
 				accommodations: booking.accommodations,
-				room: booking.room,
+				rooms: booking.rooms,
 				name: booking.name,
 				email: booking.email,
 				phonenumber: booking.phonenumber,
@@ -99,7 +99,7 @@ function EditBookings() {
 		setBooking((prevBooking) => ({ ...prevBooking, [name]: value }));
 	};
 	const selectedAcc = acc.find((item) => item.hotel_id === booking.hotel);
-	const selectedRoom = room.find((items) => items.room_id === booking.room);
+	const selectedRoom = room.find((items) => items.room_id === booking.rooms);
 
 	return (
 		<>

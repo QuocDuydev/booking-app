@@ -12,14 +12,14 @@ export default function EditBookingForm({
 	booking,
 	handleUpdate,
 	handleChange,
-	selectedHotel,
+	selectedAcc,
 	selectedRoom,
 }) {
 	return (
 		<>
 			<div className="mx-auto mt-3">
 				<Typography variant="h4" color="red">
-					Edit the Bookings
+					Cập nhật đơn đặt phòng
 				</Typography>
 			</div>
 			<div className=" max-w-full px-3 rounded-lg mt-2 overflow-auto">
@@ -34,14 +34,14 @@ export default function EditBookingForm({
 											color="blue-gray"
 											className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Hotel Name:
+											Tên chỗ ở:
 										</Typography>
 										<Typography
 											variant="h5"
 											color="blue-gray"
 											className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
 										>
-											{selectedHotel ? selectedHotel.hotelname : ""}
+											{selectedAcc ? selectedAcc.accname : ""}
 										</Typography>
 									</div>
 									<div className="flex">
@@ -50,14 +50,14 @@ export default function EditBookingForm({
 											color="blue-gray"
 											className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Hotels Address:
+											Địa chỉ:
 										</Typography>
 										<Typography
 											variant="h5"
 											color="blue-gray"
 											className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
 										>
-											{selectedHotel ? selectedHotel.roommap : ""}
+											{selectedAcc ? selectedAcc.roommap : ""}
 										</Typography>
 									</div>
 									<div className="flex">
@@ -66,14 +66,14 @@ export default function EditBookingForm({
 											color="blue-gray"
 											className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Location:
+											Vị trí:
 										</Typography>
 										<Typography
 											variant="h5"
 											color="blue-gray"
 											className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
 										>
-											{selectedHotel ? selectedHotel.location : ""}
+											{selectedAcc ? selectedAcc.location : ""}
 										</Typography>
 									</div>
 								</div>
@@ -85,7 +85,7 @@ export default function EditBookingForm({
 											color="blue-gray"
 											className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Room Name:
+											Tên phòng:
 										</Typography>
 										<Typography
 											variant="h5"
@@ -101,14 +101,14 @@ export default function EditBookingForm({
 											color="blue-gray"
 											className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Number of guests:
+											Loại phòng:
 										</Typography>
 										<Typography
 											variant="h5"
 											color="blue-gray"
 											className=" ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
 										>
-											{selectedRoom ? selectedRoom.roomoccupancy : ""} - person
+											{selectedRoom ? selectedRoom.roomtype : ""}
 										</Typography>
 									</div>
 									<div className="flex">
@@ -117,14 +117,18 @@ export default function EditBookingForm({
 											color="blue-gray"
 											className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Room Price:
+											Giá phòng:
 										</Typography>
 										<Typography
 											variant="h5"
 											color="blue-gray"
 											className=" ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
 										>
-											{selectedRoom ? selectedRoom.roomprice : ""} $
+											{(selectedRoom
+												? selectedRoom.roomprice
+												: ""
+											).toLocaleString()}{" "}
+											VNĐ
 										</Typography>
 									</div>
 								</div>
@@ -136,14 +140,14 @@ export default function EditBookingForm({
 											color="blue-gray"
 											className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Total Amount:
+											Tổng tiền:
 										</Typography>
 										<Typography
 											variant="h5"
-											color="blue-gray"
+											color="red"
 											className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
 										>
-											{booking.total} $
+											{booking.total.toLocaleString()} VNĐ
 										</Typography>
 									</div>
 									<div className="flex">
@@ -152,14 +156,16 @@ export default function EditBookingForm({
 											color="blue-gray"
 											className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Check in:
+											Ngày nhận phòng:
 										</Typography>
 										<Typography
 											variant="h5"
 											color="blue-gray"
 											className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
 										>
-											{booking.checkin}
+											{new Date(booking.checkin).getDate()}/
+											{new Date(booking.checkin).getMonth() + 1}/
+											{new Date(booking.checkin).getFullYear()}
 										</Typography>
 									</div>
 									<div className="flex">
@@ -168,14 +174,16 @@ export default function EditBookingForm({
 											color="blue-gray"
 											className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Check out:
+											Ngày trả phòng:
 										</Typography>
 										<Typography
 											variant="h5"
 											color="blue-gray"
 											className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
 										>
-											{booking.checkout}
+											{new Date(booking.checkout).getDate()}/
+											{new Date(booking.checkout).getMonth() + 1}/
+											{new Date(booking.checkout).getFullYear()}
 										</Typography>
 									</div>
 								</div>
@@ -186,9 +194,9 @@ export default function EditBookingForm({
 								<Typography
 									variant="h6"
 									color="blue-gray"
-									className="mr-4 py-2 text-sm md:text-md lg:text-lg xl:text-lg "
+									className="mr-4 py-2 text-sm md:text-md lg:text-lg xl:text-lg flex w-1/2 "
 								>
-									Status
+									Trạng thái
 								</Typography>
 								<Select
 									size="lg"
@@ -212,7 +220,7 @@ export default function EditBookingForm({
 										color="blue-gray"
 										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Full Name
+										Họ và Tên người dùng
 									</Typography>
 
 									<Input
@@ -222,7 +230,7 @@ export default function EditBookingForm({
 										name="name"
 										value={booking.name}
 										onChange={handleChange}
-										placeholder="Enter Descriptions about Rooms..."
+										placeholder="Nhập họ và tên của bạn..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 										// readOnly
 									/>
@@ -233,7 +241,7 @@ export default function EditBookingForm({
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Email
+										Địa chỉ Email
 									</Typography>
 									<Input
 										type="text"
@@ -242,7 +250,7 @@ export default function EditBookingForm({
 										name="email"
 										value={booking.email}
 										onChange={handleChange}
-										placeholder="Enter price rooms..."
+										placeholder="Nhập địa chỉ email..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
 										// readOnly
 									/>
@@ -256,7 +264,7 @@ export default function EditBookingForm({
 										color="blue-gray"
 										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Phone Number
+										Số điện thoại
 									</Typography>
 
 									<Input
@@ -266,7 +274,7 @@ export default function EditBookingForm({
 										name="phonenumber"
 										value={booking.phonenumber}
 										onChange={handleChange}
-										placeholder="Enter Numbers rooms..."
+										placeholder="Nhập số điện thoại..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 										// readOnly
 									/>
@@ -277,7 +285,7 @@ export default function EditBookingForm({
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Address
+										Địa chỉ
 									</Typography>
 
 									<Input
@@ -287,7 +295,7 @@ export default function EditBookingForm({
 										name="address"
 										value={booking.address}
 										onChange={handleChange}
-										placeholder="Enter Numbers rooms..."
+										placeholder="Nhập địa chỉ..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 										// readOnly
 									/>
@@ -300,7 +308,7 @@ export default function EditBookingForm({
 							className="mx-auto w-2/4 bg-red-600 uppercase mt-2"
 							fullWidth
 						>
-							Update nows
+							Cập nhật ngay!
 						</Button>
 					</form>
 				</Card>

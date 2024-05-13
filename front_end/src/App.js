@@ -15,8 +15,12 @@ import ShowProfile from "./pages/Customer/Page_Profile.jsx";
 
 import Home from "./pages/Customer/Page_Home.jsx";
 import ShowAccomodationDetails from "./pages/Customer/Page_AccommodationDetails.jsx";
-
+import Page_ListHotel from "./pages/Customer/Page_ListHotel.jsx";
+import Page_ListHomeStay from "./pages/Customer/Page_ListHomeStay.jsx";
+import Page_ListMotel from "./pages/Customer/Page_ListMotel.jsx";
 import Show_ListImg_Acc from "./pages/Customer/Page_ListImg_Acc.jsx";
+
+import SearchResult from "./pages/Customer/Page_SearchResult.jsx";
 
 import Booking from "./pages/Customer/Page_Booking.jsx";
 import ShowListBooking from "./pages/Customer/Page_ListBooking.jsx";
@@ -41,10 +45,7 @@ import EditRoom from "./pages/Admin/Page_EditRoom.jsx";
 import ListBookings from "./pages/Admin/Page_ListBooking_Admin.jsx";
 import EditBookings from "./pages/Admin/Page_EditBooking_Admin.jsx";
 import ProfileAdmin from "./pages/Admin/Page_Profile_Admin.jsx";
-import Page_ListHotel from "./pages/Customer/Page_ListHotel.jsx";
-import Page_ListHomeStay from "./pages/Customer/Page_ListHomeStay.jsx";
-import Page_ListMotel from "./pages/Customer/Page_ListMotel.jsx";
-import SearchResult from "./pages/Customer/Page_SearchResult.jsx";
+
 
 
 

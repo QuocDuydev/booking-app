@@ -113,6 +113,7 @@ function EditBooking() {
 		(item) => item.acc_id === booking.accommodations,
 	);
 	const selectedRoom = room.find((items) => items.room_id === booking.rooms);
+	console.log(selectedRoom);
 	return (
 		<>
 			<Navbars />

@@ -12,7 +12,7 @@ import CardLeftBooking from "../../components/Customer/Card_Left_Booking";
 import CardRightBooking from "../../components/Customer/Card_Right_Booking";
 import { getRoomType } from "../../api/acc-type_API";
 
-function Booking() {
+export default function Booking() {
 	const { acc_id, room_id } = useParams();
 	const token = useAccessToken();
 	const decodedToken = jwt_decode(token);
@@ -138,27 +138,28 @@ function Booking() {
 					Đặt phòng thành công!
 				</Alert>
 			)}
-			<div className="grid grid-cols-6">
-				<div className="grid gap-4 relative col-span-2  ">
-					<CardLeftBooking
-						booking={booking}
-						setBooking={setBooking}
-						rooms={rooms}
-						accs={accs}
-						calculateNumberOfDays={calculateNumberOfDays}
-					/>
-				</div>
-				<div className="grid gap-4 relative col-span-4 ml-3 mb-3 mt-4">
-					<CardRightBooking
-						booking={booking}
-						rooms={rooms}
-						selectRoomType={selectRoomType}
-						handleChange={handleChange}
-						handleCreate={handleCreate}
-					/>
+			<div className="container mx-auto relative max-w-screen-2xl bg-blue-50">
+				<div className="flex flex-wrap px-3 py-3">
+					<div className="flex flex-col lg:w-1/3 md:w-1/3 sm:w-full w-full">
+						<CardLeftBooking
+							booking={booking}
+							setBooking={setBooking}
+							rooms={rooms}
+							accs={accs}
+							calculateNumberOfDays={calculateNumberOfDays}
+						/>
+					</div>
+					<div className="flex flex-col lg:w-2/3 md:w-2/3 sm:w-full w-full">
+						<CardRightBooking
+							booking={booking}
+							rooms={rooms}
+							selectRoomType={selectRoomType}
+							handleChange={handleChange}
+							handleCreate={handleCreate}
+						/>
+					</div>
 				</div>
 			</div>
 		</>
 	);
 }
-export default Booking;

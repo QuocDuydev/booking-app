@@ -1,18 +1,30 @@
-import { Typography } from "@material-tailwind/react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import React from "react";
 
-export default function MapAcc() {
+const MapAcc = ({ roommap }) => {
+	const mapStyle = {
+		width: "100%",
+		height: "100%",
+		border: "0",
+		marginHeight: "0",
+		marginWidth: "0",
+		filter: "grayscale(1) contrast(1.2) opacity(0.7)",
+	};
+
+	const mapUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
+		roommap,
+	)}&output=embed`;
+
 	return (
-		<div className="bg-red-200">
-			<Typography>Vị trí chỗ ở</Typography>
-			<LoadScript
-				googleMapsApiKey="AIzaSyCtlS0msBiN-2gfqFwfJtm605w2LX5YX6M"
-				loading="async"
-			>
-				<GoogleMap zoom={17} center={{ lat: 10.7769, lng: 106.7009 }}>
-					<Marker position={{ lat: 10.7769, lng: 106.7009 }} />
-				</GoogleMap>
-			</LoadScript>
+		<div className="container mx-auto relative max-w-screen-xl h-[500px] p-3 border border-solid border-gray-400 rounded-lg ">
+			<iframe
+				width="100%"
+				height="100%"
+				title="map"
+				src={mapUrl}
+				style={mapStyle}
+			/>
 		</div>
 	);
-}
+};
+
+export default MapAcc;

@@ -109,7 +109,7 @@ export default function ProfileMenu() {
 							<ListItemPrefix>
 								<Cog6ToothIcon className="h-5 w-5" />
 							</ListItemPrefix>
-							<Link>Trung tâm trợ giúp</Link>
+							<Link to="/list-booking">Lịch sử đặt phòng</Link>
 						</ListItem>
 
 						<ListItem className="hover:bg-gray-200">

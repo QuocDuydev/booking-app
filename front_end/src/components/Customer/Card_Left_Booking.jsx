@@ -12,9 +12,9 @@ function CardLeftBooking({
 	calculateNumberOfDays,
 }) {
 	return (
-		<div className=" max-w-full px-3 rounded-lg mt-2 mb-3 ">
+		<div className=" max-w-full rounded-lg ">
 			<div className="mb-1 w-full h-full p-4">
-				<div className=" border-2 px-3 py-3 rounded-md">
+				<div className=" border border-solid border-black px-3 py-3 rounded-md">
 					<Typography
 						variant="h5"
 						color="blue-gray"
@@ -45,19 +45,19 @@ function CardLeftBooking({
 
 					<div className=" flex mt-1 text-sm md:text-md lg:text-lg xl:text-xl">
 						<MapPinIcon className="h-6 w-6" />
-						{accs.roommap && accs.location && (
+						{accs.roommap && (
 							<Typography
 								variant="h6"
 								color="blue-gray"
 								className="ml-1 text-sm md:text-md lg:text-lg xl:text-xl"
 							>
-								{accs.roommap} - {accs.location}
+								{accs.roommap}
 							</Typography>
 						)}
 					</div>
 				</div>
 
-				<div className=" border-2 px-3 py-3 rounded-md mt-3">
+				<div className=" border border-solid border-black px-3 py-3 rounded-md mt-3">
 					<Typography
 						variant="h5"
 						color="blue-gray"
@@ -148,12 +148,12 @@ function CardLeftBooking({
 							className=" text-red-600 text-sm md:text-md lg:text-lg xl:text-xl"
 							key={item.room_id}
 						>
-							Giá phòng/đêm: {item.roomprice.toLocaleString()} VNĐ
+							Giá phòng: {item.roomprice.toLocaleString()} VNĐ
 						</Typography>
 					))}
 				</div>
 
-				<div className="flex mt-3 mx-auto justify-center bg-yellow-300">
+				<div className="flex mt-3 mx-auto justify-center bg-yellow-300 rounded-lg">
 					<Typography
 						variant="h4"
 						color="blue-gray"

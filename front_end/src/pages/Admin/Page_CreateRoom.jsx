@@ -12,7 +12,6 @@ function CreateRoom() {
 	// biome-ignore lint/style/useConst: <explanation>
 	let token = useAccessToken();
 	const { acc_id } = useParams();
-	const [images, setImages] = useState([]);
 	const [room, setRoom] = useState({
 		accommodations: acc_id,
 		roomname: "",

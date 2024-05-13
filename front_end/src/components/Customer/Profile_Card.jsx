@@ -19,17 +19,17 @@ function ProfileCard({
 	return (
 		<div>
 			<section className="py-2 my-auto dark:bg-gray-900">
-				<div className="lg:w-[80%] md:w-[90%] xs:w-[96%] mx-auto flex gap-4">
-					<div className="lg:w-[88%] md:w-[80%] sm:w-[88%] xs:w-full mx-auto shadow-2xl p-4 rounded-xl h-fit self-center dark:bg-gray-800/40">
+				<div className="lg:w-[80%] md:w-[90%] mx-auto flex gap-4">
+					<div className="lg:w-[88%] md:w-[80%] sm:w-[88%] mx-auto shadow-2xl p-4 rounded-xl h-fit self-center dark:bg-gray-800/40">
 						<div className="">
-							<h1 className="lg:text-3xl md:text-2xl sm:text-xl xs:text-xl font-serif font-extrabold dark:text-white">
+							<h1 className="lg:text-3xl md:text-2xl sm:text-xl text-sm font-serif font-extrabold ">
 								Hồ sơ cá nhân
 							</h1>
 
 							<form>
 								<div className="w-full rounded-sm bg-cover bg-center bg-no-repeat items-center">
 									<div
-										className="mx-auto flex justify-center w-[141px] h-[141px] bg-blue-300/20 rounded-full bg-cover bg-center bg-no-repeat"
+										className="mx-auto flex justify-center w-[130px] h-[130px] bg-blue-300/20 rounded-full bg-cover bg-center bg-no-repeat"
 										style={{
 											backgroundImage: `url(${
 												selectedImageUrl || user.images
@@ -61,9 +61,9 @@ function ProfileCard({
 									</Button>
 								</div>
 
-								<div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
-									<div className="w-full  mb-4 mt-2">
-										<div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full mb-4">
+								<div className="lg:flex flex-row  gap-2 justify-center ">
+									<div className=" w-full mb-4 mt-2">
+										<div className=" lg:flex flex-row gap-2 justify-center w-full mb-4 mt-2">
 											<div className="w-full">
 												<Typography className="mb-2 text-red-600 font-bold">
 													Tên người dùng
@@ -89,7 +89,7 @@ function ProfileCard({
 												/>
 											</div>
 										</div>
-										<div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full mb-4">
+										<div className="lg:flex flex-row  gap-2 justify-center w-full mb-4 mt-2">
 											<div className="w-full">
 												<Typography
 													htmlFor=""
@@ -118,7 +118,7 @@ function ProfileCard({
 												/>
 											</div>
 										</div>
-										<div className="flex lg:flex-row md:flex-col sm:flex-col xs:flex-col gap-2 justify-center w-full">
+										<div className="lg:flex flex-row gap-2 justify-center w-full mt-2">
 											<div className="w-full">
 												<Typography className=" mb-2 text-red-600 font-bold">
 													Giới tính

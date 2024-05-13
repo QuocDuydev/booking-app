@@ -29,8 +29,16 @@ SECRET_KEY = 'django-insecure-z5!y8k^_*!a840#r*s2ex(9g@hq^d8)_#!_g=xn(#524oulssw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['103.245.237.132', 'back-end.timtro.top']
 
+CORS_ALLOWED_ORIGINS = [
+    'http://front-end.timtro.top',
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r".*",
+]
+CORS_ORIGIN_ALLOW_ALL= True
 
 # Application definition
 

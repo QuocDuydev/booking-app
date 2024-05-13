@@ -12,7 +12,7 @@ export default function BookingTable({
 		<>
 			<div className="mx-auto mb-4 mt-4">
 				<Typography variant="h4" color="red">
-					List Bookings
+					Danh sách đơn đặt phòng
 				</Typography>
 			</div>
 			<div className="max-w-full px-3 rounded-lg mt-2 overflow-hidden">
@@ -21,11 +21,12 @@ export default function BookingTable({
 						<table className="w-full whitespace-no-wrap">
 							<thead>
 								<tr className="text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-2 bg-gray-50 ">
-									<th className="px-4 py-3">Name</th>
-									<th className="px-4 py-3">Check in</th>
-									<th className="px-4 py-3">Check out</th>
-									<th className="px-4 py-3">Status</th>
-									<th className="px-4 py-3">Actions</th>
+									<th className="px-4 py-3">Tên người dùng</th>
+									<th className="px-4 py-3">Ngày nhận phòng</th>
+									<th className="px-4 py-3">Ngày trả phòng</th>
+									<th className="px-4 py-3">Tổng tiền</th>
+									<th className="px-4 py-3">Trạng thái</th>
+									<th className="px-4 py-3">Hoạt động</th>
 								</tr>
 							</thead>
 							<tbody className="bg-gray-100 text-center">
@@ -41,9 +42,19 @@ export default function BookingTable({
 												</div>
 											</div>
 										</td>
-										<td className="px-4 py-3 text-sm">{item.checkin}</td>
-										<td className="px-4 py-3 text-sm">{item.checkout}</td>
-
+										<td className="px-4 py-3 text-sm">
+											{new Date(item.checkin).getDate()}/
+											{new Date(item.checkin).getMonth() + 1}/
+											{new Date(item.checkin).getFullYear()}
+										</td>
+										<td className="px-4 py-3 text-sm">
+											{new Date(item.checkout).getDate()}/
+											{new Date(item.checkout).getMonth() + 1}/
+											{new Date(item.checkout).getFullYear()}
+										</td>
+										<td className="px-4 py-3 text-sm">
+											{item.total.toLocaleString()} VNĐ
+										</td>
 										<td className="px-4 py-3 text-sm">{item.status}</td>
 										<td className="px-4 py-3 ">
 											<div className=" flex space-x-4 text-sm justify-center">
@@ -55,13 +66,6 @@ export default function BookingTable({
 														<PencilSquareIcon className="w-5 h-5" />
 													</Button>
 												</Link>
-												<Button
-													onClick={() => handleDelete(item)}
-													variant="text"
-													className="flex items-center justify-between px-2 py-2 leading-5 text-red-600 rounded-full"
-												>
-													<TrashIcon className="w-5 h-5" />
-												</Button>
 											</div>
 										</td>
 									</tr>

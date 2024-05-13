@@ -50,7 +50,7 @@ function FormEditBooking({
 											color="blue-gray"
 											className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Địa chỉ chỗ ở:
+											Địa chỉ:
 										</Typography>
 										<Typography
 											variant="h5"
@@ -66,7 +66,7 @@ function FormEditBooking({
 											color="blue-gray"
 											className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Tỉnh, thành phố:
+											Vị trí:
 										</Typography>
 										<Typography
 											variant="h5"
@@ -117,7 +117,7 @@ function FormEditBooking({
 											color="blue-gray"
 											className=" text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Giá phòng/đêm:
+											Giá phòng:
 										</Typography>
 										<Typography
 											variant="h5"
@@ -144,7 +144,7 @@ function FormEditBooking({
 										</Typography>
 										<Typography
 											variant="h5"
-											color="blue-gray"
+											color="red"
 											className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
 										>
 											{booking.total.toLocaleString()} VNĐ
@@ -156,7 +156,7 @@ function FormEditBooking({
 											color="blue-gray"
 											className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Ngày nhận:
+											Ngày nhận phòng:
 										</Typography>
 										<Typography
 											variant="h5"
@@ -174,7 +174,7 @@ function FormEditBooking({
 											color="blue-gray"
 											className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
 										>
-											Ngày trả:
+											Ngày trả phòng:
 										</Typography>
 										<Typography
 											variant="h5"
@@ -198,7 +198,7 @@ function FormEditBooking({
 										color="blue-gray"
 										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Full Name
+										Họ và tên người dùng
 									</Typography>
 
 									<Input
@@ -208,7 +208,7 @@ function FormEditBooking({
 										name="name"
 										value={booking.name}
 										onChange={handleChange}
-										placeholder="Enter Descriptions about Rooms..."
+										placeholder="Nhập họ và tên người dùng..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 										// readOnly
 									/>
@@ -219,7 +219,7 @@ function FormEditBooking({
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Email
+										Địa chỉ Email
 									</Typography>
 									<Input
 										type="text"
@@ -228,7 +228,7 @@ function FormEditBooking({
 										name="email"
 										value={booking.email}
 										onChange={handleChange}
-										placeholder="Enter price rooms..."
+										placeholder="Nhập địa chỉ Email..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-700 text-sm md:text-md lg:text-lg xl:text-lg"
 										// readOnly
 									/>
@@ -242,7 +242,7 @@ function FormEditBooking({
 										color="blue-gray"
 										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Phone Number
+										Số điện thoại
 									</Typography>
 
 									<Input
@@ -252,7 +252,7 @@ function FormEditBooking({
 										name="phonenumber"
 										value={booking.phonenumber}
 										onChange={handleChange}
-										placeholder="Enter Numbers rooms..."
+										placeholder="Nhập số điện thoại..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 										// readOnly
 									/>
@@ -263,7 +263,7 @@ function FormEditBooking({
 										color="blue-gray"
 										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
-										Address
+										Địa chỉ
 									</Typography>
 
 									<Input
@@ -273,7 +273,7 @@ function FormEditBooking({
 										name="address"
 										value={booking.address}
 										onChange={handleChange}
-										placeholder="Enter Numbers rooms..."
+										placeholder="Nhập địa chỉ..."
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 										// readOnly
 									/>
@@ -286,7 +286,7 @@ function FormEditBooking({
 							className="mx-auto w-1/4 bg-red-600 uppercase mt-2"
 							fullWidth
 						>
-							Update nows
+							Cập nhật ngay!
 						</Button>
 					</form>
 				</Card>

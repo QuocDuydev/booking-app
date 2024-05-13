@@ -149,6 +149,13 @@ export default function RoominAccommodation() {
 							<>
 								{rooms.length > 0 ? (
 									filteredRooms.map((room) => {
+										let selectedRoomtype = "";
+										// biome-ignore lint/complexity/noForEach: <explanation>
+										roomtype.forEach((roomType) => {
+											if (roomType.roomtype_id === room.roomtype) {
+												selectedRoomtype = roomType.name;
+											}
+										});
 										return (
 											<div key={room.room_id} className="mb-2 ">
 												<Card className="w-full mx-auto mb-2 border border-solid border-gray-400">
@@ -255,11 +262,11 @@ export default function RoominAccommodation() {
 																			Loại:
 																		</Typography>
 																		<Typography className="text-justify">
-																			{room.roomtype}
+																			{selectedRoomtype}
 																		</Typography>
 																	</div>
 																</div>
-																<div className="border-b mb-2 border-gray-500" />
+																<div className="border-b mb-2 mt-2 border-gray-500" />
 																<div className=" flex flex-wrap container mx-auto mb-2 ">
 																	<div className=" flex flex-col flex-wrap w-full ">
 																		<ul className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-2 gap-2  ">

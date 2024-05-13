@@ -19,12 +19,12 @@ export default function AccommodationTable({
 						<table className="w-full whitespace-no-wrap">
 							<thead>
 								<tr className="text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-2">
-									<th className="px-4 py-3">Rooms</th>
-									<th className="px-4 py-3">Name</th>
-									<th className="px-4 py-3">Location</th>
-									<th className="px-4 py-3">Total Rooms</th>
-									<th className="px-4 py-3">Date Added</th>
-									<th className="px-4 py-3">Actions</th>
+									<th className="px-4 py-3">DS Phòng</th>
+									<th className="px-4 py-3">Tên chỗ ở</th>
+									<th className="px-4 py-3">Vị trí</th>
+									<th className="px-4 py-3">Tổng số phòng</th>
+									<th className="px-4 py-3">Ngày cập nhật</th>
+									<th className="px-4 py-3">AHành động</th>
 								</tr>
 							</thead>
 							<tbody className="bg-gray-100 text-center">
@@ -53,10 +53,17 @@ export default function AccommodationTable({
 										<td className="px-4 py-3 text-sm">{item.location}</td>
 										<td className="px-4 py-3 text-xs">
 											<span className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
-												{item.totalroom} - rooms
+												{item.totalroom} - phòng
 											</span>
 										</td>
-										<td className="px-4 py-3 text-sm">{item.createdAt}</td>
+										<td className="px-4 py-3 text-sm">
+											{new Date(item.updatedAt).getDate()}/
+											{new Date(item.updatedAt).getMonth() + 1}/
+											{new Date(item.updatedAt).getFullYear()} -{" "}
+											{new Date(item.updatedAt).getHours()}:
+											{new Date(item.updatedAt).getMinutes()}:
+											{new Date(item.updatedAt).getSeconds()}
+										</td>
 										<td className="px-4 py-3 ">
 											<div className=" flex space-x-4 text-sm justify-center">
 												<Link to={`/admin/edit-hotel/${item.acc_id}`}>

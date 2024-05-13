@@ -8,11 +8,32 @@ import {
 	Typography,
 	Carousel,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getRoomType } from "../../api/acc-type_API";
 
 export default function RoomDetail({ room }) {
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(!open);
+	const [roomtype, setRoomtype] = useState("");
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const reponse = await getRoomType();
+				const selectedRoomtype = reponse.find(
+					(item) => item.roomtype_id === room.roomtype,
+				);
+				if (selectedRoomtype) {
+					setRoomtype(selectedRoomtype.name);
+				}
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+
+		fetchData();
+	}, [room.roomtype]);
+
 	return (
 		<div className="mb-4 mx-auto flex justify-center">
 			<Button onClick={handleOpen} color="blue" variant="gradient" size="sm">
@@ -58,7 +79,7 @@ export default function RoomDetail({ room }) {
 													Loại:
 												</Typography>
 												<Typography className="text-justify">
-													{room.roomtype}
+													{roomtype}
 												</Typography>
 											</div>
 										</div>
