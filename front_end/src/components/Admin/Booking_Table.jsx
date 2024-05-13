@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import { Button, Typography } from "@material-tailwind/react";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 
-function BookingTable({ handleDelete, getBookingsForPage, currentPage }) {
+export default function BookingTable({
+	handleDelete,
+	getBookingsForPage,
+	currentPage,
+}) {
 	return (
 		<>
 			<div className="mx-auto mb-4 mt-4">
@@ -70,4 +74,3 @@ function BookingTable({ handleDelete, getBookingsForPage, currentPage }) {
 		</>
 	);
 }
-export default BookingTable;

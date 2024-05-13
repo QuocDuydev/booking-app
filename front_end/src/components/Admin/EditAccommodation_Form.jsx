@@ -10,19 +10,22 @@ import {
 } from "@material-tailwind/react";
 import { useParams } from "react-router-dom";
 import useAccessToken from "../ultiti";
-import { getImageAcc, postImageAcc } from "../../api/acc_API";
-import { getAccType } from "../../api/acc-type_API";
+import { getImageAcc, getUtilities, postImageAcc, postUtilities } from "../../api/acc_API";
 import UploadImageAccommodations from "./Upload_Image_Accommodation";
+import ListUtilities from "./List_Utilities";
 
 export default function EditAccommodationForm({
 	accommodation,
 	handleChange,
 	handleUpdate,
 }) {
+	const [utility, setUtility] = useState("");
+	const onChange = ({ target }) => setUtility(target.value);
 	const token = useAccessToken();
 	const [images, setImages] = useState([]);
 	const id = useParams();
 	const [selectedImage, setSelectedImage] = useState(null);
+	const [utilities, setUtilities] = useState([]);
 	const handleUploadImage = async () => {
 		// Call your upload image function here
 		try {
@@ -42,20 +45,7 @@ export default function EditAccommodationForm({
 			console.error("Create failed:", error);
 		}
 	};
-	// const [acctypes, setAcctype] = useState([]);
 
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		try {
-	// 			const AccTypeData = await getAccType();
-	// 			console.log(AccTypeData);
-	// 			setAcctype(AccTypeData);
-	// 		} catch (error) {
-	// 			console.error("Error fetching data:", error);
-	// 		}
-	// 	};
-	// 	fetchData();
-	// }, []);
 	const handleSelectChange = (value) => {
 		handleChange({ target: { name: "acctype", value } });
 	};
@@ -73,12 +63,42 @@ export default function EditAccommodationForm({
 			console.error("Error fetching data:", error);
 		}
 	};
+	const updateUtilityList = async () => {
+		try {
+			const amenitiesData = await getUtilities(token);
+			setUtilities(amenitiesData);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	};
+
+	const handleUploadUtilities = async () => {
+		try {
+			const formData = new FormData();
+
+			formData.append("accommodations", accommodation.acc_id);
+			formData.append("name", utility);
+
+			const response = await postUtilities(token, formData, id);
+			console.log("Create successful:", response.data);
+			setTimeout(() => {
+				alert("Thêm tiện nghi chỗ ở thành công!");
+				updateUtilityList();
+				setSelectedImage(null);
+			}, 1000);
+		} catch (error) {
+			console.error("Create failed:", error);
+		}
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const userData = await getImageAcc(token);
-
+				const [utilitiesData, userData] = await Promise.all([
+					getUtilities(token),
+					getImageAcc(token),
+				]);
+				setUtilities(utilitiesData);
 				setImages(userData);
 			} catch (error) {
 				console.error("Error fetching data:", error);
@@ -169,7 +189,41 @@ export default function EditAccommodationForm({
 									<Typography
 										variant="h6"
 										color="blue-gray"
-										className="mb-2  text-sm md:text-md lg:text-lg xl:text-lg"
+										className="mb-2 text-sm md:text-md lg:text-lg xl:text-lg"
+									>
+										Tiện nghi chỗ ở
+									</Typography>
+									<div className="flex justify-center border-b border-gray-200 text-gray-800 font-medium">
+										<div className="relative flex w-full items-center">
+											<Input
+												type="text"
+												name="name"
+												placeholder="Nhập tiện nghi"
+												className="pr-20"
+												onChange={onChange}
+											/>
+											<Button
+												size="sm"
+												color={utility ? "gray" : "blue-gray"}
+												disabled={!utility}
+												className="!absolute right-1 top-1 rounded"
+												onClick={handleUploadUtilities}
+											>
+												Thêm
+											</Button>
+										</div>
+									</div>
+									<ListUtilities
+										accommodation={accommodation}
+										utilities={utilities}
+										updateUtilityList={updateUtilityList}
+									/>
+								</div>
+								<div>
+									<Typography
+										variant="h6"
+										color="blue-gray"
+										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
 									>
 										Vị trí
 									</Typography>
@@ -203,46 +257,47 @@ export default function EditAccommodationForm({
 										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
 									/>
 								</div>
+								<div className="flex">
+									<div className="w-1/2 mr-2">
+										<Typography
+											variant="h6"
+											color="blue-gray"
+											className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+										>
+											Xếp hạng
+										</Typography>
+										<Input
+											type="number"
+											multiple
+											size="lg"
+											name="rating"
+											value={accommodation.rating}
+											onChange={handleChange}
+											placeholder="Nhập xếp hạng chỗ ở..."
+											className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
+										/>
+									</div>
+									<div className="w-1/2">
+										<Typography
+											variant="h6"
+											color="blue-gray"
+											className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
+										>
+											Loại chỗ ở
+										</Typography>
 
-								<div>
-									<Typography
-										variant="h6"
-										color="blue-gray"
-										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-									>
-										Xếp hạng
-									</Typography>
-									<Input
-										type="number"
-										multiple
-										size="lg"
-										name="rating"
-										value={accommodation.rating}
-										onChange={handleChange}
-										placeholder="Nhập xếp hạng chỗ ở..."
-										className=" !border-t-blue-gray-200 focus:!border-t-gray-900 text-sm md:text-md lg:text-lg xl:text-lg"
-									/>
-								</div>
-								<div>
-									<Typography
-										variant="h6"
-										color="blue-gray"
-										className="mb-2 mt-4 text-sm md:text-md lg:text-lg xl:text-lg"
-									>
-										Loại chỗ ở
-									</Typography>
-
-									<Select
-										name="acctype"
-										size="lg"
-										value={String(accommodation?.acctype) || ""}
-										onChange={handleSelectChange}
-										className="text-sm md:text-md lg:text-lg xl:text-lg"
-									>
-										<Option value="1">Khách sạn</Option>
-										<Option value="2">HomeStay</Option>
-										<Option value="3">Nhà trọ</Option>
-									</Select>
+										<Select
+											name="acctype"
+											size="lg"
+											value={String(accommodation?.acctype) || ""}
+											onChange={handleSelectChange}
+											className="text-sm md:text-md lg:text-lg xl:text-lg"
+										>
+											<Option value="1">Khách sạn</Option>
+											<Option value="2">HomeStay</Option>
+											<Option value="3">Nhà trọ</Option>
+										</Select>
+									</div>
 								</div>
 							</div>
 						</div>

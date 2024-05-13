@@ -19,7 +19,7 @@ import jwt_decode from "jwt-decode";
 import { useAccessToken } from "../../ultiti";
 import { getUser } from "../../../api/user_API";
 
-function Sidebar_Admin(isDrawerOpen, closeDrawer) {
+function Sidebar_Admin() {
 	const [open, setOpen] = useState(0);
 
 	const handleOpen = (value) => {
@@ -57,7 +57,7 @@ function Sidebar_Admin(isDrawerOpen, closeDrawer) {
 							<ListItemPrefix>
 								<HomeIcon className="h-6 w-6" />
 							</ListItemPrefix>
-							Dashboard
+							Trang chủ Admin
 						</ListItem>
 					</Link>
 					{accountType && (
@@ -82,7 +82,7 @@ function Sidebar_Admin(isDrawerOpen, closeDrawer) {
 											color="blue-gray"
 											className="-mr-3 font-normal text-lg"
 										>
-											Manager Customer
+											Quản lý người dùng
 										</Typography>
 									</AccordionHeader>
 								</ListItem>
@@ -96,7 +96,7 @@ function Sidebar_Admin(isDrawerOpen, closeDrawer) {
 														className="h-3 w-5"
 													/>
 												</ListItemPrefix>
-												List Customer
+												Danh sách người dùng
 											</ListItem>
 										</Link>
 									</List>
@@ -124,7 +124,7 @@ function Sidebar_Admin(isDrawerOpen, closeDrawer) {
 									color="blue-gray"
 									className="mr-auto font-normal text-lg"
 								>
-									Manager Hotel
+									Quản lý chỗ ở
 								</Typography>
 							</AccordionHeader>
 						</ListItem>
@@ -135,7 +135,7 @@ function Sidebar_Admin(isDrawerOpen, closeDrawer) {
 										<ListItemPrefix>
 											<ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
 										</ListItemPrefix>
-										List Hotel
+										Danh sách Khách sạn
 									</ListItem>
 								</Link>
 							</List>
@@ -145,7 +145,7 @@ function Sidebar_Admin(isDrawerOpen, closeDrawer) {
 										<ListItemPrefix>
 											<ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
 										</ListItemPrefix>
-										List HomeStay
+										Danh sách HomeStay
 									</ListItem>
 								</Link>
 							</List>
@@ -155,7 +155,7 @@ function Sidebar_Admin(isDrawerOpen, closeDrawer) {
 										<ListItemPrefix>
 											<ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
 										</ListItemPrefix>
-										List Motel
+										Danh sách Nhà trọ
 									</ListItem>
 								</Link>
 							</List>
@@ -165,7 +165,7 @@ function Sidebar_Admin(isDrawerOpen, closeDrawer) {
 										<ListItemPrefix>
 											<ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
 										</ListItemPrefix>
-										Create Hotel
+										Thêm chỗ ở
 									</ListItem>
 								</Link>
 							</List>
@@ -192,7 +192,7 @@ function Sidebar_Admin(isDrawerOpen, closeDrawer) {
 									color="blue-gray"
 									className="mr-auto font-normal text-lg"
 								>
-									Manager Booking
+									Quản lý đặt phòng
 								</Typography>
 							</AccordionHeader>
 						</ListItem>
@@ -203,7 +203,7 @@ function Sidebar_Admin(isDrawerOpen, closeDrawer) {
 										<ListItemPrefix>
 											<ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
 										</ListItemPrefix>
-										List Booking
+										Danh sách đặt phòng
 									</ListItem>
 								</Link>
 							</List>

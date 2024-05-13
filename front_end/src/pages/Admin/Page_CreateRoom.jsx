@@ -95,7 +95,7 @@ function CreateRoom() {
 					<Header_Admin />
 					{CreateSuccess && (
 						<Alert className="rounded-none border-l-4 border-[#2ec946] bg-[#2ec946]/10 font-medium text-[#2ec946]">
-							Create successfuly !!
+							Thêm phòng thành công !!
 						</Alert>
 					)}
 					<CreateRoomForm

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:8000/api";
+const baseURL = "http://back-end.timtro.top/api";
 
 export const getAccType = async () => {
 	try {

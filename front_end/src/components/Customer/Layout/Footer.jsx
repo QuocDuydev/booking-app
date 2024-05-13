@@ -2,20 +2,25 @@ import { Typography } from "@material-tailwind/react";
 
 const SITEMAP = [
 	{
-		title: "Company",
-		links: ["About Us", "Careers", "Our Team", "Projects"],
+		title: "Về Timtro.top",
+		links: ["Cách đặt chỗ ở", "Liên hệ chúng tôi", "Trợ giúp", "Về chúng tôi"],
 	},
 	{
-		title: "Help Center",
-		links: ["Discord", "Twitter", "GitHub", "Contact Us"],
+		title: "Theo dõi chúng tôi trên",
+		links: ["Facebook", "Twitter", "Instagram", "Youtube"],
 	},
 	{
-		title: "Resources",
-		links: ["Blog", "Newsletter", "Free Products", "Affiliate Program"],
+		title: "Sản phẩm",
+		links: ["Nhà trọ", "Khách sạn", "HomeStay", "Khác"],
 	},
 	{
-		title: "Products",
-		links: ["Templates", "UI Kits", "Icons", "Mockups"],
+		title: "Mục khác",
+		links: [
+			"Chính Sách Quyền Riêng",
+			"Điều khoản & Điều kiện",
+			"Quy chế hoạt động",
+			"Đăng ký nơi nghỉ của bạn",
+		],
 	},
 ];
 
@@ -46,7 +51,7 @@ export function FooterWithSitemap() {
 										<a
 											// biome-ignore lint/a11y/useValidAnchor: <explanation>
 											href="#"
-											className="inline-block py-1 pr-2 transition-transform hover:scale-105"
+											className="inline-block p-1 transition-transform hover:scale-105"
 										>
 											{link}
 										</a>

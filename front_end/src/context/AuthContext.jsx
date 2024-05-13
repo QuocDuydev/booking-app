@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 	const [data, setData] = useState([]);
 	const loginUser = async (e) => {
 		e.preventDefault();
-		const response = await fetch("http://localhost:8000/api/token/", {
+		const response = await fetch("http://back-end.timtro.top/api/token/", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 			try {
 				// Lấy thông tin người dùng từ API
 				const userDetailsResponse = await fetch(
-					"http://localhost:8000/api/users/",
+					"http://back-end.timtro.top/api/users/",
 					{
 						method: "GET",
 						headers: {
@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
 					setUser(loggedInUser);
 					localStorage.setItem("authTokens", JSON.stringify(data));
 					setLoggedIn(true);
-					alert("Login Successfully!");
+					alert("Đăng nhập thành công!");
 
 					// Kiểm tra loại tài khoản
 					const isAllowedAccess = userDetails.find(
@@ -96,13 +96,16 @@ export const AuthProvider = ({ children }) => {
 	const updateToken = async () => {
 		// Kiểm tra nếu người dùng đã đăng nhập mới thực hiện cập nhật token
 		if (authTokens?.refresh) {
-			const response = await fetch("http://127.0.0.1:8000/api/token/refresh/", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
+			const response = await fetch(
+				"http://back-end.timtro.top/api/token/refresh/",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ refresh: authTokens.refresh }),
 				},
-				body: JSON.stringify({ refresh: authTokens.refresh }),
-			});
+			);
 
 			const data = await response.json();
 

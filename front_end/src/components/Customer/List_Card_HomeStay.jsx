@@ -39,7 +39,7 @@ export default function ListCardHomeStay() {
 			hotels.map(async (hotel) => {
 				try {
 					const response = await axios.get(
-						`http://localhost:8000/api/accommodations/${hotel.acc_id}/rooms/`,
+						`http://back-end.timtro.top/api/accommodations/${hotel.acc_id}/rooms/`,
 						{
 							headers: {
 								Authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ export default function ListCardHomeStay() {
 				const uniqueUserIds = [...new Set(userIds)]; // Get unique user ids
 				const usersData = await Promise.all(
 					uniqueUserIds.map((userId) =>
-						axios.get(`http://localhost:8000/api/users/${userId}/`, {
+						axios.get(`http://back-end.timtro.top/api/users/${userId}/`, {
 							headers: {
 								Authorization: `Bearer ${token}`,
 							},
@@ -148,7 +148,7 @@ export default function ListCardHomeStay() {
 									<Carousel className="rounded-xl">
 										{item.images.slice(0, 5).map((image, index) => (
 											<Link
-												to={`/hotel/${item.acc_id}`}
+												to={`/accommodations/${item.acc_id}`}
 												// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 												key={index}
 											>
@@ -215,7 +215,7 @@ export default function ListCardHomeStay() {
 										<div className="mt-3 flex mx-auto text-right">
 											<Typography variant="h4" color="red" className="flex">
 												<span className="line-clamp-1 w-[250px] ml-1 mt-[1px] flex justify-center ">
-													{firstRoomPrice.toLocaleString()}đ
+													{firstRoomPrice.toLocaleString()} VNĐ
 												</span>
 											</Typography>
 										</div>

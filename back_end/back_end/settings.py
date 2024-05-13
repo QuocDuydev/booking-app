@@ -35,9 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    
     'cloudinary_storage',
-    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +46,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'cloudinary',
+    'django_filters'
+   
     
 ]
 
@@ -102,6 +102,7 @@ DATABASES = {
 }
 
 REST_FRAMEWORK = {
+    
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
         # 'rest_framework.permissions.IsAdminUser',
@@ -111,6 +112,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 CORS_ALLOW_HEADERS = [
     'X-CSRFTOKEN',

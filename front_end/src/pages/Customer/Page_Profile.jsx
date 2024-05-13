@@ -32,7 +32,7 @@ function ShowProfile() {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		axios
-			.get(`http://localhost:8000/api/users/${id}/`, {
+			.get(`http://back-end.timtro.top/api/users/${id}/`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -50,7 +50,7 @@ function ShowProfile() {
 		delete userData.images;
 		axios({
 			method: "put",
-			url: `http://localhost:8000/api/users/${id}/`,
+			url: `http://back-end.timtro.top/api/users/${id}/`,
 			data: userData,
 			headers: {
 				"Content-Type": "multipart/form-data",
@@ -73,7 +73,7 @@ function ShowProfile() {
 
 		axios({
 			method: "put",
-			url: `http://localhost:8000/api/users/${id}/`,
+			url: `http://back-end.timtro.top/api/users/${id}/`,
 			data: userData,
 			headers: {
 				"Content-Type": "multipart/form-data",

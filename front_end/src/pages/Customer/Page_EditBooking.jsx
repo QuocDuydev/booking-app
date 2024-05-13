@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAccessToken } from "../../components/ultiti";
 import { Alert } from "@material-tailwind/react";
-import  Navbars  from "../../components/Customer/Layout/Navbar";
+import Navbars from "../../components/Customer/Layout/Navbar";
 import { getAccommodation } from "../../api/acc_API";
 import { getRoom } from "../../api/room_in_acc_API";
 import { getBookingId } from "../../api/booking_API";
@@ -12,12 +12,12 @@ import FormEditBooking from "../../components/Customer/Form_EditBooking";
 function EditBooking() {
 	const token = useAccessToken();
 	const { booking_id } = useParams();
-	const [hotel, setHotel] = useState([]);
+	const [accs, setAccommodations] = useState([]);
 	const [room, setRoom] = useState([]);
 	const [booking, setBooking] = useState({
 		user: "",
-		hotel: "",
-		room: "",
+		accommodations: "",
+		rooms: "",
 		name: "",
 		email: "",
 		phonenumber: "",
@@ -25,8 +25,8 @@ function EditBooking() {
 		checkin: "",
 		checkout: "",
 		total: 0,
-		datebooking: "",
-		status: "",
+		createdAt: "",
+		updatedAt: new Date(),
 	});
 	const [updateSuccess, setUpdateSuccess] = useState(false);
 	const navigate = useNavigate();
@@ -36,12 +36,12 @@ function EditBooking() {
 		() => {
 			const fetchData = async () => {
 				try {
-					const [hotelData, roomData, bookingData] = await Promise.all([
+					const [accData, roomData, bookingData] = await Promise.all([
 						getAccommodation(token),
 						getRoom(token),
 						getBookingId(booking_id, token),
 					]);
-					setHotel(hotelData);
+					setAccommodations(accData);
 					setRoom(roomData);
 					setBooking(bookingData);
 					console.log(bookingData);
@@ -75,13 +75,13 @@ function EditBooking() {
 	};
 	const handleUpdate = async () => {
 		if (booking.status === "active") {
-			alert("Cannot update an active booking!");
+			alert("Không thể hủy đơn đặt phòng này!");
 		} else {
 			try {
 				const bookingData = {
 					user: booking.user,
-					hotel: booking.hotel,
-					room: booking.room,
+					accommodations: booking.accommodations,
+					rooms: booking.rooms,
 					name: booking.name,
 					email: booking.email,
 					phonenumber: booking.phonenumber,
@@ -89,13 +89,13 @@ function EditBooking() {
 					checkin: formatDate(new Date(booking.checkin)),
 					checkout: formatDate(new Date(booking.checkout)),
 					total: booking.total,
-					datebooking: booking.datebooking,
+					createdAt: booking.createdAt,
+					updatedAt: booking.updatedAt,
 					status: booking.status,
 				};
 
 				const response = await putBooking(booking_id, token, bookingData);
 
-				console.log("Create successful:", response.data);
 				console.log("Update successful:", response.data);
 				setUpdateSuccess(true);
 				setTimeout(() => {
@@ -109,8 +109,10 @@ function EditBooking() {
 		}
 	};
 
-	const selectedHotel = hotel.find((item) => item.hotel_id === booking.hotel);
-	const selectedRoom = room.find((items) => items.room_id === booking.room);
+	const selectedAcc = accs.find(
+		(item) => item.acc_id === booking.accommodations,
+	);
+	const selectedRoom = room.find((items) => items.room_id === booking.rooms);
 	return (
 		<>
 			<Navbars />
@@ -118,12 +120,12 @@ function EditBooking() {
 				<div className="flex flex-col flex-1 w-full">
 					{updateSuccess && (
 						<Alert className="rounded-none border-l-4 border-[#2ec946] bg-[#2ec946]/10 font-medium text-[#2ec946]">
-							Update successfuly !!
+							Cập nhật thông tin đặt phòng thành công !!
 						</Alert>
 					)}
 					<div className=" container m-4 text-red-500">
 						<FormEditBooking
-							selectedHotel={selectedHotel}
+							selectedAcc={selectedAcc}
 							selectedRoom={selectedRoom}
 							booking={booking}
 							handleUpdate={handleUpdate}

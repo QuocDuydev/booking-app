@@ -22,7 +22,7 @@ export function DefaultTimeline() {
 		<>
 			<div className="container mx-auto relative max-w-screen-2xl px-5 py-5">
 				<div className="mb-4 mt-4">
-					<Typography variant="h4">House rules</Typography>
+					<Typography variant="h4">Quy định của chỗ ở</Typography>
 				</div>
 				<div className=" container p-4">
 					<Timeline>
@@ -35,7 +35,7 @@ export function DefaultTimeline() {
 									color="blue-gray"
 									className="leading-none"
 								>
-									Check-in
+									Nhận phòng
 								</Typography>
 							</TimelineHeader>
 							<TimelineBody className="pb-4 ml-8">
@@ -44,11 +44,11 @@ export function DefaultTimeline() {
 									color="gray"
 									className="font-normal text-gray-600"
 								>
-									- From 15:00 to 00:00
-									<br />- Guests are required to show a photo identification and
-									credit card upon check-in
-									<br />- You'll need to let the property know in advance what
-									time you'll arrive.
+									- Từ 15:00 đến 00:00
+									<br />- Du khách phải xuất trình giấy tờ tùy thân có ảnh và
+									thẻ tín dụng khi nhận phòng
+									<br />- Bạn cần phải cho chỗ nghỉ biết trước thời gian bạn sẽ
+									đến.
 								</Typography>
 							</TimelineBody>
 						</TimelineItem>
@@ -61,7 +61,7 @@ export function DefaultTimeline() {
 									color="blue-gray"
 									className="leading-none"
 								>
-									Check-out
+									Trả phòng
 								</Typography>
 							</TimelineHeader>
 							<TimelineBody className="pb-4 ml-8">
@@ -70,7 +70,7 @@ export function DefaultTimeline() {
 									color="gray"
 									className="font-normal text-gray-600"
 								>
-									- From 01:00 to 10:00
+									- Từ 01:00 đến 10:00
 								</Typography>
 							</TimelineBody>
 						</TimelineItem>
@@ -82,7 +82,7 @@ export function DefaultTimeline() {
 									color="blue-gray"
 									className="leading-none"
 								>
-									Cancellation/prepayment
+									Hủy/trả trước
 								</Typography>
 							</TimelineHeader>
 							<TimelineBody className="pb-4 ml-8">
@@ -91,9 +91,9 @@ export function DefaultTimeline() {
 									color="gray"
 									className="font-normal text-gray-600"
 								>
-									- Cancellation and prepayment policies vary according to
-									apartment type. Please enter the dates of your stay and check
-									the conditions of your required room.
+									- Chính sách hủy và thanh toán trước khác nhau tùy theo loại
+									căn hộ. Vui lòng nhập ngày lưu trú của bạn và kiểm tra các
+									điều kiện của phòng bạn yêu cầu.
 								</Typography>
 							</TimelineBody>
 						</TimelineItem>
@@ -105,7 +105,7 @@ export function DefaultTimeline() {
 									color="blue-gray"
 									className="leading-none"
 								>
-									Children and beds
+									Chính sách trẻ em
 								</Typography>
 							</TimelineHeader>
 							<TimelineBody className="pb-4 ml-8">
@@ -114,28 +114,12 @@ export function DefaultTimeline() {
 									color="gray"
 									className="font-normal text-gray-600"
 								>
-									<strong className=" text-red-500">Child policies</strong>
-									<br />
-									Children of any age are welcome.
-									<br />
-									Children 4 years and above will be charged as adults at this
-									property.
-									<br />
-									To see correct prices and occupancy information, please add
-									the number of children in your group and their ages to your
-									search.
-									<br />
-									<strong className=" text-red-500">
-										Cot and extra bed policies
-									</strong>
-									<br />
-									The number of cots allowed is dependent on the option you
-									choose. Please check your selected option for more
-									information.
-									<br />
-									There are no extra beds available at this property.
-									<br />
-									All cots are subject to availability.
+									- Trẻ em ở mọi lứa tuổi đều được chào đón.
+									<br />- Trẻ em từ 4 tuổi trở lên sẽ được tính phí như người
+									lớn tại nơi lưu trú này.
+									<br />- Để xem thông tin về giá và số lượng phòng chính xác,
+									vui lòng thêm số lượng trẻ em trong nhóm của bạn và độ tuổi
+									của chúng vào tìm kiếm của bạn
 								</Typography>
 							</TimelineBody>
 						</TimelineItem>
@@ -147,7 +131,7 @@ export function DefaultTimeline() {
 									color="blue-gray"
 									className="leading-none"
 								>
-									Age restriction
+									Giới hạn độ tuổi
 								</Typography>
 							</TimelineHeader>
 							<TimelineBody className="pb-4 ml-8">
@@ -156,7 +140,7 @@ export function DefaultTimeline() {
 									color="gray"
 									className="font-normal text-gray-600"
 								>
-									- The minimum age for check-in is 18.
+									- Độ tuổi tối thiểu để nhận phòng là 18.
 								</Typography>
 							</TimelineBody>
 						</TimelineItem>
@@ -168,7 +152,7 @@ export function DefaultTimeline() {
 									color="blue-gray"
 									className="leading-none"
 								>
-									Quiet hours
+									Giờ yên tĩnh
 								</Typography>
 							</TimelineHeader>
 							<TimelineBody className="pb-4 ml-8">
@@ -177,7 +161,8 @@ export function DefaultTimeline() {
 									color="gray"
 									className="font-normal text-gray-600"
 								>
-									- Guests must be quiet between 22:00 and 06:00.
+									- Du khách phải giữ im lặng trong khoảng thời gian từ 22:00
+									đến 06:00.
 								</Typography>
 							</TimelineBody>
 						</TimelineItem>

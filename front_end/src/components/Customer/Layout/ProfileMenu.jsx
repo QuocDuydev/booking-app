@@ -36,7 +36,7 @@ export default function ProfileMenu() {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		axios
-			.get(`http://localhost:8000/api/users/${id}/`, {
+			.get(`http://back-end.timtro.top/api/users/${id}/`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -44,6 +44,10 @@ export default function ProfileMenu() {
 			.then((response) => {
 				console.log(response);
 				setUsers(response.data);
+				// const allowedAccess = response.data.find(
+				// 	(user) => user.id === id && user.account_type === "superadmin",
+				// );
+				// setUsers(allowedAccess);
 			})
 			.catch((error) => {
 				console.error("Error fetching user data:", error);

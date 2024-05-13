@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseURL = "http://localhost:8000/api";
+export const baseURL = "http://back-end.timtro.top/api";
 
 export const getAccommodation = async () => {
 	try {
@@ -122,6 +122,64 @@ export const deleteImageAcc = async (token, id) => {
 		return response.data;
 	} catch (error) {
 		console.error("Error posting Accommodation data:", error);
+		throw error;
+	}
+};
+
+// Process Amenities in Rooms
+
+export const getUtilities = async (token, formData) => {
+	try {
+		const response = await axios.get(
+			`${baseURL}/accommodation-utilities/`,
+			formData,
+			{
+				headers: {
+					"Content-Type": "multipart/form-data",
+					Authorization: `Bearer ${token}`,
+				},
+			},
+		);
+		return response.data;
+	} catch (error) {
+		console.error("Error getting utilities data:", error);
+		throw error;
+	}
+};
+
+export const postUtilities = async (token, formData) => {
+	try {
+		const response = await axios.post(
+			`${baseURL}/accommodation-utilities/`,
+			formData,
+			{
+				headers: {
+					"Content-Type": "multipart/form-data",
+					Authorization: `Bearer ${token}`,
+				},
+			},
+		);
+		return response.data;
+	} catch (error) {
+		console.error("Error post utilities data:", error);
+		throw error;
+	}
+};
+
+export const deleteUtilities = async (token, id) => {
+	try {
+		const response = await axios.delete(
+			`${baseURL}/accommodation-utilities/${id}/`,
+			{
+				headers: {
+					"Content-Type": "multipart/form-data",
+					Authorization: `Bearer ${token}`,
+				},
+			},
+		);
+		return response.data;
+	} catch (error) {
+		console.error("Error delete utilities data:", error);
 		throw error;
 	}
 };

@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:8000/apis";
-const baseURLs = "http://localhost:8000/api";
+const baseURL = "http://back-end.timtro.top/apis";
+const baseURLs = "http://back-end.timtro.top/api";
 
 export const getUser = async (token) => {
 	try {

@@ -37,7 +37,7 @@ export default function EditCustomer() {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		axios
-			.get(`http://localhost:8000/api/users/${id}/`, {
+			.get(`http://back-end.timtro.top/api/users/${id}/`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -60,7 +60,7 @@ export default function EditCustomer() {
 
 		axios({
 			method: "put",
-			url: `http://localhost:8000/api/users/${id}/`,
+			url: `http://back-end.timtro.top/api/users/${id}/`,
 			data: userData,
 			headers: {
 				"Content-Type": "multipart/form-data",
@@ -102,7 +102,7 @@ export default function EditCustomer() {
 					<Header_Admin />
 					{updateSuccess && (
 						<Alert className="rounded-none border-l-4 border-[#2ec946] bg-[#2ec946]/10 font-medium text-[#2ec946]">
-							Update successfuly !!
+							Cập nhật thông tin tài khoản thành công !!
 						</Alert>
 					)}
 					<EditCustomerForm

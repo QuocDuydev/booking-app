@@ -22,8 +22,8 @@ export default function List_Img_Acc() {
 	}, [acc_id]);
 	return (
 		<div className=" max-w-screen-xl container mx-auto relative mt-8">
-			<Link to={`/hotel/${acc.acc_id}`}>
-				<div className="flex">
+			<Link to={`/accommodations/${acc.acc_id}`}>
+				<div className="flex ml-4">
 					<ArrowUturnLeftIcon className="h-5 w-5 mr-3" />
 					<Typography variant="h6">Quay lại</Typography>
 				</div>

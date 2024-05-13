@@ -14,8 +14,7 @@ import Error from "./pages/Page_Error.jsx";
 import ShowProfile from "./pages/Customer/Page_Profile.jsx";
 
 import Home from "./pages/Customer/Page_Home.jsx";
-import ListSearch from "./pages/Customer/Page_Search.jsx";
-import ShowHotelDetails from "./pages/Customer/Page_HotelDetails.jsx";
+import ShowAccomodationDetails from "./pages/Customer/Page_AccommodationDetails.jsx";
 
 import Show_ListImg_Acc from "./pages/Customer/Page_ListImg_Acc.jsx";
 
@@ -42,6 +41,10 @@ import EditRoom from "./pages/Admin/Page_EditRoom.jsx";
 import ListBookings from "./pages/Admin/Page_ListBooking_Admin.jsx";
 import EditBookings from "./pages/Admin/Page_EditBooking_Admin.jsx";
 import ProfileAdmin from "./pages/Admin/Page_Profile_Admin.jsx";
+import Page_ListHotel from "./pages/Customer/Page_ListHotel.jsx";
+import Page_ListHomeStay from "./pages/Customer/Page_ListHomeStay.jsx";
+import Page_ListMotel from "./pages/Customer/Page_ListMotel.jsx";
+import SearchResult from "./pages/Customer/Page_SearchResult.jsx";
 
 
 
@@ -60,10 +63,13 @@ function App() {
           <Route path="/profile/:id" element={<ShowProfile />} />
 
           <Route path="/" element={<Home />} />
-          <Route path="/search-results" element={<ListSearch />} />
-          <Route path="/hotel/:acc_id" element={<ShowHotelDetails />} />
-          <Route path="/hotel/:acc_id/list-images" element={<Show_ListImg_Acc />} />
-          <Route path="/booking/:hotel_id/:room_id" element={<Booking />} />
+          <Route path="/search-results" element={<SearchResult />} />
+          <Route path="/accommodations/:acc_id" element={<ShowAccomodationDetails />} />
+          <Route path="/list-hotel" element={<Page_ListHotel />} />
+          <Route path="/list-homestay" element={<Page_ListHomeStay />} />
+          <Route path="/list-motel" element={<Page_ListMotel />} />
+          <Route path="/accommodations/:acc_id/list-images" element={<Show_ListImg_Acc />} />
+          <Route path="/booking/:acc_id/:room_id" element={<Booking />} />
           <Route path="/list-booking" element={<ShowListBooking />} />
           <Route path="/edit-booking/:booking_id" element={<EditBooking />} />
 

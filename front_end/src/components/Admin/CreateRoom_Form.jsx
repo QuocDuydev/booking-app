@@ -11,7 +11,7 @@ import {
 import { useState, useEffect } from "react";
 import { getAmenities } from "../../api/acc-type_API";
 
-function CreateRoomForm({
+export default function CreateRoomForm({
 	room,
 	handleChange,
 	handleSelectChange,
@@ -178,4 +178,3 @@ function CreateRoomForm({
 		</>
 	);
 }
-export default CreateRoomForm;

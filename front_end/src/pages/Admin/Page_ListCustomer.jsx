@@ -26,7 +26,7 @@ function ListCustomer() {
 	}, [token]);
 
 	const handleDelete = async (item) => {
-		const isConfirmed = window.confirm("Are you sure you want to delete?");
+		const isConfirmed = window.confirm("Bạn chắc chắn muốn xóa tài khoản này?");
 		if (isConfirmed) {
 			try {
 				await deleteUsers(item.id, token);

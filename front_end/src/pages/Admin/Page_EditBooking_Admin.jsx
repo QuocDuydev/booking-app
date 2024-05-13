@@ -111,7 +111,7 @@ function EditBookings() {
 					<Header_Admin />
 					{updateSuccess && (
 						<Alert className="rounded-none border-l-4 border-[#2ec946] bg-[#2ec946]/10 font-medium text-[#2ec946]">
-							Update successfuly !!
+							Cập nhật thông tin đặt phòng !!
 						</Alert>
 					)}
 					<EditBookingForm

@@ -52,7 +52,7 @@ export function GridGallery() {
 					<div className="grid grid-cols-3 gap-4 md:grid-cols-3">
 						<div className="relative  transform transition-transform  cursor-pointer">
 							<img
-								className="h-48 w-full rounded-xl object-cover object-center"
+								className=" h-[90px] 2xl:h-48 lg:h-48 md:48 sm:h-30 w-full rounded-xl object-cover object-center"
 								src="https://dulich9.com/wp-content/uploads/2019/10/dia-diem-du-lich-63-tinh-thanh-14.jpg"
 								alt="gallery-photo"
 							/>
@@ -70,7 +70,7 @@ export function GridGallery() {
 
 						<div className="relative  transform transition-transform  cursor-pointer">
 							<img
-								className="h-48 w-full rounded-xl object-cover object-center"
+								className="h-[90px]  2xl:h-48 lg:h-48 sm:h-30 w-full rounded-xl object-cover object-center"
 								src="https://dulich9.com/wp-content/uploads/2019/10/cach-dia-diem-du-lich-ca-nuoc-9.jpg"
 								alt="gallery-photo"
 							/>
@@ -88,7 +88,7 @@ export function GridGallery() {
 
 						<div className="relative  transform transition-transform  cursor-pointer">
 							<img
-								className="h-48 w-full rounded-xl object-cover object-center "
+								className="h-[90px]  2xl:h-48 lg:h-48 md:38 sm:h-30 w-full rounded-xl object-cover object-center "
 								src="https://dulich9.com/wp-content/uploads/2019/10/cach-dia-diem-du-lich-ca-nuoc-3.jpg"
 								alt="gallery-photo"
 							/>

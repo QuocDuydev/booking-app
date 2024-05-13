@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:8000/api";
+const baseURL = "http://back-end.timtro.top/api";
 
 export const getRoom = async () => {
 	try {
@@ -134,7 +134,7 @@ export const getAmenities = async (token, formData) => {
 		});
 		return response.data;
 	} catch (error) {
-		console.error("Error getting images data:", error);
+		console.error("Error getting amenities data:", error);
 		throw error;
 	}
 };
@@ -149,7 +149,7 @@ export const postAmenities = async (token, formData) => {
 		});
 		return response.data;
 	} catch (error) {
-		console.error("Error post images data:", error);
+		console.error("Error post amenities data:", error);
 		throw error;
 	}
 };
@@ -164,7 +164,7 @@ export const deleteAmenities = async (token, id) => {
 		});
 		return response.data;
 	} catch (error) {
-		console.error("Error delete images data:", error);
+		console.error("Error delete amenities data:", error);
 		throw error;
 	}
 };

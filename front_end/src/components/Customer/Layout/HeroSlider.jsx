@@ -8,21 +8,21 @@ const images = [
 	{
 		src: "https://dulich9.com/wp-content/uploads/2019/10/cac-dia-diem-du-lich-63-tinh-thanh-Viet-Nam-3.jpg",
 
-		text: "Your Luxury Hotel For Vacation",
+		text: "Khách sạn sang trọng của bạn để nghỉ dưỡng",
 	},
 	{
 		src: "https://dulich9.com/wp-content/uploads/2019/10/cac-dia-diem-du-lich-63-tinh-thanh-Viet-Nam-8.jpg",
 
-		text: "Hotel with reasonable price",
+		text: "Nhà trọ có giá cả hợp lý",
 	},
 	{
 		src: "https://dulich9.com/wp-content/uploads/2019/10/dia-diem-du-lich-63-tinh-thanh-14.jpeg",
 
-		text: "Great Vacation Experience",
+		text: "Trải nghiệm kỳ nghỉ tuyệt vời với HomeStay",
 	},
 ];
 
-function CarouselDefault() {
+export default function SlideBar() {
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	const settings = {
@@ -51,13 +51,13 @@ function CarouselDefault() {
 						<div className="absolute inset-0 flex flex-col  items-center bg-black/50">
 							<h3 className="text-white text-2xl mt-5">
 								{" "}
-								Wellcome to Website Booking{" "}
+								Chào mừng bạn đến với Timtro.top{" "}
 							</h3>
 							<h1 className="text-white text-4xl font-bold  m-10">
 								{image.text}
 							</h1>
 							<Button className=" bg-white text-black font-bold hover:bg-gray-500 hover:text-white">
-								See Rooms Nows
+								Xem thông tin chi tiết
 							</Button>
 						</div>
 					</div>
@@ -79,5 +79,3 @@ function CarouselDefault() {
 		</div>
 	);
 }
-
-export default CarouselDefault;

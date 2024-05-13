@@ -100,7 +100,7 @@ function Registers() {
 							Đăng ký tài khoản
 						</h3>
 						<p className="mb-4 italic text-black text-center">
-							Chào mừng bạn đến với TimphongQD
+							Chào mừng bạn đến với Timtro.top
 						</p>
 
 						<div className="mb-4">
@@ -179,7 +179,7 @@ function Registers() {
 							onClick={handleCreate}
 							className="w-full bg-blue-500 text-white px-4 mb-4 py-2 rounded-lg uppercase"
 						>
-							Đăng kí
+							Đăng ký
 						</button>
 						<div className="flex ">
 							<p className="text-sm mx-auto text-right font-semibold">

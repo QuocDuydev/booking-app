@@ -17,7 +17,7 @@ function Login() {
 							Đăng nhập
 						</h3>
 						<p className="mb-4 italic text-center text-black">
-							Chào mừng bạn đến với TimphongQD
+							Chào mừng bạn đến với Timtro.top
 						</p>
 
 						<div className="mb-4">

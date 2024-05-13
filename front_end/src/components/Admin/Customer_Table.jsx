@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import { Typography, Button } from "@material-tailwind/react";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 
-function CustomerTable({ handleDelete, getUsersForPage, currentPage }) {
+export default function CustomerTable({
+	handleDelete,
+	getUsersForPage,
+	currentPage,
+}) {
 	return (
 		<>
 			<div className=" mx-auto mb-4 mt-4">
 				<Typography variant="h4" color="red">
-					List Customers
+					Danh sách người dùng
 				</Typography>
 			</div>
 			<div className="max-w-full px-3 rounded-lg mt-2 overflow-hidden">
@@ -17,11 +21,11 @@ function CustomerTable({ handleDelete, getUsersForPage, currentPage }) {
 						<table className="w-full whitespace-no-wrap">
 							<thead>
 								<tr className="text-xs font-semibold tracking-wide text-center text-gray-500 uppercase border-2 bg-gray-50">
-									<th className="px-4 py-3">Name</th>
-									<th className="px-4 py-3">Username</th>
+									<th className="px-4 py-3">Họ và tên</th>
+									<th className="px-4 py-3">Tên tài khoản</th>
 									<th className="px-4 py-3">Email</th>
-									<th className="px-4 py-3">Account type</th>
-									<th className="px-4 py-3">Actions</th>
+									<th className="px-4 py-3">Loại tài khoản</th>
+									<th className="px-4 py-3">Hành động</th>
 								</tr>
 							</thead>
 							<tbody className="bg-gray-100">
@@ -70,4 +74,3 @@ function CustomerTable({ handleDelete, getUsersForPage, currentPage }) {
 		</>
 	);
 }
-export default CustomerTable;

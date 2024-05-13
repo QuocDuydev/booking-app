@@ -27,9 +27,7 @@ function ListRoom() {
 	}, [acc_id]);
 
 	const handleDelete = async (roomId) => {
-		const isConfirmed = window.confirm(
-			"Are you sure you want to delete this room?",
-		);
+		const isConfirmed = window.confirm("Bạn chắc chắn muốn xóa phòng này?");
 		if (isConfirmed) {
 			try {
 				await deleteRoom_In_Accommodation(roomId);

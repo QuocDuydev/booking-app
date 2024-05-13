@@ -6,23 +6,25 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useAccessToken } from "../../components/ultiti";
 import { postBooking } from "../../api/booking_API";
 import { getAccommodationdetail } from "../../api/acc_API";
-import { getRoomdetail_In_Accommodation} from "../../api/room_in_acc_API";
+import { getRoomdetail_In_Accommodation } from "../../api/room_in_acc_API";
 import { Alert } from "@material-tailwind/react";
 import CardLeftBooking from "../../components/Customer/Card_Left_Booking";
 import CardRightBooking from "../../components/Customer/Card_Right_Booking";
+import { getRoomType } from "../../api/acc-type_API";
 
 function Booking() {
-	const { hotel_id, room_id } = useParams();
+	const { acc_id, room_id } = useParams();
 	const token = useAccessToken();
 	const decodedToken = jwt_decode(token);
 	const userId = decodedToken.user_id;
 	const navigate = useNavigate();
 	const [rooms, setRooms] = useState([]);
-	const [hotels, setHotels] = useState([]);
+	const [accs, setAccommodations] = useState([]);
+	const [roomtype, setRoomtypes] = useState([]);
 	const [booking, setBooking] = useState({
 		user: userId,
-		hotel: hotel_id,
-		room: room_id,
+		accommodations: acc_id,
+		rooms: room_id,
 		name: "",
 		email: "",
 		phonenumber: "",
@@ -30,7 +32,8 @@ function Booking() {
 		checkin: "",
 		checkout: "",
 		total: 0,
-		datebooking: new Date().toISOString().split("T")[0],
+		createdAt: new Date(),
+		updatedAt: new Date(),
 	});
 
 	const [CreateSuccess, setCreateSuccess] = useState(false);
@@ -78,8 +81,8 @@ function Booking() {
 		try {
 			const bookingData = {
 				user: booking.user,
-				hotel: booking.hotel,
-				room: booking.room,
+				accommodations: booking.accommodations,
+				rooms: booking.rooms,
 				name: booking.name,
 				email: booking.email,
 				phonenumber: booking.phonenumber,
@@ -87,7 +90,8 @@ function Booking() {
 				checkin: formatDate(booking.checkin),
 				checkout: formatDate(booking.checkout),
 				total: totalPrice,
-				datebooking: booking.datebooking,
+				createdAt: booking.createdAt,
+				updatedAt: booking.updatedAt,
 				status: booking.status,
 			};
 
@@ -102,35 +106,36 @@ function Booking() {
 			}, 1000);
 		} catch (error) {
 			console.error("Create failed:", error);
-			// Hiển thị thông báo lỗi hoặc xử lý lỗi khác
 		}
 	};
 
 	useEffect(() => {
-		// Fetch hotel details
 		const fetchData = async () => {
 			try {
-				const [hotelData, roomData] = await Promise.all([
-					getAccommodationdetail(hotel_id, token),
-					getRoomdetail_In_Accommodation(hotel_id, room_id, token),
+				const [accData, roomData, roomtypeData] = await Promise.all([
+					getAccommodationdetail(acc_id),
+					getRoomdetail_In_Accommodation(acc_id, room_id),
+					getRoomType(),
 				]);
-
-				setHotels(hotelData);
+				console.log(roomtypeData);
+				setAccommodations(accData);
 				setRooms(roomData);
-				console.log(roomData);
+				setRoomtypes(roomtypeData);
 			} catch (error) {
 				console.error("Error fetching data:", error);
 			}
 		};
 		fetchData();
-	}, [hotel_id, room_id, token]);
-
+	}, [acc_id, room_id]);
+	const selectRoomType = roomtype.find(
+		(item) => item.roomtype_id === rooms.roomtype,
+	);
 	return (
 		<>
 			<Navbars />
 			{CreateSuccess && (
 				<Alert className="rounded-none border-l-4 border-[#2ec946] bg-[#2ec946]/10 font-medium text-[#2ec946]">
-					Create successfuly !!
+					Đặt phòng thành công!
 				</Alert>
 			)}
 			<div className="grid grid-cols-6">
@@ -139,7 +144,7 @@ function Booking() {
 						booking={booking}
 						setBooking={setBooking}
 						rooms={rooms}
-						hotels={hotels}
+						accs={accs}
 						calculateNumberOfDays={calculateNumberOfDays}
 					/>
 				</div>
@@ -147,6 +152,7 @@ function Booking() {
 					<CardRightBooking
 						booking={booking}
 						rooms={rooms}
+						selectRoomType={selectRoomType}
 						handleChange={handleChange}
 						handleCreate={handleCreate}
 					/>

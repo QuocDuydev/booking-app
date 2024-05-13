@@ -20,7 +20,7 @@ import {
 import useAccessToken from "../ultiti";
 import UploadAmenities from "./List_Amenities";
 
-function EditRoomForm({
+export default function EditRoomForm({
 	room,
 	handleChange,
 	handleUpdate,
@@ -330,4 +330,3 @@ function EditRoomForm({
 		</>
 	);
 }
-export default EditRoomForm;

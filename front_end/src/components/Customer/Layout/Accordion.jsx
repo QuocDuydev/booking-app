@@ -27,7 +27,7 @@ function Icon({ id, open }) {
 	);
 }
 
-function AccordionCustomIcon() {
+export default function AccordionCustomIcon() {
 	const [open, setOpen] = React.useState(0);
 
 	const handleOpen = (value) => setOpen(open === value ? 0 : value);
@@ -36,44 +36,43 @@ function AccordionCustomIcon() {
 		<>
 			<div className="container mx-auto relative max-w-screen-2xl px-5 py-5">
 				<h3 className=" mt-[40px] text-2xl font-bold mb-2">
-					How does it work?
+					Làm thế nào nó hoạt động?
 				</h3>
 
 				<Accordion open={open === 1} icon={<Icon id={1} open={open} />}>
 					<AccordionHeader onClick={() => handleOpen(1)} className=" text-md">
-						Getting your key
+						Liên hệ đặt phòng
 					</AccordionHeader>
 					<AccordionBody>
-						You’ll be able to communicate directly with your host to find out
-						how to get your keys. Whether you meet them personally or simply use
-						a lockbox, it’ll be easy for you to access your property and start
-						enjoying your holiday!
+						Bạn sẽ có thể liên lạc trực tiếp với chủ nhà để tìm hiểu cách đặt
+						phòng. Cho dù bạn gặp họ trực tiếp hay chỉ đơn giản là sử dụng dịch
+						vụ đặt online, bạn sẽ dễ dàng truy cập vào nơi lưu trú của mình và
+						bắt đầu tận hưởng kỳ nghỉ của mình!
 					</AccordionBody>
 				</Accordion>
 				<Accordion open={open === 2} icon={<Icon id={2} open={open} />}>
 					<AccordionHeader onClick={() => handleOpen(2)} className=" text-md">
-						Communicating with your host
+						Giao tiếp với chủ nhà của bạn
 					</AccordionHeader>
 					<AccordionBody>
-						You can always contact your host with any questions leading up to
-						your trip. Perhaps you want to let them know what time you’re
-						arriving or you have a special request – enjoy stress-free
-						communication at all times.
+						Bạn luôn có thể liên hệ với chủ nhà nếu có bất kỳ câu hỏi nào trước
+						chuyến đi của mình. Có lẽ bạn muốn cho họ biết thời gian bạn đến
+						hoặc bạn có yêu cầu đặc biệt – luôn tận hưởng cuộc trò chuyện thoải
+						mái.
 					</AccordionBody>
 				</Accordion>
 				<Accordion open={open === 3} icon={<Icon id={3} open={open} />}>
 					<AccordionHeader onClick={() => handleOpen(3)} className=" text-md">
-						Checking in
+						Đăng ký nó
 					</AccordionHeader>
 					<AccordionBody>
-						Maybe you’ve always stayed in hotels and you’re not sure how to
-						‘check-in’ to an apartment or holiday home. Don’t worry, other
-						guests have felt the same! That’s why hosts provide all the
-						information you need to get you settled in.
+						Có thể bạn luôn ở trong khách sạn và không biết cách 'nhận phòng'
+						tại một căn hộ hoặc nhà nghỉ mát. Đừng lo lắng, những vị khách khác
+						cũng cảm thấy như vậy! Đó là lý do tại sao chủ nhà cung cấp tất cả
+						thông tin bạn cần để giúp bạn ổn định cuộc sống.
 					</AccordionBody>
 				</Accordion>
 			</div>
 		</>
 	);
 }
-export default AccordionCustomIcon;

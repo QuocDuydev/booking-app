@@ -8,37 +8,61 @@ import {
 } from "@material-tailwind/react";
 import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import ProfileMenu from "./ProfileMenu";
-
-const navListItems = [
-	{
-		label: "PHÒNG TRỌ",
-	},
-	{
-		label: "KHÁCH SẠN",
-	},
-	{
-		label: "HOMESTAY",
-	},
-];
+import { useNavigate } from "react-router-dom";
 
 function NavList() {
+	const [searchKey, setSearchKey] = useState("");
+	const navigate = useNavigate();
+
+	const handleSearchSubmit = (event) => {
+		event.preventDefault();
+
+		navigate(`/search-results?q=${encodeURIComponent(searchKey)}`);
+	};
+
+	const handleInputChange = (event) => {
+		setSearchKey(event.target.value);
+	};
 	return (
 		<ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-			{navListItems.map(({ label }) => (
-				<Typography
-					key={label}
-					as="a"
-					href="#"
-					variant="small"
-					color="gray"
-					className="font-medium text-blue-gray-500"
-				>
-					<MenuItem className="flex items-center gap-2 lg:rounded-full">
-						<span className="text-gray-900"> {label}</span>
-					</MenuItem>
-				</Typography>
-			))}
-			<form className="w-auto mx-auto lg:w-[450px] md:w-[500px]">
+			<Typography
+				as="a"
+				href="/list-motel"
+				variant="small"
+				color="gray"
+				className="font-medium text-blue-gray-500"
+			>
+				<MenuItem className="flex items-center gap-2 lg:rounded-full">
+					<span className="text-gray-900 uppercase">Nhà trọ</span>
+				</MenuItem>
+			</Typography>
+			<Typography
+				as="a"
+				href="/list-hotel"
+				variant="small"
+				color="gray"
+				className="font-medium text-blue-gray-500"
+			>
+				<MenuItem className="flex items-center gap-2 lg:rounded-full">
+					<span className="text-gray-900 uppercase">Khách sạn</span>
+				</MenuItem>
+			</Typography>
+			<Typography
+				as="a"
+				href="/list-homestay"
+				variant="small"
+				color="gray"
+				className="font-medium text-blue-gray-500"
+			>
+				<MenuItem className="flex items-center gap-2 lg:rounded-full">
+					<span className="text-gray-900 uppercase">HomeStay</span>
+				</MenuItem>
+			</Typography>
+
+			<form
+				className="w-auto mx-auto lg:w-[450px] md:w-[500px]"
+				onSubmit={handleSearchSubmit}
+			>
 				<div className="relative">
 					<div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
 						<MagnifyingGlassIcon className="w-5 h-5 text-black" />
@@ -48,7 +72,8 @@ function NavList() {
 						id="default-search"
 						className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
 						placeholder="Tìm kiếm phòng trọ bạn muốn ..."
-						required
+						value={searchKey}
+						onChange={handleInputChange}
 					/>
 					<button
 						type="submit"
@@ -83,7 +108,7 @@ export default function Navbars() {
 						href="/"
 						className="mr-4 ml-2 cursor-pointer py-1.5 font-bold text-red-500"
 					>
-						E-Commerce
+						Timtro.top
 					</Typography>
 					<div className="hidden lg:block">
 						<NavList />

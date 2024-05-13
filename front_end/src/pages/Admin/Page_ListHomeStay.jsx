@@ -47,7 +47,7 @@ export default function ListHomeStayAdmin() {
 	}, [token]);
 
 	const handleDelete = async (item) => {
-		const isConfirmed = window.confirm("Bạn chắc chắn muốn xóa nó?");
+		const isConfirmed = window.confirm("Bạn chắc chắn muốn xóa chỗ ở này?");
 		if (isConfirmed) {
 			try {
 				await deleteAccommodation(item, token);

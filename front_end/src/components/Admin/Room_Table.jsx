@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { Typography, Button } from "@material-tailwind/react";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 
-function RoomTable({ acc_id, handleDelete, getRoomsForPage, currentPage }) {
+export default function RoomTable({
+	acc_id,
+	handleDelete,
+	getRoomsForPage,
+	currentPage,
+}) {
 	return (
 		<>
 			<div className=" mx-auto mb-4 mt-4">
@@ -81,4 +86,3 @@ function RoomTable({ acc_id, handleDelete, getRoomsForPage, currentPage }) {
 		</>
 	);
 }
-export default RoomTable;
