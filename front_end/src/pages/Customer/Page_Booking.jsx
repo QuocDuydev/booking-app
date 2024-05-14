@@ -11,6 +11,7 @@ import { Alert } from "@material-tailwind/react";
 import CardLeftBooking from "../../components/Customer/Card_Left_Booking";
 import CardRightBooking from "../../components/Customer/Card_Right_Booking";
 import { getRoomType } from "../../api/acc-type_API";
+import ScrollToTop from "../../components/Customer/Layout/ScrollTop";
 
 export default function Booking() {
 	const { acc_id, room_id } = useParams();
@@ -133,6 +134,7 @@ export default function Booking() {
 	return (
 		<>
 			<Navbars />
+			<ScrollToTop />
 			{CreateSuccess && (
 				<Alert className="rounded-none border-l-4 border-[#2ec946] bg-[#2ec946]/10 font-medium text-[#2ec946]">
 					Đặt phòng thành công!

@@ -18,6 +18,7 @@ import { Bars3Icon, MapPinIcon } from "@heroicons/react/24/solid";
 import useAccessToken from "../../components/ultiti";
 import { getAccommodation } from "../../api/acc_API";
 import FilterAcc from "../../components/Customer/Filter_Accommodation";
+import ScrollToTop from "../../components/Customer/Layout/ScrollTop";
 
 const SearchResult = () => {
 	const [searchResults, setSearchResults] = useState([]);
@@ -150,6 +151,7 @@ const SearchResult = () => {
 		return (
 			<>
 				<Navbars />
+				<ScrollToTop />
 				<main className="content">
 					<div className="container mx-auto">
 						{/* <ButtonSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} /> */}
@@ -260,6 +262,7 @@ const SearchResult = () => {
 	return (
 		<>
 			<Navbars />
+			<ScrollToTop />
 			<main className="content">
 				<div className="container mx-auto">
 					{/* <ButtonSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} /> */}

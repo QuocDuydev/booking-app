@@ -8,6 +8,7 @@ import { getRoom } from "../../api/room_in_acc_API";
 import { getBookingId } from "../../api/booking_API";
 import { putBooking } from "../../api/booking_API";
 import FormEditBooking from "../../components/Customer/Form_EditBooking";
+import ScrollToTop from "../../components/Customer/Layout/ScrollTop";
 
 function EditBooking() {
 	const token = useAccessToken();
@@ -117,6 +118,7 @@ function EditBooking() {
 	return (
 		<>
 			<Navbars />
+			<ScrollToTop />
 			<div className=" ">
 				<div className="flex flex-col flex-1 w-full">
 					{updateSuccess && (

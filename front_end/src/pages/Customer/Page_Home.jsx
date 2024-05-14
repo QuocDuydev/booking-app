@@ -8,6 +8,7 @@ import ListCardHotel from "../../components/Customer/List_Card_Hotel";
 import ListCardHomeStay from "../../components/Customer/List_Card_HomeStay";
 import ListCardMotel from "../../components/Customer/List_Card_Motel";
 import SlideBar from "../../components/Customer/Layout/HeroSlider";
+import ScrollToTop from "../../components/Customer/Layout/ScrollTop";
 
 function Home() {
 	return (
@@ -16,7 +17,7 @@ function Home() {
 			<div className="hidden 2lx:block lg:block md:block">
 				<SlideBar />
 			</div>
-
+			<ScrollToTop />
 			<main className="content ">
 				<div className="container mx-auto relative">
 					<ListCardHotel />

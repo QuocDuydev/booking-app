@@ -4,6 +4,7 @@ import Navbars from "../../components/Customer/Layout/Navbar";
 import { useAccessToken } from "../../components/ultiti";
 import axios from "axios";
 import ProfileCard from "../../components/Customer/Profile_Card";
+import ScrollToTop from "../../components/Customer/Layout/ScrollTop";
 
 function ShowProfile() {
 	const token = useAccessToken();
@@ -99,6 +100,7 @@ function ShowProfile() {
 	return (
 		<>
 			<Navbars />
+			<ScrollToTop />
 			<ProfileCard
 				user={user}
 				handleChange={handleChange}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getAccommodation } from "../../api/acc_API";
@@ -10,9 +10,13 @@ import {
 	Rating,
 	Carousel,
 } from "@material-tailwind/react";
-import { BuildingOffice2Icon, MapPinIcon } from "@heroicons/react/24/outline";
+import {
+	BuildingStorefrontIcon,
+	MapPinIcon,
+} from "@heroicons/react/24/outline";
 import useAccessToken from "../../components/ultiti";
 import Navbars from "../../components/Customer/Layout/Navbar";
+import ScrollToTop from "../../components/Customer/Layout/ScrollTop";
 
 export default function Page_ListMotel() {
 	const token = useAccessToken();
@@ -108,10 +112,11 @@ export default function Page_ListMotel() {
 	return (
 		<>
 			<Navbars />
+			<ScrollToTop />
 			<div className="container mx-auto relative max-w-screen-2xl px-3 py-3">
 				<div className="mt-6 flex ">
-					<BuildingOffice2Icon className="h-7 w-7 text-red-600 mr-3" />
-					<Typography variant="h4">Danh sách Khách Sạn</Typography>
+					<BuildingStorefrontIcon className="h-7 w-7 text-red-600 mr-3" />
+					<Typography variant="h4">Danh sách Nhà trọ</Typography>
 				</div>
 				<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
 					{motels.map((item, index) => {

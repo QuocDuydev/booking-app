@@ -1,4 +1,4 @@
-import { XMarkIcon } from "@heroicons/react/24/solid";
+﻿import { XMarkIcon } from "@heroicons/react/24/solid";
 import {
 	Drawer,
 	Button,
@@ -32,7 +32,7 @@ export function ListAllRecomment({ users, recommentsData }) {
 				>
 					<div className=" flex mb-6 items-center justify-between">
 						<Typography variant="h5" color="blue-gray">
-							List Recomment
+							Danh sách đánh giá
 						</Typography>
 						<IconButton
 							variant="text"

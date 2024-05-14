@@ -7,6 +7,7 @@ import { getBookingbyuserid } from "../../api/booking_API";
 import { patchBooking } from "../../api/booking_API";
 import ListBookings from "../../components/Customer/List_Booking";
 import ListHistory from "../../components/Customer/List_History";
+import ScrollToTop from "../../components/Customer/Layout/ScrollTop";
 
 function ShowListBooking() {
 	const token = useAccessToken();
@@ -52,6 +53,7 @@ function ShowListBooking() {
 	return (
 		<>
 			<Navbars />
+			<ScrollToTop />
 			<main className="content">
 				<div className=" container mx-auto">
 					<ListBookings booking={booking} handleDelete={handleDelete} />

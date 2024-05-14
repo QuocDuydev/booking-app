@@ -1,4 +1,5 @@
-import { Typography } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 const SITEMAP = [
 	{
@@ -27,6 +28,11 @@ const SITEMAP = [
 export function FooterWithSitemap() {
 	return (
 		<footer className="relative w-full">
+			<div className="flex justify-center mx-auto m-2">
+				<Link to="https://forms.gle/3XNfhFBKnfCFbTtC9">
+					<Button>Đánh giá trang web tại đây !!</Button>
+				</Link>
+			</div>
 			<div className="mx-auto w-full max-w-7xl px-8 text-center">
 				<div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 md:grid-cols-2 lg:grid-cols-4">
 					{SITEMAP.map(({ title, links }, key) => (
