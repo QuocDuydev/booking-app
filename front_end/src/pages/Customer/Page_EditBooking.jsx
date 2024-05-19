@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAccessToken } from "../../components/ultiti";
 import { Alert } from "@material-tailwind/react";
@@ -9,12 +9,14 @@ import { getBookingId } from "../../api/booking_API";
 import { putBooking } from "../../api/booking_API";
 import FormEditBooking from "../../components/Customer/Form_EditBooking";
 import ScrollToTop from "../../components/Customer/Layout/ScrollTop";
+import { getRoomType } from "../../api/acc-type_API";
 
 function EditBooking() {
 	const token = useAccessToken();
 	const { booking_id } = useParams();
 	const [accs, setAccommodations] = useState([]);
 	const [room, setRoom] = useState([]);
+	const [roomtypes, setRoomtypes] = useState([]);
 	const [booking, setBooking] = useState({
 		user: "",
 		accommodations: "",
@@ -32,29 +34,26 @@ function EditBooking() {
 	const [updateSuccess, setUpdateSuccess] = useState(false);
 	const navigate = useNavigate();
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useEffect(
-		() => {
-			const fetchData = async () => {
-				try {
-					const [accData, roomData, bookingData] = await Promise.all([
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const [accData, roomData, bookingData, roomtypeData] =
+					await Promise.all([
 						getAccommodation(token),
 						getRoom(token),
 						getBookingId(booking_id, token),
+						getRoomType(),
 					]);
-					setAccommodations(accData);
-					setRoom(roomData);
-					setBooking(bookingData);
-					console.log(bookingData);
-				} catch (error) {
-					console.error("Error fetching data:", error);
-				}
-			};
-			fetchData();
-		},
-		[booking_id],
-		token,
-	);
+				setAccommodations(accData);
+				setRoom(roomData);
+				setBooking(bookingData);
+				setRoomtypes(roomtypeData);
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+		fetchData();
+	}, [booking_id, token]);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -68,12 +67,12 @@ function EditBooking() {
 		let month = date.getMonth() + 1;
 		let day = date.getDate();
 
-		// Thêm số 0 phía trước nếu tháng hoặc ngày là một chữ số
 		month = month < 10 ? `0${month}` : month;
 		day = day < 10 ? `0${day}` : day;
 
 		return `${year}-${month}-${day}`;
 	};
+
 	const handleUpdate = async () => {
 		if (booking.status === "active") {
 			alert("Không thể hủy đơn đặt phòng này!");
@@ -105,7 +104,6 @@ function EditBooking() {
 				}, 1000);
 			} catch (error) {
 				console.error("Update failed:", error);
-				// Hiển thị thông báo lỗi hoặc xử lý lỗi khác
 			}
 		}
 	};
@@ -114,7 +112,9 @@ function EditBooking() {
 		(item) => item.acc_id === booking.accommodations,
 	);
 	const selectedRoom = room.find((items) => items.room_id === booking.rooms);
-	console.log(selectedRoom);
+	const selectedRoomType = roomtypes.find(
+		(type) => type.roomtype_id === selectedRoom?.roomtype,
+	);
 	return (
 		<>
 			<Navbars />
@@ -131,6 +131,7 @@ function EditBooking() {
 							selectedAcc={selectedAcc}
 							selectedRoom={selectedRoom}
 							booking={booking}
+							selectedRoomType={selectedRoomType}
 							handleUpdate={handleUpdate}
 							handleChange={handleChange}
 						/>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import Navbars from "../../components/Customer/Layout/Navbar";
@@ -128,9 +128,6 @@ export default function Booking() {
 		};
 		fetchData();
 	}, [acc_id, room_id]);
-	const selectRoomType = roomtype.find(
-		(item) => item.roomtype_id === rooms.roomtype,
-	);
 	return (
 		<>
 			<Navbars />
@@ -155,7 +152,7 @@ export default function Booking() {
 						<CardRightBooking
 							booking={booking}
 							rooms={rooms}
-							selectRoomType={selectRoomType}
+							roomtype={roomtype}
 							handleChange={handleChange}
 							handleCreate={handleCreate}
 						/>

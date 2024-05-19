@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import {
 	Card,
 	Input,
@@ -14,6 +14,7 @@ function FormEditBooking({
 	booking,
 	handleUpdate,
 	handleChange,
+	selectedRoomType,
 }) {
 	return (
 		<>
@@ -108,7 +109,7 @@ function FormEditBooking({
 											color="blue-gray"
 											className=" ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
 										>
-											{selectedRoom ? selectedRoom.roomtype : ""}
+											{selectedRoomType ? selectedRoomType.name : ""}
 										</Typography>
 									</div>
 									<div className="flex">

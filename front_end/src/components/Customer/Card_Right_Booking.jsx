@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
 
 export default function CardRightBooking({
@@ -6,86 +6,95 @@ export default function CardRightBooking({
 	rooms,
 	handleChange,
 	handleCreate,
-	selectRoomType,
+	roomtype,
 }) {
 	return (
 		<div className=" max-w-full px-3 rounded-lg ">
 			<div className="mb-1 w-full h-full p-4">
-				{rooms.map((item) => (
-					<div
-						className=" border border-solid border-black  px-3 py-3 rounded-md"
-						key={item.room_id}
-					>
-						<Typography
-							variant="h5"
-							color="blue-gray"
-							className="mb-3 text-sm md:text-md lg:text-lg xl:text-lg"
+				{rooms.map((item) => {
+					let selectedRoomtype = "";
+					// biome-ignore lint/complexity/noForEach: <explanation>
+					roomtype.forEach((roomType) => {
+						if (roomType.roomtype_id === item.roomtype) {
+							selectedRoomtype = roomType.name;
+						}
+					});
+					return (
+						<div
+							className=" border border-solid border-black  px-3 py-3 rounded-md"
+							key={item.room_id}
 						>
-							Thông tin phòng
-						</Typography>
-
-						<div className="flex">
 							<Typography
 								variant="h5"
 								color="blue-gray"
-								className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+								className="mb-3 text-sm md:text-md lg:text-lg xl:text-lg"
 							>
-								Tên phòng:
+								Thông tin phòng
 							</Typography>
+
+							<div className="flex">
+								<Typography
+									variant="h5"
+									color="blue-gray"
+									className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+								>
+									Tên phòng:
+								</Typography>
+								<Typography
+									variant="h5"
+									color="blue-gray"
+									className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
+								>
+									{item.roomname}
+								</Typography>
+							</div>
+
+							<div className=" flex ">
+								<Typography
+									variant="h5"
+									color="blue-gray"
+									className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+								>
+									Mô tả:
+								</Typography>
+								<Typography
+									variant="h5"
+									color="blue-gray"
+									className="mb-2  ml-2 font-normal text-justify text-sm md:text-md lg:text-lg xl:text-lg"
+								>
+									{typeof item.descriptions === "string"
+										? item.descriptions.split(" ").slice(0, 25).join(" ")
+										: ""}
+								</Typography>
+							</div>
+							<div className="border-b mb-2" />
+							<div className=" flex">
+								<Typography
+									variant="h5"
+									color="blue-gray"
+									className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
+								>
+									Loại phòng:
+								</Typography>
+								<Typography
+									variant="h5"
+									color="blue-gray"
+									className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl"
+								>
+									{selectedRoomtype}
+								</Typography>
+							</div>
+
 							<Typography
 								variant="h5"
 								color="blue-gray"
-								className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl "
+								className=" mt-2 text-red-600 text-sm md:text-md lg:text-lg xl:text-xl"
 							>
-								{item.roomname}
+								Giá phòng: {item.roomprice.toLocaleString()} VNĐ
 							</Typography>
 						</div>
-
-						<div className=" flex ">
-							<Typography
-								variant="h5"
-								color="blue-gray"
-								className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
-							>
-								Mô tả:
-							</Typography>
-							<Typography
-								variant="h5"
-								color="blue-gray"
-								className="mb-2  ml-2 font-normal text-justify text-sm md:text-md lg:text-lg xl:text-lg"
-							>
-								{typeof item.descriptions === "string"
-									? item.descriptions.split(" ").slice(0, 25).join(" ")
-									: ""}
-							</Typography>
-						</div>
-						<div className="border-b mb-2" />
-						<div className=" flex">
-							<Typography
-								variant="h5"
-								color="blue-gray"
-								className="mb-2 text-blue-700 text-sm md:text-md lg:text-lg xl:text-xl"
-							>
-								Loại phòng:
-							</Typography>
-							<Typography
-								variant="h5"
-								color="blue-gray"
-								className="mb-2  ml-2 text-sm md:text-md lg:text-lg xl:text-xl"
-							>
-								{item.roomtype}
-							</Typography>
-						</div>
-
-						<Typography
-							variant="h5"
-							color="blue-gray"
-							className=" mt-2 text-red-600 text-sm md:text-md lg:text-lg xl:text-xl"
-						>
-							Giá phòng: {item.roomprice.toLocaleString()} VNĐ
-						</Typography>
-					</div>
-				))}
+					);
+				})}
 				<Card color="transparent" shadow={false}>
 					<form className="border border-solid border-black mt-3 mb-2 rounded-md">
 						<div className="lg:flex md:flex sm:flex mx-auto  ">

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { getAccommodationdetail } from "../../api/acc_API";
 import { Link, useParams } from "react-router-dom";
 import { useAccessToken } from "../ultiti";
@@ -142,7 +142,7 @@ export default function AccommodationDetails() {
 								<div className=" flex">
 									<MapPinIcon className="w-6 h-6" />
 									<Typography variant="h6" color="blue-gray" className="ml-1">
-										{accommodations.roommap}, {accommodations.location}
+										{accommodations.roommap}
 									</Typography>
 								</div>
 

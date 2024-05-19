@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAccessToken } from "../ultiti";
 import axios from "axios";
@@ -207,7 +207,7 @@ export default function ListCardHotel() {
 												<div className="flex">
 													<MapPinIcon className="h-5 w-5" />
 													<span className="line-clamp-1 w-[250px] ml-1 overflow-ellipsis block ">
-														{item.location} - {item.roommap}
+														{item.roommap}
 													</span>
 												</div>
 											</Typography>

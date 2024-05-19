@@ -42,7 +42,7 @@ export default function Page_ListMotel() {
 			motels.map(async (motel) => {
 				try {
 					const response = await axios.get(
-						`http://back-end.timtro.top/accommodations/${motel.acc_id}/rooms/`,
+						`http://back-end.timtro.top/api/accommodations/${motel.acc_id}/rooms/`,
 						{
 							headers: {
 								Authorization: `Bearer ${token}`,

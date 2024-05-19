@@ -1,4 +1,4 @@
-import {
+﻿import {
 	Checkbox,
 	Card,
 	List,
@@ -32,7 +32,7 @@ export function FiltersRoom({ handleRoomTypeFilter, handlePriceFilter }) {
 									<Checkbox
 										id="vertical-list-react"
 										ripple={false}
-										onClick={() => handleRoomTypeFilter("Phòng đơn")}
+										onClick={() => handleRoomTypeFilter(1)}
 										className="hover:before:opacity-0"
 										containerProps={{
 											className: "p-0",
@@ -53,7 +53,7 @@ export function FiltersRoom({ handleRoomTypeFilter, handlePriceFilter }) {
 									<Checkbox
 										id="vertical-list-vue"
 										ripple={false}
-										onClick={() => handleRoomTypeFilter("Phòng đôi")}
+										onClick={() => handleRoomTypeFilter(2)}
 										className="hover:before:opacity-0"
 										containerProps={{
 											className: "p-0",
@@ -74,7 +74,7 @@ export function FiltersRoom({ handleRoomTypeFilter, handlePriceFilter }) {
 									<Checkbox
 										id="vertical-list-svelte"
 										ripple={false}
-										onClick={() => handleRoomTypeFilter("Phòng gia đình")}
+										onClick={() => handleRoomTypeFilter(3)}
 										className="hover:before:opacity-0"
 										containerProps={{
 											className: "p-0",
@@ -95,7 +95,7 @@ export function FiltersRoom({ handleRoomTypeFilter, handlePriceFilter }) {
 									<Checkbox
 										id="vertical-list-svelte"
 										ripple={false}
-										onClick={() => handleRoomTypeFilter("Phòng ghép")}
+										onClick={() => handleRoomTypeFilter(4)}
 										className="hover:before:opacity-0"
 										containerProps={{
 											className: "p-0",

@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Link } from "react-router-dom";
 import {
 	ListBulletIcon,
@@ -24,7 +24,7 @@ export default function AccommodationTable({
 									<th className="px-4 py-3">Vị trí</th>
 									<th className="px-4 py-3">Tổng số phòng</th>
 									<th className="px-4 py-3">Ngày cập nhật</th>
-									<th className="px-4 py-3">AHành động</th>
+									<th className="px-4 py-3">Hành động</th>
 								</tr>
 							</thead>
 							<tbody className="bg-gray-100 text-center">

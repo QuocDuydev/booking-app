@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+﻿import { useContext, useState, useEffect } from "react";
 import useAccessToken from "../../ultiti";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -42,12 +42,9 @@ export default function ProfileMenu() {
 				},
 			})
 			.then((response) => {
-				console.log(response);
+				
 				setUsers(response.data);
-				// const allowedAccess = response.data.find(
-				// 	(user) => user.id === id && user.account_type === "superadmin",
-				// );
-				// setUsers(allowedAccess);
+				
 			})
 			.catch((error) => {
 				console.error("Error fetching user data:", error);
